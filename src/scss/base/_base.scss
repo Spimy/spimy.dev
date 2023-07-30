@@ -3,7 +3,11 @@
 @use '../abstracts/mixins' as *;
 @use '../abstracts/type-scale' as *;
 
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500');
+
 :root {
+	font-family: 'Fira Code', monospace;
+
 	@each $color, $shades in $colors {
 		@each $shade, $value in $shades {
 			--clr-#{$color}-#{$shade}: #{$value};
