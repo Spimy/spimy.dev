@@ -13,7 +13,7 @@
 	<nav class="navbar__items">
 		<!-- WIP theme switcher ignore for now -->
 		<form method="POST" use:enhance>
-			<button aria-label="Toggle theme" type="submit" class="navbar__items__theme-switcher">
+			<button aria-label="Toggle theme" type="submit" class="navbar__items__theme-toggler">
 				<img aria-hidden="true" src="icons/theme-toggle/light.svg" alt="theme-toggler-icon" />
 			</button>
 		</form>
