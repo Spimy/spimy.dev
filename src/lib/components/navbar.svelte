@@ -13,13 +13,15 @@
 	<nav class="navbar__items">
 		<!-- WIP theme switcher ignore for now -->
 		<form method="POST" use:enhance>
-			<button type="submit" class="navbar__items__theme-switcher">
-				<img src="icons/theme-toggle/light.svg" alt="theme-toggler-icon" />
+			<button aria-label="Toggle theme" type="submit" class="navbar__items__theme-switcher">
+				<img aria-hidden="true" src="icons/theme-toggle/light.svg" alt="theme-toggler-icon" />
 			</button>
 		</form>
 
-		<input type="checkbox" name="burger" id="burger" />
-		<label for="burger"><img src="icons/burger.svg" alt="burger-menu-icon" /></label>
+		<input aria-label="Toggle menu" type="checkbox" name="burger" id="burger" />
+		<label aria-hidden="true" for="burger">
+			<img src="icons/burger.svg" alt="burger-menu-icon" />
+		</label>
 
 		<ul role="list" class="navbar__items__menu">
 			<li>
