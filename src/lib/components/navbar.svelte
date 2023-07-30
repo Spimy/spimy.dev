@@ -35,7 +35,3 @@
 		</ul>
 	</nav>
 </aside>
-
-<style lang="scss">
-	@use '../../scss/layout/navbar.scss' as *;
-</style>
