@@ -10,7 +10,7 @@
 		<a href="/"><img src="/logos/icon.png" alt="home-logo" /></a>
 	</div>
 
-	<nav class="navbar__items-container">
+	<nav class="navbar__menu-container">
 		<!-- WIP theme switcher ignore for now -->
 		<form method="POST" use:enhance>
 			<button type="submit" class="navbar__theme-switcher">Toggle Theme</button>
