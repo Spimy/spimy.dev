@@ -29,6 +29,11 @@ $menu-item-gap: 2rem;
 			border: none;
 			background-color: transparent;
 			height: 100%;
+
+			> img {
+				aspect-ratio: 1;
+				width: var(--fs-500);
+			}
 		}
 
 		@include mq(small) {
