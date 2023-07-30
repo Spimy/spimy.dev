@@ -3,6 +3,7 @@
 	import { page } from '$app/stores';
 	import { pages } from '$lib/global';
 	import type { SubmitFunction } from '@sveltejs/kit';
+	import BurgerIcon from './burger-icon.svelte';
 
 	const submitUpdateTheme: SubmitFunction = ({ action }) => {
 		const theme = action.searchParams.get('theme') as Theme;
@@ -45,7 +46,8 @@
 
 		<input aria-label="Toggle menu" type="checkbox" name="burger" id="burger" />
 		<label aria-hidden="true" for="burger">
-			<img src="icons/burger.svg" alt="burger-menu-icon" />
+			<!-- <img src="icons/burger.svg" alt="burger-menu-icon" /> -->
+			<BurgerIcon />
 		</label>
 
 		<ul role="list" class="navbar__items__menu">

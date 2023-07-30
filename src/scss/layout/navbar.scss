@@ -2,15 +2,6 @@
 
 $menu-item-gap: 2rem;
 
-:root[data-theme='dark'] {
-	label[for='burger'] {
-		display: none;
-		img {
-			filter: invert(1);
-		}
-	}
-}
-
 .navbar {
 	display: flex;
 	justify-content: space-between;
