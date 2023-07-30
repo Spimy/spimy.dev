@@ -24,18 +24,6 @@ $menu-item-gap: 2rem;
 	&__items {
 		display: flex;
 
-		&__theme-toggler {
-			cursor: pointer;
-			border: none;
-			background-color: transparent;
-			height: 100%;
-
-			> img {
-				aspect-ratio: 1;
-				width: var(--fs-500);
-			}
-		}
-
 		// ===================================================================
 		// Burger menu
 		// ===================================================================
