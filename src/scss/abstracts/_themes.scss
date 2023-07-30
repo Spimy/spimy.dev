@@ -1,0 +1,10 @@
+$themes: (
+	light: (
+		theme-primary: var(--clr-primary-400),
+		theme-background: var(--clr-primary-100)
+	),
+	dark: (
+		theme-primary: var(--clr-primary-100),
+		theme-background: var(--clr-primary-400)
+	)
+);
