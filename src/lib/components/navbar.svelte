@@ -17,7 +17,7 @@
 		</form>
 
 		<input type="checkbox" name="burger" id="burger" />
-		<label for="burger"><img src="icons/burger.svg" alt="" /></label>
+		<label for="burger"><img src="icons/burger.svg" alt="burger-menu-icon" /></label>
 
 		<ul role="list" class="navbar__items__menu">
 			<li>
