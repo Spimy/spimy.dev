@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import { page } from '$app/stores';
+	import { pages } from '$lib/global';
 	import type { SubmitFunction } from '@sveltejs/kit';
 
-	const submitUpdateTheme: SubmitFunction = ({ action, submitter }) => {
+	const submitUpdateTheme: SubmitFunction = ({ action }) => {
 		const theme = action.searchParams.get('theme') as Theme;
 		if (theme) {
 			document.documentElement.setAttribute('data-theme', theme);
@@ -28,7 +29,7 @@
 					type="submit"
 					formaction="/?/setTheme&theme=dark&redirectTo={path}"
 				>
-					<img aria-hidden="true" src="icons/theme-toggle/to-dark.svg" alt="theme-toggler-icon" />
+					<img aria-hidden="true" src="/icons/theme-toggle/to-dark.svg" alt="theme-toggler-icon" />
 				</button>
 			{:else}
 				<button
@@ -37,7 +38,7 @@
 					type="submit"
 					formaction="/?/setTheme&theme=light&redirectTo={path}"
 				>
-					<img aria-hidden="true" src="icons/theme-toggle/to-light.svg" alt="theme-toggler-icon" />
+					<img aria-hidden="true" src="/icons/theme-toggle/to-light.svg" alt="theme-toggler-icon" />
 				</button>
 			{/if}
 		</form>
@@ -48,27 +49,15 @@
 		</label>
 
 		<ul role="list" class="navbar__items__menu">
-			<li>
-				<a
-					href="/"
-					aria-current={path === '/' ? 'page' : undefined}
-					class="navbar__items__menu__item">Home</a
-				>
-			</li>
-			<li>
-				<a
-					href="/projects"
-					aria-current={path === '/projects' ? 'page' : undefined}
-					class="navbar__items__menu__item">Past Projects</a
-				>
-			</li>
-			<li>
-				<a
-					href="/contact"
-					aria-current={path === '/contact' ? 'page' : undefined}
-					class="navbar__items__menu__item">Contact</a
-				>
-			</li>
+			{#each pages as page, index (index)}
+				<li>
+					<a
+						href={page.path}
+						aria-current={path === page.path ? 'page' : undefined}
+						class="navbar__items__menu__item">{page.name}</a
+					>
+				</li>
+			{/each}
 		</ul>
 	</nav>
 </aside>
