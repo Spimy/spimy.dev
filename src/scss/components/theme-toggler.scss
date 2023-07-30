@@ -1,0 +1,11 @@
+.theme-toggler {
+	cursor: pointer;
+	border: none;
+	background-color: transparent;
+	height: 100%;
+
+	&__icon {
+		aspect-ratio: 1;
+		width: var(--fs-500);
+	}
+}
