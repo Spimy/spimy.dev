@@ -13,7 +13,9 @@
 	<nav class="navbar__items">
 		<!-- WIP theme switcher ignore for now -->
 		<form method="POST" use:enhance>
-			<button type="submit" class="navbar__items__theme-switcher">Toggle Theme</button>
+			<button type="submit" class="navbar__items__theme-switcher">
+				<img src="icons/theme-toggle/light.svg" alt="theme-toggler-icon" />
+			</button>
 		</form>
 
 		<input type="checkbox" name="burger" id="burger" />
