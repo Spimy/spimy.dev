@@ -2,6 +2,15 @@
 
 $menu-item-gap: 2rem;
 
+:root[data-theme='dark'] {
+	label[for='burger'] {
+		display: none;
+		img {
+			filter: invert(1);
+		}
+	}
+}
+
 .navbar {
 	display: flex;
 	justify-content: space-between;
@@ -36,6 +45,9 @@ $menu-item-gap: 2rem;
 			}
 		}
 
+		// ===================================================================
+		// Burger menu
+		// ===================================================================
 		@include mq(small) {
 			gap: $menu-item-gap;
 
@@ -65,6 +77,7 @@ $menu-item-gap: 2rem;
 			visibility: visible;
 			transform: scaleY(100%);
 		}
+		// ===================================================================
 
 		&__menu {
 			position: absolute;
