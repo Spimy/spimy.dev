@@ -46,7 +46,6 @@
 
 		<input aria-label="Toggle menu" type="checkbox" name="burger" id="burger" />
 		<label aria-hidden="true" for="burger">
-			<!-- <img src="icons/burger.svg" alt="burger-menu-icon" /> -->
 			<BurgerIcon />
 		</label>
 
