@@ -1,51 +1,105 @@
+@use '../abstracts/mixins' as *;
+
 .navbar {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: 1rem 5rem;
+	padding: 1rem 3rem;
 	font-weight: 600;
 	font-size: var(--fs-400);
+	background-color: var(--theme-background);
+	position: relative;
+
+	@include mq(small) {
+		padding: 1rem 5rem;
+	}
 
 	&__logo {
 		aspect-ratio: 1;
 		width: 3rem;
 	}
 
-	&__menu-container {
+	&__items {
 		display: flex;
 		align-items: center;
-	}
 
-	&__menu {
-		display: flex;
-		gap: 2rem;
+		@include mq(small) {
+			label[for='burger'],
+			input[type='checkbox'][name='burger'] {
+				display: none;
+			}
+		}
 
-		&__item {
-			color: var(--theme-text);
-			text-decoration: none;
-			position: relative;
+		label[for='burger'] {
+			cursor: pointer;
 
-			&::after {
-				content: '';
-				background-color: var(--theme-primary);
-				position: absolute;
-				left: 0;
-				bottom: 0;
-				height: 0.2rem;
-				width: 100%;
-				scale: 0 100%;
-				transition: scale 250ms ease-in-out;
+			img {
+				width: var(--fs-700);
+			}
+		}
+
+		input[type='checkbox'][name='burger']:focus ~ label[for='burger'] {
+			outline: auto;
+		}
+
+		input[type='checkbox'][name='burger'] {
+			opacity: 0;
+		}
+
+		input[type='checkbox'][name='burger']:checked ~ &__menu {
+			visibility: visible;
+			transform: scaleY(100%);
+		}
+
+		&__menu {
+			position: absolute;
+			top: calc(100% - 1.5rem);
+			left: 0;
+			width: 100%;
+			padding-block: 1rem;
+			background-color: var(--theme-background);
+			visibility: hidden;
+			transform: scaleY(0);
+			transform-origin: top;
+			transition: visibility 300ms, transform 250ms ease-in-out;
+
+			@include mq(small) {
+				position: initial;
+				visibility: visible;
+				transform: scaleY(100%);
+				display: flex;
+				gap: 2rem;
+				width: auto;
+				padding-block: 0;
 			}
 
-			&:hover::after {
-				scale: 100% 100%;
-			}
-
-			&[aria-current='page'] {
-				color: var(--theme-primary);
+			&__item {
+				color: var(--theme-text);
+				text-decoration: none;
+				position: relative;
 
 				&::after {
+					content: '';
+					background-color: var(--theme-primary);
+					position: absolute;
+					left: 0;
+					bottom: 0;
+					height: 0.2rem;
+					width: 100%;
+					scale: 0 100%;
+					transition: scale 250ms ease-in-out;
+				}
+
+				&:hover::after {
 					scale: 100% 100%;
+				}
+
+				&[aria-current='page'] {
+					color: var(--theme-primary);
+
+					&::after {
+						scale: 100% 100%;
+					}
 				}
 			}
 		}
