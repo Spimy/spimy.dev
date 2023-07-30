@@ -1,5 +1,7 @@
 @use '../abstracts/mixins' as *;
 
+$menu-item-gap: 2rem;
+
 .navbar {
 	display: flex;
 	justify-content: space-between;
@@ -21,9 +23,17 @@
 
 	&__items {
 		display: flex;
-		align-items: center;
+
+		&__theme-toggler {
+			cursor: pointer;
+			border: none;
+			background-color: transparent;
+			height: 100%;
+		}
 
 		@include mq(small) {
+			gap: $menu-item-gap;
+
 			label[for='burger'],
 			input[type='checkbox'][name='burger'] {
 				display: none;
@@ -68,9 +78,9 @@
 				visibility: visible;
 				transform: scaleY(100%);
 				display: flex;
-				gap: 2rem;
+				gap: $menu-item-gap;
 				width: auto;
-				padding-block: 0;
+				padding: 0;
 			}
 
 			&__item {
