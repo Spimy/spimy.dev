@@ -12,9 +12,8 @@ export const handle: Handle = async ({ event, resolve }) => {
 		theme = cookieTheme;
 	}
 
-	if (!theme) return await resolve(event);
-
 	return resolve(event, {
-		transformPageChunk: ({ html }) => html.replace('data-theme=""', `data-theme="${theme}"`)
+		transformPageChunk: ({ html }) =>
+			html.replace('data-theme=""', `data-theme="${theme ?? 'light'}"`)
 	});
 };
