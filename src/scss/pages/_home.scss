@@ -1,0 +1,43 @@
+@use '../abstracts/mixins' as *;
+
+.hero {
+	padding: 3rem;
+
+	@include mq(small) {
+		gap: 5rem;
+		padding: 5rem;
+	}
+
+	@include mq(medium) {
+		display: flex;
+		flex-direction: row-reverse;
+		align-items: center;
+		gap: 10rem;
+	}
+
+	&__info {
+		flex-basis: 100%;
+		margin-block: 3rem;
+
+		h1,
+		h2 {
+			letter-spacing: -0.2rem;
+		}
+
+		h1 {
+			font-size: var(--fs-600);
+			line-height: 20%;
+		}
+
+		h2 {
+			color: var(--theme-primary);
+			font-size: var(--fs-800);
+		}
+
+		p {
+			font-size: var(--fs-300);
+			max-width: 75ch;
+			margin-top: 1rem;
+		}
+	}
+}
