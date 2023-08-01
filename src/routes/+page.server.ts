@@ -22,7 +22,8 @@ export const actions: Actions = {
 		if (newTheme) {
 			cookies.set('theme', newTheme, {
 				path: '/',
-				maxAge: 60 * 60 * 24 * 365
+				maxAge: 60 * 60 * 24 * 365,
+				secure: false
 			});
 		}
 
