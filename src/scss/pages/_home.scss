@@ -1,10 +1,12 @@
 @use '../abstracts/mixins' as *;
 
 .hero {
-	padding: 3rem;
+	padding-inline: 3rem;
+	padding-block: 10rem;
+	height: 100svh;
 
 	@include mq(small) {
-		padding: 5rem;
+		padding-inline: 5rem;
 	}
 
 	@include mq(medium) {
