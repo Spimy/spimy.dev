@@ -5,3 +5,7 @@
 	<div class="avatar__corner avatar__corner--top-right" />
 	<div class="avatar__corner avatar__corner--bottom-right" />
 </div>
+
+<style lang="scss">
+	@use '../../scss/components/avatar' as *;
+</style>

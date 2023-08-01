@@ -32,3 +32,7 @@
 		/>
 	</button>
 </form>
+
+<style lang="scss">
+	@use '../../scss/components/theme-toggler.scss' as *;
+</style>

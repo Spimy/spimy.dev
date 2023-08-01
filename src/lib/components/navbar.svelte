@@ -33,3 +33,7 @@
 		</ul>
 	</nav>
 </header>
+
+<style lang="scss">
+	@use '../../scss/layout/navbar.scss';
+</style>
