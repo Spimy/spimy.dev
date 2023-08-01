@@ -7,4 +7,7 @@
 </script>
 
 <Navbar {data} />
-<slot />
+
+<main>
+	<slot />
+</main>
