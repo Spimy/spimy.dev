@@ -15,7 +15,7 @@
 	</div>
 
 	<nav class="navbar__items">
-		<ThemeToggler {path} currentTheme={data.theme} />
+		<ThemeToggler currentTheme={data.theme} />
 
 		<input aria-label="Toggle menu" type="checkbox" name="burger" id="burger" />
 		<label aria-hidden="true" for="burger"><BurgerIcon /></label>

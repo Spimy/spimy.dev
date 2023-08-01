@@ -1,12 +1,13 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
 
 	export let currentTheme: Theme | undefined;
-	export let path: string;
 
 	let nextTheme: Theme;
 	$: nextTheme = !currentTheme || currentTheme === 'light' ? 'dark' : 'light';
+	$: path = $page.url.pathname;
 
 	const submitUpdateTheme: SubmitFunction = ({ action }) => {
 		const theme = action.searchParams.get('theme') as Theme;
