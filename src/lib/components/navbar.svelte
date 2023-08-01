@@ -9,7 +9,7 @@
 	$: path = $page.url.pathname;
 </script>
 
-<aside class="navbar">
+<header class="navbar">
 	<div class="navbar__logo">
 		<a href="/"><img src="/logos/icon.png" alt="home-logo" /></a>
 	</div>
@@ -18,9 +18,7 @@
 		<ThemeToggler {path} currentTheme={data.theme} />
 
 		<input aria-label="Toggle menu" type="checkbox" name="burger" id="burger" />
-		<label aria-hidden="true" for="burger">
-			<BurgerIcon />
-		</label>
+		<label aria-hidden="true" for="burger"><BurgerIcon /></label>
 
 		<ul role="list" class="navbar__items__menu">
 			{#each pages as page, index (index)}
@@ -34,4 +32,4 @@
 			{/each}
 		</ul>
 	</nav>
-</aside>
+</header>
