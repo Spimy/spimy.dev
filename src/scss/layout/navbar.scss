@@ -44,7 +44,7 @@ $menu-item-gap: 2rem;
 			}
 		}
 
-		input[type='checkbox'][name='burger']:focus ~ label[for='burger'] {
+		input[type='checkbox'][name='burger']:focus + label[for='burger'] {
 			outline: auto;
 		}
 
@@ -97,7 +97,8 @@ $menu-item-gap: 2rem;
 					transition: scale 250ms ease-in-out;
 				}
 
-				&:hover::after, &:focus::after {
+				&:hover::after,
+				&:focus::after {
 					scale: 100% 100%;
 				}
 
