@@ -38,10 +38,6 @@ $menu-item-gap: 2rem;
 
 		label[for='burger'] {
 			cursor: pointer;
-
-			img {
-				width: var(--fs-700);
-			}
 		}
 
 		input[type='checkbox'][name='burger']:focus + label[for='burger'] {
