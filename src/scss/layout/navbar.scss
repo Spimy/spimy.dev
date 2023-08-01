@@ -69,6 +69,7 @@ $menu-item-gap: 2rem;
 			transform: scaleY(0);
 			transform-origin: top;
 			transition: visibility 300ms, transform 250ms ease-in-out;
+			z-index: 9999;
 
 			@include mq(small) {
 				position: initial;
