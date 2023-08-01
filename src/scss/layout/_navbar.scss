@@ -10,7 +10,9 @@ $menu-item-gap: 2rem;
 	font-weight: 600;
 	font-size: var(--fs-400);
 	background-color: var(--theme-background);
-	position: relative;
+	position: fixed;
+	width: 100%;
+	z-index: 9999;
 
 	@include mq(small) {
 		padding-inline: 5rem;
@@ -65,7 +67,6 @@ $menu-item-gap: 2rem;
 			transform: scaleY(0);
 			transform-origin: top;
 			transition: visibility 300ms, transform 250ms ease-in-out;
-			z-index: 9999;
 
 			@include mq(small) {
 				position: initial;
