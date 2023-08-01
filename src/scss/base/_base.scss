@@ -36,5 +36,10 @@
 		}
 	}
 
+	color: var(--theme-text);
 	background-color: var(--theme-background);
+
+	a {
+		color: var(--theme-primary);
+	}
 }
