@@ -35,5 +35,5 @@
 </header>
 
 <style lang="scss">
-	@use '../../scss/layout/navbar.scss';
+	@use '../../scss/layout/navbar';
 </style>

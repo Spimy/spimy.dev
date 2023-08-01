@@ -7,5 +7,5 @@
 </div>
 
 <style lang="scss">
-	@use '../../scss/components/avatar' as *;
+	@use '../../scss/components/avatar';
 </style>

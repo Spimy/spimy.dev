@@ -34,5 +34,5 @@
 </form>
 
 <style lang="scss">
-	@use '../../scss/components/theme-toggler.scss' as *;
+	@use '../../scss/components/theme-toggler';
 </style>
