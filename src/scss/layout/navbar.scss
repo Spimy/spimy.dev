@@ -97,7 +97,7 @@ $menu-item-gap: 2rem;
 					transition: scale 250ms ease-in-out;
 				}
 
-				&:hover::after {
+				&:hover::after, &:focus::after {
 					scale: 100% 100%;
 				}
 
