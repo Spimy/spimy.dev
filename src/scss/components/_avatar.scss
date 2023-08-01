@@ -1,0 +1,47 @@
+$border-width: 0.4rem;
+
+.avatar {
+	aspect-ratio: 1;
+	position: relative;
+
+	img {
+		padding: 1rem;
+		width: 100%;
+	}
+
+	&__corner {
+		position: absolute;
+		aspect-ratio: 1;
+		width: 20%;
+		border: 0 solid var(--theme-text);
+		border-radius: 0.25rem;
+
+		&--top-left {
+			top: 0;
+			left: 0;
+			border-top-width: $border-width;
+			border-left-width: $border-width;
+		}
+
+		&--bottom-left {
+			bottom: 0;
+			left: 0;
+			border-bottom-width: $border-width;
+			border-left-width: $border-width;
+		}
+
+		&--top-right {
+			top: 0;
+			right: 0;
+			border-top-width: $border-width;
+			border-right-width: $border-width;
+		}
+
+		&--bottom-right {
+			bottom: 0;
+			right: 0;
+			border-bottom-width: $border-width;
+			border-right-width: $border-width;
+		}
+	}
+}
