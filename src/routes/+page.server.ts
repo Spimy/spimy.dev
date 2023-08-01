@@ -1,5 +1,18 @@
 import { pages } from '$lib/global';
 import { redirect, type Actions } from '@sveltejs/kit';
+import type { PageServerLoad } from './$types';
+
+function calculateAge(date: string) {
+	const timeDiff = Math.abs(Date.now() - new Date(date).getTime());
+	return Math.floor(timeDiff / (1000 * 3600 * 24) / 365);
+}
+
+export const load: PageServerLoad = async () => {
+	return {
+		age: calculateAge('2003/01/30'),
+		experienceYears: calculateAge('2016')
+	};
+};
 
 export const actions: Actions = {
 	setTheme: async ({ url, cookies }) => {
