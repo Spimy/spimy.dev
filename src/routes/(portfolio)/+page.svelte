@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { PageData } from './$types';
 	import Avatar from '$lib/components/avatar.svelte';
+	import type { PageData } from './$types';
 
 	export let data: PageData;
 </script>
@@ -27,5 +27,5 @@
 </section>
 
 <style lang="scss">
-	@use '../scss/pages/home';
+	@use '../../scss/pages/home';
 </style>
