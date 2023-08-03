@@ -1,15 +1,9 @@
 @use '../abstracts/mixins' as *;
 
 .hero {
-	padding-inline: 3rem;
-	padding-block: 10rem;
-	height: 100svh;
+	// margin-bottom: calc(100vh - 40rem);
 
-	@include mq(small) {
-		padding-inline: 5rem;
-	}
-
-	@include mq(medium) {
+	@include cmq(50em) {
 		display: flex;
 		flex-direction: row-reverse;
 		align-items: center;
