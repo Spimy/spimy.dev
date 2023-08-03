@@ -1,0 +1,68 @@
+.footer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	padding: 3rem var(--content-padding);
+	position: relative;
+
+	a {
+		color: var(--theme-text);
+
+		&:hover,
+		&:focus {
+			color: var(--theme-primary);
+		}
+	}
+
+	&::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 47%;
+		right: 47%;
+		height: 0.2rem;
+		border-radius: 1rem;
+		background-color: var(--theme-text);
+		opacity: 0.2;
+	}
+
+	&__issue a {
+		color: var(--theme-primary);
+
+		&:hover,
+		&:focus {
+			text-decoration: underline;
+		}
+	}
+
+	&__socials {
+		display: flex;
+		flex-direction: row;
+		gap: 1rem;
+		padding: 0;
+		margin: 0;
+		margin-top: 0.5rem;
+		font-size: var(--fs-500);
+	}
+
+	&__links {
+		font-size: var(--fs-300);
+		margin-top: 1rem;
+		margin-bottom: 2rem;
+
+		&__title {
+			text-transform: uppercase;
+		}
+
+		&__container {
+			display: flex;
+			gap: 1rem;
+		}
+	}
+
+	&__copyright {
+		font-size: var(--fs-200);
+	}
+}
