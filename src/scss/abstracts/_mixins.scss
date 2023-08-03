@@ -1,8 +1,17 @@
 @use 'breakpoints' as *;
 
+// mq = media query
 @mixin mq($key) {
 	$size: map-get($breakpoints, $key);
 
+	@media only screen and (min-width: $size) {
+		@content;
+	}
+}
+
+// For rare circumstances where breakpoints do not match
+// cmq = custom media query
+@mixin cmq($size) {
 	@media only screen and (min-width: $size) {
 		@content;
 	}
