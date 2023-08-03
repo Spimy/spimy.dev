@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import { enhance } from '$app/forms';
+	import { afterNavigate } from '$app/navigation';
+	import { page } from '$app/stores';
 	import type { SubmitFunction } from '@sveltejs/kit';
 
 	export let currentTheme: Theme | undefined;
@@ -9,12 +10,17 @@
 	$: nextTheme = !currentTheme || currentTheme === 'light' ? 'dark' : 'light';
 	$: path = $page.url.pathname;
 
+	let scrollX: number = 0;
+	let scrollY: number = 0;
+
 	const submitUpdateTheme: SubmitFunction = ({ action }) => {
 		const theme = action.searchParams.get('theme') as Theme;
 		if (theme) {
 			document.documentElement.setAttribute('data-theme', theme);
 		}
 	};
+
+	afterNavigate(() => scrollTo(scrollX, scrollY));
 </script>
 
 <form method="POST" use:enhance={submitUpdateTheme}>
@@ -23,6 +29,10 @@
 		class="theme-toggler"
 		type="submit"
 		formaction="/?/setTheme&theme={nextTheme}&redirectTo={path}"
+		on:click={() => {
+			scrollX = window.scrollX;
+			scrollY = window.scrollY;
+		}}
 	>
 		<img
 			aria-hidden="true"
