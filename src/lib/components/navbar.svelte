@@ -4,7 +4,7 @@
 	import BurgerIcon from './burger-icon.svelte';
 	import ThemeToggler from './theme-toggler.svelte';
 
-	export let data: { theme: Theme | undefined };
+	export let theme: Theme | undefined;
 
 	$: path = $page.url.pathname;
 </script>
@@ -15,7 +15,7 @@
 	</div>
 
 	<nav class="navbar__items">
-		<ThemeToggler currentTheme={data.theme} />
+		<ThemeToggler currentTheme={theme} />
 
 		<input aria-label="Toggle menu" type="checkbox" name="burger" id="burger" />
 		<label aria-hidden="true" for="burger"><BurgerIcon /></label>
