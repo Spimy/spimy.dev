@@ -1,7 +1,14 @@
 @use '../abstracts/mixins' as *;
 
+$MARGIN-CONSTANT: 8rem;
+$TITLE-FONT-SIZE: var(--fs-700);
+
 .hero {
-	// margin-bottom: calc(100vh - 40rem);
+	margin-bottom: $MARGIN-CONSTANT;
+
+	@include mq(small) {
+		margin-bottom: calc($MARGIN-CONSTANT + $TITLE-FONT-SIZE);
+	}
 
 	@include cmq(50em) {
 		display: flex;
@@ -32,7 +39,8 @@
 		p {
 			font-size: var(--fs-300);
 			max-width: 75ch;
-			margin-top: 1rem;
+			margin-top: 2rem;
+			margin-bottom: 3rem;
 		}
 	}
 }

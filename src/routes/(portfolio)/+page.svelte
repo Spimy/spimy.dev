@@ -23,6 +23,7 @@
 			<a href="https://minecraft.net" rel="external" target="_blank">Minecraft</a>; making Java my
 			first programming language.
 		</p>
+		<a href="/contact" class="hero__cta btn">Contact Me »</a>
 	</div>
 </section>
 
