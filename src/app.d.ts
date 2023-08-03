@@ -9,4 +9,8 @@ declare global {
 	}
 }
 
+declare module '@fortawesome/free-brands-svg-icons/index.es' {
+	export * from '@fortawesome/free-brands-svg-icons';
+}
+
 export {};
