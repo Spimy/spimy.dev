@@ -12,8 +12,15 @@
 	<slot />
 </main>
 
-<style>
+<style lang="scss">
+	@use '../../scss/abstracts/mixins' as *;
+
 	main {
-		padding: 10rem var(--content-padding);
+		padding-inline: var(--content-padding);
+		padding-block: 8rem;
+
+		@include mq(small) {
+			padding-block: 12rem;
+		}
 	}
 </style>
