@@ -21,7 +21,7 @@
 		<label aria-hidden="true" for="burger"><BurgerIcon /></label>
 
 		<ul role="list" class="navbar__items__menu">
-			{#each pages as page, index (index)}
+			{#each pages.filter((page) => page.navbar) as page, index (index)}
 				<li>
 					<a
 						href={page.path}
