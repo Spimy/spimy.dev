@@ -21,13 +21,14 @@
 
 	main {
 		padding-inline: var(--content-padding);
-		padding-block: 8rem;
+		padding-top: 8rem;
+		padding-bottom: 3rem;
 		display: flex;
 		flex-direction: column;
 		gap: 6rem;
 
 		@include mq(small) {
-			padding-block: 12rem;
+			padding-top: 12rem;
 			gap: 12rem;
 		}
 	}
