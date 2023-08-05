@@ -50,7 +50,7 @@
 		<h2 class="footer__links__title">Helpful Links</h2>
 		<div class="footer__links__container">
 			{#each pages as page, index (index)}
-				<a href={page.path}>{page.name}</a> |
+				<a href={page.path}>{page.display}</a> |
 			{/each}
 			<a href="/sitemap.xml" target="_blank">Sitemap</a>
 		</div>

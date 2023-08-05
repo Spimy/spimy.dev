@@ -1,5 +1,5 @@
-export const pages = [
-	{ name: 'Home', path: '/' },
-	{ name: 'Projects', path: '/projects' },
-	{ name: 'Contact', path: '/contact' }
+export const pages: Page[] = [
+	{ id: 'home', display: 'Home', path: '/' },
+	{ id: 'projects', display: 'Projects', path: '/projects' },
+	{ id: 'contact', display: 'Contact', path: '/contact' }
 ];

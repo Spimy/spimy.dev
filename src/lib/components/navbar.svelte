@@ -26,7 +26,7 @@
 					<a
 						href={page.path}
 						aria-current={path === page.path ? 'page' : undefined}
-						class="navbar__items__menu__item">{page.name}</a
+						class="navbar__items__menu__item">{page.display}</a
 					>
 				</li>
 			{/each}
