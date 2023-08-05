@@ -1,15 +1,6 @@
 @use '../abstracts/mixins' as *;
 
-$MARGIN-CONSTANT: 6rem;
-$TITLE-FONT-SIZE: var(--fs-700);
-
 .hero {
-	margin-bottom: $MARGIN-CONSTANT;
-
-	@include mq(small) {
-		margin-bottom: calc($MARGIN-CONSTANT + $TITLE-FONT-SIZE);
-	}
-
 	@include cmq(50em) {
 		display: flex;
 		flex-direction: row-reverse;
@@ -19,7 +10,7 @@ $TITLE-FONT-SIZE: var(--fs-700);
 
 	&__info {
 		flex-basis: 100%;
-		margin-block: 3rem;
+		margin-top: 3rem;
 
 		h1,
 		h2 {
@@ -47,7 +38,7 @@ $TITLE-FONT-SIZE: var(--fs-700);
 
 .skills {
 	h1 {
-		font-size: $TITLE-FONT-SIZE;
+		font-size: var(--fs-700);
 		color: var(--theme-primary);
 	}
 
