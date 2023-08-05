@@ -72,8 +72,8 @@
 <section class="skills">
 	<h1>Skills</h1>
 	<div class="skills__container">
-		<div class="skills__container__texture skills__container__texture--left-long" />
-		<div class="skills__container__texture skills__container__texture--left-short" />
+		<div class="skills__container__texture" />
+		<div class="skills__container__texture" />
 		<div class="skills__container__hex-grid">
 			{#each chunk(skills, 3) as skillsList, i (i)}
 				<div
@@ -87,8 +87,8 @@
 				</div>
 			{/each}
 		</div>
-		<div class="skills__container__texture skills__container__texture--right-short" />
-		<div class="skills__container__texture skills__container__texture--right-long" />
+		<div class="skills__container__textur" />
+		<div class="skills__container__texture" />
 	</div>
 </section>
 
