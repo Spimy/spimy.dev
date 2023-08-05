@@ -7,10 +7,15 @@ function calculateAge(date: string) {
 	return Math.floor(timeDiff / (1000 * 3600 * 24) / 365);
 }
 
-export const load: PageServerLoad = async () => {
+export const load: PageServerLoad = async ({ fetch }) => {
+	const projects: Project[] = await fetch('/api/projects?number=3').then((response) =>
+		response.json()
+	);
+
 	return {
 		age: calculateAge('2003/01/30'),
-		experienceYears: calculateAge('2016')
+		experienceYears: calculateAge('2016'),
+		projects
 	};
 };
 

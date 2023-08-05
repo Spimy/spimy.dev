@@ -1,8 +1,11 @@
 <script lang="ts">
 	import Avatar from '$lib/components/avatar.svelte';
+	import ProjectDisplay from '$lib/components/project-display.svelte';
+	import { pages } from '$lib/global';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
+	console.log(data);
 
 	// Temporarily loaded on client side. Will be loaded on server side later from database.
 	interface SkillsList {
@@ -65,7 +68,9 @@
 			<a href="https://minecraft.net" rel="external" target="_blank">Minecraft</a>; making Java my
 			first programming language.
 		</p>
-		<a href="/contact" class="hero__cta btn">Contact Me »</a>
+		<a href={pages.find((page) => page.id === 'contact')?.path} class="hero__cta btn"
+			>Contact Me »</a
+		>
 	</div>
 </section>
 
@@ -89,6 +94,20 @@
 		</div>
 		<div class="skills__container__texture" />
 		<div class="skills__container__texture" />
+	</div>
+</section>
+
+<section class="projects">
+	<h1><span>Latest</span><br />Projects</h1>
+	<div class="projects__info">
+		<div class="projects__info__grid">
+			{#each data.projects as project}
+				<ProjectDisplay {project} />
+			{/each}
+		</div>
+		<a href={pages.find((page) => page.id === 'projects')?.path} class="projects__info__cta btn"
+			>View More
+		</a>
 	</div>
 </section>
 
