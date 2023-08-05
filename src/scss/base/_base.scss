@@ -62,5 +62,17 @@
 			color: var(--clr-text-100);
 			background-color: var(--theme-primary);
 		}
+
+		&--invert {
+			color: var(--clr-text-100);
+			background-color: var(--theme-primary);
+
+			&:hover,
+			&:focus {
+				color: var(--theme-primary);
+				border: 0.2rem solid var(--theme-primary);
+				background-color: var(--clr-text-100);
+			}
+		}
 	}
 }
