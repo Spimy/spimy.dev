@@ -47,6 +47,11 @@
 	a {
 		color: var(--theme-primary);
 		text-decoration: none;
+
+		&:not(.btn):hover,
+		&:not(.btn):focus {
+			text-decoration: underline;
+		}
 	}
 
 	.btn {

@@ -30,11 +30,6 @@
 
 	&__issue a {
 		color: var(--theme-primary);
-
-		&:hover,
-		&:focus {
-			text-decoration: underline;
-		}
 	}
 
 	&__socials {
