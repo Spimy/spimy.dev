@@ -1,0 +1,47 @@
+.project {
+	display: flex;
+	flex-direction: column;
+	border-radius: 1rem;
+	background-color: var(--clr-background-400);
+	// height: fit-content;
+
+	&__preview {
+		border-radius: inherit;
+		aspect-ratio: 16 / 9;
+		object-fit: cover;
+	}
+
+	&__info {
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+		padding: 1rem;
+		height: 100%;
+
+		&__title {
+			font-size: var(--fs-500);
+			font-weight: 600;
+		}
+
+		&__techs {
+			display: flex;
+			gap: 0.5rem;
+			background-color: var(--clr-background-300);
+			padding: 0.5rem;
+			border-radius: 0.2rem;
+
+			img {
+				aspect-ratio: 1;
+				width: 1.2rem;
+			}
+		}
+
+		&__description {
+			flex: 1;
+		}
+
+		&__cta {
+			padding-block: 0.5rem;
+		}
+	}
+}
