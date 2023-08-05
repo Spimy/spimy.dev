@@ -3,7 +3,7 @@
 	flex-direction: column;
 	border-radius: 1rem;
 	background-color: var(--clr-background-400);
-	// height: fit-content;
+	height: fit-content;
 
 	&__preview {
 		border-radius: inherit;
@@ -16,7 +16,6 @@
 		flex-direction: column;
 		gap: 2rem;
 		padding: 1rem;
-		height: 100%;
 
 		&__title {
 			font-size: var(--fs-500);
@@ -34,10 +33,6 @@
 				aspect-ratio: 1;
 				width: 1.2rem;
 			}
-		}
-
-		&__description {
-			flex: 1;
 		}
 
 		&__cta {
