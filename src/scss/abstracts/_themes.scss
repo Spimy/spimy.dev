@@ -2,13 +2,11 @@ $themes: (
 	light: (
 		theme-primary: var(--clr-primary-100),
 		theme-background: var(--clr-background-100),
-		theme-text: var(--clr-text-200),
-		theme-text-dark-bg: var(--clr-text-100)
+		theme-text: var(--clr-text-200)
 	),
 	dark: (
 		theme-primary: var(--clr-primary-200),
 		theme-background: var(--clr-background-500),
-		theme-text: var(--clr-text-100),
-		theme-text-dark-bg: var(--clr-text-200)
+		theme-text: var(--clr-text-100)
 	)
 );
