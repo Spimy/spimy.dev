@@ -202,9 +202,13 @@ h1 {
 
 		&__grid {
 			display: grid;
-			grid-template-columns: repeat(3, 1fr);
+			grid-template-columns: repeat(auto-fill, 1fr);
 			gap: 1rem;
 			margin-block: 3rem;
+
+			@include mq(small) {
+				grid-template-columns: repeat(3, 1fr);
+			}
 		}
 	}
 }
