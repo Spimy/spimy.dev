@@ -24,11 +24,11 @@
 		padding-block: 8rem;
 		display: flex;
 		flex-direction: column;
-		gap: 5rem;
+		gap: 6rem;
 
 		@include mq(small) {
 			padding-block: 12rem;
-			gap: 10rem;
+			gap: 12rem;
 		}
 	}
 </style>
