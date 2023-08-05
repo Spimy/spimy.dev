@@ -1,3 +1,4 @@
+import { connectDatabase } from '$lib/server/database';
 import type { Handle } from '@sveltejs/kit';
 
 export const handle: Handle = async ({ event, resolve }) => {
@@ -17,3 +18,5 @@ export const handle: Handle = async ({ event, resolve }) => {
 			html.replace('data-theme=""', `data-theme="${theme ?? 'light'}"`)
 	});
 };
+
+connectDatabase();
