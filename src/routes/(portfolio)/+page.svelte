@@ -87,7 +87,7 @@
 				</div>
 			{/each}
 		</div>
-		<div class="skills__container__textur" />
+		<div class="skills__container__texture" />
 		<div class="skills__container__texture" />
 	</div>
 </section>
