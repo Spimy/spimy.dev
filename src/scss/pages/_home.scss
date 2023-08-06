@@ -7,6 +7,10 @@ h1 {
 }
 
 .hero {
+	@include mq(small) {
+		padding-top: 3rem;
+	}
+
 	@include cmq(50em) {
 		display: flex;
 		flex-direction: row-reverse;

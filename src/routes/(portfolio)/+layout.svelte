@@ -28,7 +28,6 @@
 		gap: 6rem;
 
 		@include mq(small) {
-			padding-top: 12rem;
 			gap: 12rem;
 		}
 	}
