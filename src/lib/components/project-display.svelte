@@ -23,7 +23,9 @@
 			{project.description}
 		</p>
 		<footer>
-			<a href={project.link} class="project__info__cta btn btn--invert">View Project</a>
+			<a href={project.link} target="_blank" class="project__info__cta btn btn--invert"
+				>View Project</a
+			>
 		</footer>
 	</div>
 </div>
