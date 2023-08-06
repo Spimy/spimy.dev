@@ -5,14 +5,31 @@ interface Page {
 	navbar: boolean;
 }
 
+interface Technology {
+	icon: string;
+	name: string;
+}
+
 interface Project {
 	title: string;
 	link: string;
 	description: string;
 	previewImageUrl: string;
-	technologies: string[]; // Will update the type later
+	technologies: Technology[];
 	createdAt: string;
 	updatedAt: string;
+}
+
+interface Paginator {
+	pageCount: number;
+	currentPage: number;
+	pageRange: number;
+	pageMin: number;
+}
+
+interface ProjectResponse {
+	projects: Project[];
+	paginator: Paginator;
 }
 
 type Theme = 'light' | 'dark';
