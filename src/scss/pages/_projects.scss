@@ -1,0 +1,48 @@
+.projects {
+	h1 {
+		font-size: var(--fs-700);
+		color: var(--theme-primary);
+		line-height: 100%;
+	}
+
+	&__info {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+
+		&__grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+			gap: 2rem;
+			margin-block: 3rem;
+			width: 100%;
+		}
+
+		&__paginator {
+			display: flex;
+			gap: 1rem;
+
+			&__item {
+				cursor: pointer;
+				color: var(--theme-text);
+				background-color: var(--clr-background-300);
+				padding: 1rem;
+				border: none;
+				border-radius: 0.2rem;
+				transition: color 250ms ease-in-out, background-color 250ms ease-in-out;
+
+				&[aria-disabled='true'] {
+					color: grey;
+				}
+
+				&[aria-current='page'],
+				&[aria-disabled='false']:hover,
+				&[aria-disabled='false']:focus {
+					text-decoration: none;
+					color: var(--clr-text-100);
+					background-color: var(--theme-primary);
+				}
+			}
+		}
+	}
+}
