@@ -1,9 +1,6 @@
 import { Document, Schema, model } from 'mongoose';
 
-export interface ITechnology extends Document {
-	icon: string;
-	name: string;
-}
+export interface ITechnology extends Document, Technology {}
 
 const technologiesSchema = new Schema<ITechnology>({
 	icon: { type: String, required: true },
