@@ -1,8 +1,12 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import ProjectDisplay from '$lib/components/project-display.svelte';
 	import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 	import Fa from 'svelte-fa';
 	import type { PageServerData } from './$types';
+
+	const technologies = $page.url.searchParams.get('technologies');
+	const technologiesParam = technologies ? `&technologies=${technologies}` : '';
 
 	export let data: PageServerData;
 	$: ({ projects, paginator } = data);
@@ -24,7 +28,9 @@
 					</button>
 				{:else}
 					<a
-						href="?page={paginator.currentPage === 1 ? 1 : paginator.currentPage - 1}"
+						href="?page={paginator.currentPage === 1
+							? 1
+							: paginator.currentPage - 1}{technologiesParam}"
 						aria-disabled="false"
 						class="projects__info__paginator__item"
 					>
@@ -34,7 +40,7 @@
 
 				{#each { length: paginator.pageRange } as _, index (index)}
 					<a
-						href="?page={index + paginator.pageMin}"
+						href="?page={index + paginator.pageMin}{technologiesParam}"
 						aria-current={index + paginator.pageMin === paginator.currentPage ? 'page' : undefined}
 						aria-disabled="false"
 						class="projects__info__paginator__item"
@@ -51,7 +57,7 @@
 					<a
 						href="?page={paginator.currentPage === paginator.pageCount
 							? paginator.pageCount
-							: paginator.currentPage + 1}"
+							: paginator.currentPage + 1}{technologiesParam}"
 						aria-disabled="false"
 						class="projects__info__paginator__item"
 					>

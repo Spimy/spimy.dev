@@ -4,7 +4,7 @@ import { json, type RequestHandler } from '@sveltejs/kit';
 import type { Types } from 'mongoose';
 
 // TODO: Set this to 9 for production
-const PER_PAGE_SIZE = 4;
+const PER_PAGE_SIZE = 2;
 
 export const GET: RequestHandler = async ({ url }) => {
 	const number = url.searchParams.get('number');
@@ -49,14 +49,16 @@ export const GET: RequestHandler = async ({ url }) => {
 	const numProjects = await Projects.count();
 	const currentPage = Math.max(1, page);
 
-	const response = await projects
+	const totalFilteredProjects = (await projects.exec()).length;
+	const results = await projects
+		.clone()
 		.limit(PER_PAGE_SIZE)
 		.skip(PER_PAGE_SIZE * (currentPage - 1))
 		.exec();
 
 	const pageCount =
 		technologies.length > 0
-			? Math.ceil(response.length / PER_PAGE_SIZE)
+			? Math.ceil(totalFilteredProjects / PER_PAGE_SIZE)
 			: Math.ceil(numProjects / PER_PAGE_SIZE);
 	const pageRange = pageCount >= 5 ? 5 : pageCount;
 
@@ -72,7 +74,7 @@ export const GET: RequestHandler = async ({ url }) => {
 	}
 
 	return json({
-		projects: response,
+		projects: results,
 		paginator: { pageCount, currentPage, pageRange, pageMin }
 	});
 };
