@@ -1,4 +1,5 @@
 import { Document, Schema, model } from 'mongoose';
+import { Technology } from './technologies.model';
 
 export interface IProject extends Document, Omit<Project, 'technologies'> {
 	technologies: Schema.Types.ObjectId[];
@@ -10,7 +11,7 @@ const projectsSchema = new Schema<IProject>(
 		link: { type: String, required: true },
 		description: { type: String, required: true },
 		previewImageUrl: { type: String, required: true },
-		technologies: { type: [Schema.Types.ObjectId], ref: 'technologies', required: true }
+		technologies: { type: [Schema.Types.ObjectId], ref: Technology, required: true }
 	},
 	{ timestamps: { createdAt: true, updatedAt: true } }
 );
