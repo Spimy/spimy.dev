@@ -32,5 +32,5 @@
 </div>
 
 <style lang="scss">
-	@use '../../scss/components/project_display';
+	@use '../../scss/components/project-display';
 </style>
