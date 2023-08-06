@@ -2,10 +2,9 @@
 	import Avatar from '$lib/components/avatar.svelte';
 	import ProjectDisplay from '$lib/components/project-display.svelte';
 	import { pages } from '$lib/global';
-	import type { PageData } from './$types';
+	import type { PageServerData } from './$types';
 
-	export let data: PageData;
-	console.log(data);
+	export let data: PageServerData;
 
 	// Temporarily loaded on client side. Will be loaded on server side later from database.
 	interface SkillsList {
