@@ -32,4 +32,8 @@ interface ProjectResponse {
 	paginator: Paginator;
 }
 
+interface TechnologyResponse {
+	technologies: Technology[];
+}
+
 type Theme = 'light' | 'dark';
