@@ -33,8 +33,7 @@ main {
 	padding-inline: var(--content-padding);
 	padding-top: 8rem;
 	padding-bottom: 3rem;
-	display: flex;
-	flex-direction: column;
+	display: grid;
 	gap: 6rem;
 
 	@include mq(small) {

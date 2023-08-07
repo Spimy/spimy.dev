@@ -1,8 +1,6 @@
 .footer {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
+	display: grid;
+	place-items: center;
 	text-align: center;
 	padding: 3rem var(--content-padding);
 	position: relative;
