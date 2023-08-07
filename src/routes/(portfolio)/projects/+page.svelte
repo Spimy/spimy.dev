@@ -24,6 +24,8 @@
 			inX = animationConstant;
 			outX = -animationConstant;
 		}
+
+		checked = false;
 	});
 
 	export let data: PageServerData;
