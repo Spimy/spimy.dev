@@ -11,7 +11,7 @@
 	const animationConstant = 200;
 	let inX: number;
 	let outX: number;
-	let checked: boolean = false;
+	let checked: boolean = false; // Filter selection box toggle
 
 	beforeNavigate(({ from, to }) => {
 		const initialPage = Number(from?.url.searchParams.get('page') ?? 1);
