@@ -44,6 +44,7 @@ $menu-item-gap: 2rem;
 
 		input[type='checkbox'][name='burger'] {
 			opacity: 0;
+			z-index: -1;
 		}
 
 		input[type='checkbox'][name='burger']:checked ~ &__menu {
