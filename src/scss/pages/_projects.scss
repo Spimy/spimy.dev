@@ -5,6 +5,88 @@
 		line-height: 100%;
 	}
 
+	form {
+		display: flex;
+		gap: 1rem;
+		margin-top: 1em;
+		position: relative;
+
+		input[type='checkbox'][name='technologies-toggle'] {
+			position: absolute;
+			opacity: 0;
+			z-index: -1;
+
+			&:focus + label[for='technologies-toggle'] {
+				outline: auto;
+			}
+
+			&:checked ~ select[name='technologies'] {
+				transform: scaleY(100%);
+				visibility: visible;
+			}
+		}
+
+		label[for='technologies-toggle'] {
+			cursor: pointer;
+			color: var(--clr-text-100);
+			background-color: var(--theme-primary);
+			padding: 0.5rem;
+			border-radius: 0.5rem;
+			-webkit-touch-callout: none; /* iOS Safari */
+			-webkit-user-select: none; /* Safari */
+			-khtml-user-select: none; /* Konqueror HTML */
+			-moz-user-select: none; /* Old versions of Firefox */
+			-ms-user-select: none; /* Internet Explorer/Edge */
+			user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+
+			// Add a triangle facing down
+			&::after {
+				content: '';
+				display: inline-block;
+				margin-inline-start: 0.5rem;
+				border-left: 0.5rem solid transparent;
+				border-right: 0.5rem solid transparent;
+				border-top: 0.5rem solid currentColor;
+			}
+		}
+
+		// TODO: Make the select box look pretty
+		select[name='technologies'] {
+			cursor: pointer;
+			position: absolute;
+			left: 0;
+			top: 2.53em;
+			width: fit-content;
+			padding: 0.5rem;
+			border-radius: 0.5rem;
+
+			transform: scaleY(0);
+			transform-origin: top;
+			visibility: hidden;
+			transition: transform 250ms ease-in-out, visibility 300ms ease-in-out;
+
+			overflow: hidden;
+			z-index: 9998; // Just 1 below the navbar which has a z-index of 9999
+
+			option {
+				display: flex;
+				gap: 0.5rem;
+				padding: 0.5rem;
+
+				img {
+					aspect-ratio: 1;
+					width: 1.2rem;
+				}
+			}
+		}
+
+		button {
+			cursor: pointer;
+			padding: 0.2rem 0.5rem;
+		}
+	}
+
 	&__info {
 		display: grid;
 		place-items: center;
