@@ -42,7 +42,7 @@
 		method="POST"
 		action="?/filterProjects"
 		use:enhance={() => {
-			checked = false;
+			checked = false; // Close the selection box on form submission
 		}}
 	>
 		<input type="checkbox" name="technologies-toggle" id="technologies-toggle" bind:checked />
