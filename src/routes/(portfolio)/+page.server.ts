@@ -8,14 +8,18 @@ function calculateAge(date: string) {
 }
 
 export const load: PageServerLoad = async ({ fetch }) => {
-	const response: ProjectResponse = await fetch('/api/projects?number=3').then((response) =>
+	const projectResponse: ProjectResponse = await fetch('/api/projects?number=3').then((response) =>
+		response.json()
+	);
+	const technologyResponse: TechnologyResponse = await fetch('/api/technologies').then((response) =>
 		response.json()
 	);
 
 	return {
 		age: calculateAge('2003/01/30'),
 		experienceYears: calculateAge('2016'),
-		projects: response.projects
+		...projectResponse,
+		...technologyResponse
 	};
 };
 
