@@ -14,7 +14,7 @@ export const load: PageServerLoad = async ({ fetch, url }) => {
 	const technologyResponse: TechnologyResponse = await fetch('/api/technologies').then((response) =>
 		response.json()
 	);
-	return { ...projectResponse, ...technologyResponse };
+	return { ...projectResponse, ...technologyResponse, searchParams: url.searchParams.toString() };
 };
 
 export const actions: Actions = {

@@ -9,6 +9,7 @@
 	import type { PageServerData } from './$types';
 
 	const animationConstant = 200;
+	const animationDuration = 300;
 	let inX: number;
 	let outX: number;
 	let checked: boolean = false; // Filter selection box toggle
@@ -29,7 +30,7 @@
 	});
 
 	export let data: PageServerData;
-	$: ({ projects, paginator, technologies } = data);
+	$: ({ projects, paginator, technologies, searchParams } = data);
 	$: technologiesQuery = $page.url.searchParams.get('technologies');
 	$: technologiesParam = technologiesQuery ? `&technologies=${technologiesQuery}` : '';
 </script>
@@ -72,14 +73,14 @@
 	{#if projects.length === 0}
 		<h2>No projects found with the filters provided.</h2>
 	{:else}
-		{#key $page.url}
+		{#key searchParams}
 			<div class="projects__info">
 				<div
 					class="projects__info__grid"
-					in:fly={{ x: inX, duration: 300, delay: 300 }}
-					out:fly={{ x: outX, duration: 300 }}
+					in:fly={{ x: inX, duration: animationDuration, delay: animationDuration }}
+					out:fly={{ x: outX, duration: animationDuration }}
 				>
-					{#each projects as project}
+					{#each projects as project, index (index)}
 						<ProjectDisplay {project} />
 					{/each}
 				</div>
