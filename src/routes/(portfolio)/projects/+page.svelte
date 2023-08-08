@@ -99,9 +99,12 @@
 			{#if technologiesQuery && technologiesQuery.split(',').length > 0}
 				<h2>No projects found with the filters provided.</h2>
 				<p>
-					This could be because I decided not to put the project I created using this technology.
-					<br />
-					There are many reasons why but the following reasons are the most common:
+					This could be because I decided not to put the project I created using this technology or
+					technology overlaps one another such as TypeScript and JavaScript or SCSS and CSS.
+				</p>
+				<p>
+					There are various reasons why I decide not to put up a project on display on my portfolio
+					but the following reasons are the most common:
 				</p>
 				<ol>
 					<li>
