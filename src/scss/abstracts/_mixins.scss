@@ -16,3 +16,11 @@
 		@content;
 	}
 }
+
+@mixin south-facing-triangle($clr) {
+	content: '';
+	display: inline-block;
+	border-left: 0.5rem solid transparent;
+	border-right: 0.5rem solid transparent;
+	border-top: 0.5rem solid $clr;
+}

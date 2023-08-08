@@ -1,3 +1,5 @@
+@use '../abstracts/mixins' as *;
+
 .project {
 	border-radius: 1rem;
 	background-color: var(--clr-background-400);
@@ -48,13 +50,8 @@
 					display: none;
 					z-index: 9999;
 
-					// Add a triangle facing down
 					&::after {
-						content: '';
-						display: inline-block;
-						border-left: 0.5rem solid transparent;
-						border-right: 0.5rem solid transparent;
-						border-top: 0.5rem solid black;
+						@include south-facing-triangle(black);
 						position: absolute;
 						bottom: 0;
 						left: 50%;

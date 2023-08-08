@@ -1,3 +1,5 @@
+@use '../abstracts/mixins' as *;
+
 .projects {
 	h1 {
 		font-size: var(--fs-700);
@@ -47,11 +49,7 @@
 
 			// Add a triangle facing down
 			&::after {
-				content: '';
-				display: inline-block;
-				border-left: 0.5rem solid transparent;
-				border-right: 0.5rem solid transparent;
-				border-top: 0.5rem solid currentColor;
+				@include south-facing-triangle(currentColor);
 			}
 		}
 
