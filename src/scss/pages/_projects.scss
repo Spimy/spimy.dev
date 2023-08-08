@@ -93,6 +93,19 @@
 		}
 	}
 
+	&__no-projects {
+		margin-block: 3em;
+		color: var(--clr-text-100);
+		background-color: var(--clr-background-400);
+		text-align: start;
+		border-radius: 0.5rem;
+		padding: 2em;
+
+		> * {
+			margin-block: 1em;
+		}
+	}
+
 	&__info {
 		display: grid;
 		place-items: center;

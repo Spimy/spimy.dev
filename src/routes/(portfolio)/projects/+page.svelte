@@ -3,6 +3,7 @@
 	import { beforeNavigate } from '$app/navigation';
 	import { page } from '$app/stores';
 	import ProjectDisplay from '$lib/components/project-display.svelte';
+	import { pages } from '$lib/global';
 	import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 	import { onMount } from 'svelte';
 	import Fa from 'svelte-fa';
@@ -49,6 +50,8 @@
 		});
 	});
 
+	const contactPath = pages.find((page) => page.id == 'contact')?.path;
+
 	export let data: PageServerData;
 	$: ({ projects, paginator, technologies, searchParams } = data);
 	$: technologiesQuery = $page.url.searchParams.get('technologies');
@@ -92,7 +95,24 @@
 	</form>
 
 	{#if projects.length === 0}
-		<h2>No projects found with the filters provided.</h2>
+		<div class="projects__no-projects">
+			<h2>No projects found with the filters provided.</h2>
+			<p>
+				This could be because I decided not to put the project I created using this technology.
+				<br />
+				There are many reasons why but the following reasons are the most common:
+			</p>
+			<ol>
+				<li>
+					The project is not a web application and/or cannot be showcased through a link to it;
+				</li>
+				<li>
+					The project is too old and has dependency issues and/or cannot run on newer versions of
+					Ubuntu.
+				</li>
+			</ol>
+			<p>If you wish to see it, <a href={contactPath}>please contact me.</a></p>
+		</div>
 	{:else}
 		{#key searchParams}
 			<div class="projects__info">
