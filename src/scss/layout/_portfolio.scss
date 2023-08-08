@@ -35,6 +35,7 @@ main {
 	padding-bottom: 3rem;
 	display: grid;
 	gap: 6rem;
+	overflow: hidden;
 
 	@include mq(small) {
 		gap: 12rem;
