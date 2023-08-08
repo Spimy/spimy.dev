@@ -54,11 +54,11 @@
 							: 'skills__container__hex-grid--b'}
 					>
 						{#each skillsList as skill, j (j)}
-							<div class="skills__container__hex-grid__hex">
-								<a href="{projectsPath}?pages=1&technologies={skill.name}">
+							<a href="{projectsPath}?pages=1&technologies={skill.name}">
+								<div class="skills__container__hex-grid__hex">
 									<img src={skill.icon} alt="{skill.name} logo" />
-								</a>
-							</div>
+								</div>
+							</a>
 						{/each}
 					</div>
 				{/each}
