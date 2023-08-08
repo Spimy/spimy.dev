@@ -115,7 +115,7 @@
 						Ubuntu.
 					</li>
 				</ol>
-				<p>If you wish to see it, <a href={contactPath}>please contact me.</a></p>
+				<p>If you wish to see them, <a href={contactPath}>please contact me.</a></p>
 			{:else}
 				<h2>No projects have been uploaded yet.</h2>
 			{/if}
