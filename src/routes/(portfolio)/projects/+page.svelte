@@ -59,8 +59,8 @@
 			{#each technologies as technology}
 				<option value={technology.name}>
 					<img src={technology.icon} alt="{technology.name}'s logo" />
-					{technology.name}</option
-				>
+					{technology.name}
+				</option>
 			{/each}
 		</select>
 		<button type="submit" class="btn btn--invert">Filter</button>
