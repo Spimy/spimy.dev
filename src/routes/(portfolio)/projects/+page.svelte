@@ -96,22 +96,26 @@
 
 	{#if projects.length === 0}
 		<div class="projects__no-projects">
-			<h2>No projects found with the filters provided.</h2>
-			<p>
-				This could be because I decided not to put the project I created using this technology.
-				<br />
-				There are many reasons why but the following reasons are the most common:
-			</p>
-			<ol>
-				<li>
-					The project is not a web application and/or cannot be showcased through a link to it;
-				</li>
-				<li>
-					The project is too old and has dependency issues and/or cannot run on newer versions of
-					Ubuntu.
-				</li>
-			</ol>
-			<p>If you wish to see it, <a href={contactPath}>please contact me.</a></p>
+			{#if technologiesQuery && technologiesQuery.split(',').length > 0}
+				<h2>No projects found with the filters provided.</h2>
+				<p>
+					This could be because I decided not to put the project I created using this technology.
+					<br />
+					There are many reasons why but the following reasons are the most common:
+				</p>
+				<ol>
+					<li>
+						The project is not a web application and/or cannot be showcased through a link to it;
+					</li>
+					<li>
+						The project is too old and has dependency issues and/or cannot run on newer versions of
+						Ubuntu.
+					</li>
+				</ol>
+				<p>If you wish to see it, <a href={contactPath}>please contact me.</a></p>
+			{:else}
+				<h2>No projects have been uploaded yet.</h2>
+			{/if}
 		</div>
 	{:else}
 		{#key searchParams}
