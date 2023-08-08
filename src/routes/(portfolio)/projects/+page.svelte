@@ -68,6 +68,7 @@
 			{/each}
 		</select>
 		<button type="submit" class="btn btn--invert">Filter</button>
+		<a href="?page=1" class="btn btn--invert">Clear Filter</a>
 	</form>
 
 	{#if projects.length === 0}
