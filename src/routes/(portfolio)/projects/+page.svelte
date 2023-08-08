@@ -57,7 +57,10 @@
 		</label>
 		<select name="technologies" id="technologies" size={technologies.length} multiple>
 			{#each technologies as technology}
-				<option value={technology.name}>
+				<option
+					value={technology.name}
+					selected={technologiesQuery?.split(',').includes(technology.name) ?? false}
+				>
 					<img src={technology.icon} alt="{technology.name}'s logo" />
 					{technology.name}
 				</option>
