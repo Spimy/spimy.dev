@@ -22,14 +22,15 @@
 
 		&__techs {
 			display: flex;
+			align-items: center;
 			gap: 0.5rem;
 			background-color: var(--clr-background-300);
 			padding: 0.5rem;
 			border-radius: 0.2rem;
 
 			img {
-				aspect-ratio: 1;
 				width: 1.2rem;
+				height: 100%;
 			}
 		}
 
