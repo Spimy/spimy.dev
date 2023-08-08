@@ -4,6 +4,7 @@
 	import { page } from '$app/stores';
 	import ProjectDisplay from '$lib/components/project-display.svelte';
 	import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
+	import { onMount } from 'svelte';
 	import Fa from 'svelte-fa';
 	import { fly } from 'svelte/transition';
 	import type { PageServerData } from './$types';
@@ -27,6 +28,25 @@
 		}
 
 		checked = false;
+	});
+
+	onMount(() => {
+		// Close the select box if it is opened and somewhere else was clicked
+		document.addEventListener('click', (event) => {
+			if (checked) {
+				const clickedElement = event.target as HTMLElement;
+
+				const isLabel = clickedElement.tagName.toLowerCase() === 'label';
+				const isTechToggle = clickedElement.getAttribute('for') === 'technologies-toggle';
+
+				const isSelect = clickedElement.tagName.toLowerCase() === 'select';
+				const isOption = clickedElement.tagName.toLowerCase() === 'option';
+
+				if ((isLabel && isTechToggle) || isSelect || isOption) return;
+
+				checked = false;
+			}
+		});
 	});
 
 	export let data: PageServerData;
