@@ -32,6 +32,41 @@
 				width: 1.2rem;
 				height: 100%;
 			}
+
+			&__item {
+				position: relative;
+
+				&__tooltip {
+					color: var(--theme-text);
+					position: absolute;
+					bottom: 150%;
+					left: 50%;
+					transform: translateX(-50%);
+					background-color: black;
+					padding: 0.5rem;
+					border-radius: 0.5rem;
+					display: none;
+					z-index: 9999;
+
+					// Add a triangle facing down
+					&::after {
+						content: '';
+						display: inline-block;
+						border-left: 0.5rem solid transparent;
+						border-right: 0.5rem solid transparent;
+						border-top: 0.5rem solid black;
+						position: absolute;
+						bottom: 0;
+						left: 50%;
+						transform: translate(-50%, 100%);
+					}
+				}
+
+				&:hover > &__tooltip,
+				&:focus > &__tooltip {
+					display: block;
+				}
+			}
 		}
 
 		&__cta {

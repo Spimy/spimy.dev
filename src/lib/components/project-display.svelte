@@ -14,9 +14,14 @@
 			{#if project.technologies}
 				<div class="project__info__techs">
 					{#each project.technologies as technology}
-						<a href="?page=1&technologies={technology.name}">
-							<img src={technology.icon} alt="{technology.name} logo" />
-						</a>
+						<div class="project__info__techs__item">
+							<div class="project__info__techs__item__tooltip">
+								<p>{technology.name}</p>
+							</div>
+							<a href="?page=1&technologies={technology.name}">
+								<img src={technology.icon} alt="{technology.name} logo" />
+							</a>
+						</div>
 					{/each}
 				</div>
 			{/if}
