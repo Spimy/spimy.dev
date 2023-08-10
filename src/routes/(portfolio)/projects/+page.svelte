@@ -112,7 +112,7 @@
 					</li>
 					<li>
 						The project is too old and has dependency issues and/or cannot run on newer versions of
-						Ubuntu.
+						Ubuntu (the Linux distro hosting most of my projects).
 					</li>
 				</ol>
 				<p>If you wish to see them, <a href={contactPath}>please contact me.</a></p>
