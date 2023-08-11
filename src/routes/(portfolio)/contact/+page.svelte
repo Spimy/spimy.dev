@@ -1,4 +1,7 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
+	import { PUBLIC_HCAPTCHA_SITEKEY_CONTACT } from '$env/static/public';
+	import Hcaptcha from '$lib/components/hcaptcha.svelte';
 	import { contactFormSchema, socialLinks } from '$lib/global';
 	import { faEnvelope, faMessage, faUser } from '@fortawesome/free-solid-svg-icons';
 	import Fa from 'svelte-fa';
@@ -9,18 +12,25 @@
 	const { form, errors, constraints, enhance } = superForm(data.form, {
 		taintedMessage: 'Are you sure you want to leave?',
 		autoFocusOnError: true,
-		validators: contactFormSchema
+		validators: contactFormSchema,
+		clearOnSubmit: 'errors-and-message',
+		resetForm: true
 	});
+
+	let submitButton: HTMLButtonElement;
 </script>
 
 <svelte:head>
 	<title>Spimy's Portfolio - Contact</title>
+
+	{#if browser}
+		<script src="https://js.hcaptcha.com/1/api.js?onload=onLoad" async defer></script>
+	{/if}
 </svelte:head>
 
 <section class="contact">
 	<h1>Contact</h1>
 
-	<!-- <SuperDebug data={$form} /> -->
 	<div class="contact__content">
 		<article class="contact__content__info">
 			<h2>Get in Touch!</h2>
@@ -44,6 +54,13 @@
 				instead of waiting for my reply so that we may further along the discussion at a faster
 				rate.
 			</p>
+			<p>
+				<em>
+					This site is protected by hCaptcha and its
+					<a href="https://www.hcaptcha.com/privacy">Privacy Policy</a> and
+					<a href="https://www.hcaptcha.com/terms">Terms of Service</a> apply.
+				</em>
+			</p>
 			<noscript>
 				<h3>
 					<span aria-label="Noscript warning"> ⚠️ Noscript:</span>
@@ -53,6 +70,7 @@
 		</article>
 		<form class="contact__content__form" method="POST" action="?/submitContactForm" use:enhance>
 			<h2>Contact Form</h2>
+			<Hcaptcha siteKey={PUBLIC_HCAPTCHA_SITEKEY_CONTACT} {submitButton} />
 			<div class="contact__content__form__group">
 				<label for="name"><i><Fa icon={faUser} /></i></label>
 				<input
@@ -90,7 +108,7 @@
 			{#if $errors.message}
 				<small class="contact__content__form__error">{$errors.message}</small>
 			{/if}
-			<button type="submit" class="btn">Send</button>
+			<button type="submit" bind:this={submitButton} class="btn">Send</button>
 		</form>
 	</div>
 </section>
