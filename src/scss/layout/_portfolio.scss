@@ -47,3 +47,7 @@ main {
 	color: var(--theme-primary);
 	line-height: 100%;
 }
+
+:global(h2) {
+	font-size: var(--fs-500);
+}
