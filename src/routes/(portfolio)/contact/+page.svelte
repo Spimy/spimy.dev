@@ -12,6 +12,10 @@
 	});
 </script>
 
+<svelte:head>
+	<title>Spimy's Portfolio - Contact</title>
+</svelte:head>
+
 <section class="contact">
 	<div class="contact__intro">
 		<h1>Get in Touch!</h1>
