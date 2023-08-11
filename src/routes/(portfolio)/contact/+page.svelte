@@ -59,8 +59,9 @@
 					{...$constraints.message}
 				/>
 			</div>
-			{#if $errors.message}<small class="contact__content__form__error">{$errors.message}</small
-				>{/if}
+			{#if $errors.message}
+				<small class="contact__content__form__error">{$errors.message}</small>
+			{/if}
 			<button type="submit" class="btn">Send</button>
 		</form>
 	</div>
