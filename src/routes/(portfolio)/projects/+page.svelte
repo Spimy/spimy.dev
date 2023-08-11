@@ -134,6 +134,7 @@
 				</div>
 				{#if paginator.pageCount > 1}
 					<div class="projects__info__paginator">
+						<div class="sr-only">Paginator</div>
 						{#if paginator.currentPage === 1}
 							<button aria-disabled="true" class="projects__info__paginator__item" disabled>
 								<i><Fa icon={faAngleLeft} /></i>
@@ -159,6 +160,7 @@
 								aria-disabled="false"
 								class="projects__info__paginator__item"
 							>
+								<div class="sr-only">Page</div>
 								{index + paginator.pageMin}
 							</a>
 						{/each}

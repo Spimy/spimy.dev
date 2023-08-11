@@ -13,6 +13,7 @@
 			<h2 class="project__info__title">{project.title}</h2>
 			{#if project.technologies}
 				<div class="project__info__techs">
+					<div class="sr-only">List of technologies used:</div>
 					{#each project.technologies as technology}
 						<div class="project__info__techs__item">
 							<div class="project__info__techs__item__tooltip">
@@ -26,6 +27,7 @@
 				</div>
 			{/if}
 		</header>
+		<div class="sr-only">Project description:</div>
 		<p class="project__info__description">
 			{project.description}
 		</p>
