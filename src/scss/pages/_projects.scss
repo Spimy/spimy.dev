@@ -1,12 +1,6 @@
 @use '../abstracts/mixins' as *;
 
 .projects {
-	h1 {
-		font-size: var(--fs-700);
-		color: var(--theme-primary);
-		line-height: 100%;
-	}
-
 	form {
 		display: flex;
 		align-items: center;

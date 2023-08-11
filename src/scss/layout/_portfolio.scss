@@ -41,3 +41,9 @@ main {
 		gap: 12rem;
 	}
 }
+
+:global(h1) {
+	font-size: var(--fs-700);
+	color: var(--theme-primary);
+	line-height: 100%;
+}
