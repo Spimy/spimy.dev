@@ -10,7 +10,7 @@
 	<p class="footer__issue">
 		Find an issue with this page? <a
 			href="https://github.com/spimy/spimy.dev/issues"
-			target="_blank">Fix it on GitHub</a
+			target="_blank">Report it</a
 		>.
 	</p>
 	<ul role="list" class="footer__socials">
