@@ -18,5 +18,6 @@ export const socialLinks: SocialLink[] = [
 export const contactFormSchema = zod.object({
 	name: zod.string().min(2),
 	email: zod.string().email(),
-	message: zod.string().min(2)
+	message: zod.string().min(2),
+	token: zod.string()
 });
