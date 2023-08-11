@@ -11,7 +11,12 @@
 <noscript>
 	<input type="checkbox" id="close-noscript" name="close-noscript" class="btn btn--invert" />
 	<label for="close-noscript" class="btn btn--invert">X</label>
-	<div>Enable JavaScript for the best experience while using this portfolio.</div>
+	<div>
+		<p>Enable JavaScript for the best experience while using this portfolio.</p>
+		<p>
+			JavaScript <b><u><em>must</em></u></b> be enabled to use the contact form on the contact page.
+		</p>
+	</div>
 </noscript>
 
 <Navbar {theme} />
