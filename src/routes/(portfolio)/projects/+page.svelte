@@ -160,7 +160,7 @@
 								aria-disabled="false"
 								class="projects__info__paginator__item"
 							>
-								<div class="sr-only">Page</div>
+								<span class="sr-only">Page</span>
 								{index + paginator.pageMin}
 							</a>
 						{/each}
