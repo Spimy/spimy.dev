@@ -8,7 +8,7 @@
 		src={project.previewImageUrl}
 		alt="{project.title} project preview"
 	/>
-	<div class="project__info">
+	<article class="project__info">
 		<header>
 			<h2 class="project__info__title">{project.title}</h2>
 			{#if project.technologies}
@@ -34,7 +34,7 @@
 				>View Project</a
 			>
 		</footer>
-	</div>
+	</article>
 </div>
 
 <style lang="scss">
