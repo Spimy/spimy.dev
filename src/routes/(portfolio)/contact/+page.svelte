@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { contactFormSchema } from '$lib/global';
+	import { contactFormSchema, socialLinks } from '$lib/global';
 	import { faEnvelope, faMessage, faUser } from '@fortawesome/free-solid-svg-icons';
 	import Fa from 'svelte-fa';
 	import { superForm } from 'sveltekit-superforms/client';
@@ -18,13 +18,41 @@
 </svelte:head>
 
 <section class="contact">
-	<div class="contact__intro">
-		<h1>Get in Touch!</h1>
-		<p>I'll get back to you as soon as possible.</p>
-	</div>
+	<h1>Contact</h1>
+
 	<!-- <SuperDebug data={$form} /> -->
 	<div class="contact__content">
+		<article class="contact__content__info">
+			<h2>Get in Touch!</h2>
+			<p>
+				I will get back to you as soon as possible. It may take anywhere between 2-3 working days
+				before I see your message.
+			</p>
+			<p>Only if it is urgent, you may also reach me through the following social links:</p>
+			<ol class="contact__content__info__social-links">
+				{#each socialLinks as social}
+					<li>
+						<a href={social.url} target="_blank">
+							<i><Fa icon={social.icon} /></i>
+							{social.name}
+						</a>
+					</li>
+				{/each}
+			</ol>
+			<p>
+				If you contact me through my social links, please state your name and your requirements
+				instead of waiting for my reply so that we may further along the discussion at a faster
+				rate.
+			</p>
+			<noscript>
+				<h3>
+					<span aria-label="Noscript warning"> ⚠️ Noscript:</span>
+					JavaScript <u><em>must</em></u> be enabled to use the contact form.
+				</h3>
+			</noscript>
+		</article>
 		<form class="contact__content__form" method="POST" action="?/submitContactForm" use:enhance>
+			<h2>Contact Form</h2>
 			<div class="contact__content__form__group">
 				<label for="name"><i><Fa icon={faUser} /></i></label>
 				<input
