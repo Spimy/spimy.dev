@@ -189,8 +189,12 @@
 }
 
 .projects {
-	span {
-		color: var(--theme-text);
+	h1 {
+		margin-top: -1em;
+
+		span {
+			color: var(--theme-text);
+		}
 	}
 
 	&__info {
