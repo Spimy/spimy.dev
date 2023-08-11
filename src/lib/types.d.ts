@@ -5,6 +5,12 @@ interface Page {
 	navbar: boolean;
 }
 
+interface SocialLink {
+	name: string;
+	url: string;
+	icon: IconDefinition;
+}
+
 interface Technology {
 	icon: string;
 	name: string;
