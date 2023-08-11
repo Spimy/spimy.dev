@@ -17,4 +17,16 @@ declare module '@fortawesome/free-solid-svg-icons/index.es' {
 	export * from '@fortawesome/free-solid-svg-icons';
 }
 
+declare global {
+	interface Window {
+		hcaptcha: {
+			execute: () => void;
+		};
+		onSubmit?: (token: string) => void;
+		onError?: (error: Error) => void;
+		onExpire?: () => void;
+		onLoad?: () => void;
+	}
+}
+
 export {};
