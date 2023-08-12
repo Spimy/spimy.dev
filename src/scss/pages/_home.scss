@@ -47,7 +47,7 @@
 		--_min-container-padding: 3rem;
 		display: grid;
 		place-items: center;
-		background-color: var(--clr-primary-500);
+		background-color: var(--theme-skill-bg);
 		margin-inline: calc(var(--content-padding) * -1); // Negative margin to undo main padding
 		padding-top: 2%;
 		padding-bottom: calc(var(--_min-container-padding) + 8%);
@@ -66,7 +66,7 @@
 
 		&__texture {
 			--_radius: calc(var(--fs-300) * 10);
-			background-color: var(--theme-primary);
+			background-color: var(--theme-skill-texture);
 			position: absolute;
 			height: 50%;
 			width: var(--_radius);
@@ -150,7 +150,7 @@
 				display: flex;
 				pointer-events: initial;
 				width: calc(100% * 2 / 3 - 2px);
-				background-color: var(--clr-background-300);
+				background-color: var(--theme-skill-hex);
 				clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
 				position: relative;
 				cursor: pointer;
@@ -174,7 +174,11 @@
 					content: '';
 					position: absolute;
 					inset: 0 0;
-					background: linear-gradient(150deg, #d9d9d9 50%, var(--clr-background-400));
+					background: linear-gradient(
+						150deg,
+						var(--clr-neutral-100) 50%,
+						var(--theme-skill-hex-hover)
+					);
 					opacity: 0;
 					transition: opacity 250ms ease-in-out;
 					z-index: -1;

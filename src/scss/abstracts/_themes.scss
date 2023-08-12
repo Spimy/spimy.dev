@@ -1,12 +1,22 @@
 $themes: (
 	light: (
-		theme-primary: var(--clr-primary-100),
-		theme-background: var(--clr-background-100),
-		theme-text: var(--clr-text-200)
+		theme-primary: var(--clr-persian-blue-100),
+		theme-background: var(--clr-neutral-100),
+		theme-text: var(--clr-neutral-200),
+		// Skill section colours
+		theme-skill-bg: var(--clr-eerie-black-100),
+		theme-skill-texture: var(--clr-gunmetal-100),
+		theme-skill-hex: var(--clr-neutral-100),
+		theme-skill-hex-hover: var(--clr-persian-blue-100)
 	),
 	dark: (
-		theme-primary: var(--clr-primary-200),
-		theme-background: var(--clr-background-500),
-		theme-text: var(--clr-text-100)
+		theme-primary: var(--clr-royal-blue-100),
+		theme-background: var(--clr-neutral-200),
+		theme-text: var(--clr-neutral-100),
+		// Skill section colours
+		theme-skill-bg: var(--clr-gray-300),
+		theme-skill-texture: var(--clr-royal-blue-100),
+		theme-skill-hex: var(--clr-gray-200),
+		theme-skill-hex-hover: var(--clr-gray-200)
 	)
 );
