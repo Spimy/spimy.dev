@@ -40,10 +40,8 @@
 				const isLabel = clickedElement.tagName.toLowerCase() === 'label';
 				const isTechToggle = clickedElement.getAttribute('for') === 'technologies-toggle';
 
-				const isSelect = clickedElement.tagName.toLowerCase() === 'select';
-				const isOption = clickedElement.tagName.toLowerCase() === 'option';
-
-				if ((isLabel && isTechToggle) || isSelect || isOption) return;
+				const isFilter = clickedElement.parentElement?.className.startsWith('projects__filter');
+				if ((isLabel && isTechToggle) || isFilter) return;
 
 				checked = false;
 			}
@@ -64,9 +62,11 @@
 
 <section class="projects">
 	<h1>Projects</h1>
+
 	<form
 		method="POST"
 		action="?/filterProjects"
+		class="projects__filter"
 		use:enhance={() => {
 			checked = false; // Close the selection box on form submission
 		}}
@@ -79,17 +79,23 @@
 				Filter Technologies
 			{/if}
 		</label>
-		<select name="technologies" id="technologies" size={technologies.length} multiple>
+		<div class="projects__filter__items">
 			{#each technologies as technology}
-				<option
-					value={technology.name}
-					selected={technologiesQuery?.split(',').includes(technology.name) ?? false}
-				>
-					<img src={technology.icon} alt="{technology.name}'s logo" />
-					{technology.name}
-				</option>
+				<div class="projects__filter__items__group">
+					<input
+						type="checkbox"
+						name={technology.name}
+						id={technology.name}
+						checked={technologiesQuery?.split(',').includes(technology.name) ?? false}
+					/>
+					<label for={technology.name} class="projects__filter__items__group__label">
+						<img src={technology.icon} alt="{technology.name}'s logo" />
+						{technology.name}
+					</label>
+				</div>
 			{/each}
-		</select>
+		</div>
+
 		<button type="submit" class="btn btn--invert">Filter</button>
 		<a href="?page=1" class="btn btn--invert">Clear Filter</a>
 	</form>

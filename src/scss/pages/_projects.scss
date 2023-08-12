@@ -1,7 +1,7 @@
 @use '../abstracts/mixins' as *;
 
 .projects {
-	form {
+	&__filter {
 		display: flex;
 		align-items: center;
 		flex-wrap: wrap;
@@ -25,13 +25,14 @@
 				border: 0.2rem solid var(--theme-primary);
 			}
 
-			&:checked ~ select[name='technologies'] {
+			&:checked ~ .projects__filter__items {
 				transform: scaleY(100%);
 				visibility: visible;
 			}
 		}
 
 		label[for='technologies-toggle'] {
+			@include no-select();
 			cursor: pointer;
 			display: flex;
 			align-items: center;
@@ -42,13 +43,6 @@
 			font-weight: 600;
 			padding: 0.3rem 1rem;
 			border-radius: 0.5rem;
-			-webkit-touch-callout: none; /* iOS Safari */
-			-webkit-user-select: none; /* Safari */
-			-khtml-user-select: none; /* Konqueror HTML */
-			-moz-user-select: none; /* Old versions of Firefox */
-			-ms-user-select: none; /* Internet Explorer/Edge */
-			user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome, Edge, Opera and Firefox */
 			transition: background-color 250ms ease-in-out, color 250ms ease-in-out;
 			// Add a triangle facing down
 			&::after {
@@ -56,13 +50,16 @@
 			}
 		}
 
-		// TODO: Make the select box look pretty
-		select[name='technologies'] {
-			cursor: pointer;
+		&__items {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+			gap: 0.5rem;
+			background-color: var(--theme-project-bg);
+			border: 0.2rem solid var(--theme-primary);
 			position: absolute;
 			left: 0;
 			top: 2.53em;
-			width: fit-content;
+			width: 100%;
 			padding: 0.5rem;
 			border-radius: 0.5rem;
 
@@ -74,15 +71,40 @@
 			overflow: hidden;
 			z-index: 9998; // Just 1 below the navbar which has a z-index of 9999
 
-			option {
+			&__group {
 				display: flex;
-				align-items: center;
-				gap: 0.5rem;
-				padding: 0.5rem;
+				position: relative;
+				padding: 0 0.5rem;
 
-				img {
-					width: 1.2rem;
-					height: 100%;
+				input[type='checkbox'] {
+					&:checked + label {
+						color: var(--clr-neutral-100);
+
+						&::after {
+							background-color: var(--theme-primary);
+						}
+					}
+				}
+
+				label {
+					@include no-select();
+					display: flex;
+					align-items: center;
+					gap: 0.5rem;
+					padding: 0.5rem;
+					width: 100%;
+
+					&::after {
+						content: '';
+						position: absolute;
+						inset: 0;
+						border-radius: 0.5rem;
+						z-index: -1;
+					}
+
+					img {
+						width: 1.2rem;
+					}
 				}
 			}
 		}
