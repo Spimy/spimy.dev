@@ -1,4 +1,4 @@
-import { Document, Schema, model, models } from 'mongoose';
+import { Document, Model, Schema, model, models } from 'mongoose';
 
 export interface IProject extends Document, Omit<Project, 'technologies'> {
 	technologies: Schema.Types.ObjectId[];
@@ -16,4 +16,4 @@ const projectsSchema = new Schema<IProject>(
 );
 
 export const Projects =
-	(models['projects'] as unknown as IProject) || model<IProject>('projects', projectsSchema);
+	(models['projects'] as unknown as Model<IProject>) || model<IProject>('projects', projectsSchema);
