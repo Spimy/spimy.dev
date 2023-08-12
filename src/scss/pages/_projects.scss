@@ -14,8 +14,11 @@
 			opacity: 0;
 			z-index: -1;
 
-			&:focus + label[for='technologies-toggle'] {
+			&:focus + label[for='technologies-toggle'],
+			&:hover + label[for='technologies-toggle'] {
 				outline: auto;
+				background-color: var(--clr-neutral-100);
+				color: var(--theme-primary);
 			}
 
 			&:checked ~ select[name='technologies'] {
@@ -29,8 +32,9 @@
 			display: flex;
 			align-items: center;
 			gap: 0.5rem;
-			color: var(--clr-text-100);
+			color: var(--clr-neutral-100);
 			background-color: var(--theme-primary);
+			font-weight: 600;
 			padding: 0.5rem 1rem;
 			border-radius: 0.5rem;
 			-webkit-touch-callout: none; /* iOS Safari */
