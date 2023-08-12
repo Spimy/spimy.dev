@@ -47,6 +47,7 @@
 	a {
 		color: var(--theme-primary);
 		text-decoration: none;
+		transition: color 250ms ease-in-out;
 
 		&:not(.btn):hover,
 		&:not(.btn):focus {
@@ -60,6 +61,7 @@
 		border-radius: 0.5rem;
 		padding: 1rem 2rem;
 		font-weight: 600;
+		transition: background-color 250ms ease-in-out, color 250ms ease-in-out;
 
 		&:hover,
 		&:focus {
