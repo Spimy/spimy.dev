@@ -18,7 +18,7 @@ export const GET: RequestHandler = async ({ url }) => {
 		const filterTechs = (
 			await Technology.find({
 				name: {
-					$in: technologies.map((tech) => new RegExp(tech, 'i'))
+					$in: technologies.map((tech) => new RegExp(`^${tech}$`, 'ig'))
 				}
 			}).exec()
 		).reduce((acc, cur) => [...acc, cur._id], [] as Types.ObjectId[]);
