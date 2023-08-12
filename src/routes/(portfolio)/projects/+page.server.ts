@@ -24,7 +24,9 @@ export const load: PageServerLoad = async ({ fetch, url }) => {
 export const actions: Actions = {
 	filterProjects: async ({ request }) => {
 		const form = await request.formData();
-		const technologies = form.getAll('technologies');
+		const technologies = Object.keys(Object.fromEntries(form)).filter(
+			(x) => x !== 'technologies-toggle'
+		);
 		if (technologies.length === 0) throw redirect(302, `?page=1`);
 		throw redirect(302, `?page=1&technologies=${technologies}`);
 	}
