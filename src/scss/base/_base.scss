@@ -63,19 +63,19 @@
 
 		&:hover,
 		&:focus {
-			color: var(--clr-text-100) !important;
+			color: var(--clr-neutral-100) !important;
 			background-color: var(--theme-primary) !important;
 		}
 
 		&--invert {
-			color: var(--clr-text-100);
+			color: var(--clr-neutral-100);
 			background-color: var(--theme-primary);
 
 			&:hover,
 			&:focus {
 				color: var(--theme-primary) !important;
 				border: 0.2rem solid var(--theme-primary) !important;
-				background-color: var(--clr-text-100) !important;
+				background-color: var(--clr-neutral-100) !important;
 			}
 		}
 	}
