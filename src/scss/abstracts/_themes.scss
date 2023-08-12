@@ -10,9 +10,7 @@ $themes: (
 		theme-skill-hex-hover: var(--clr-persian-blue-100),
 		// Project Display section colours
 		theme-project-bg: var(--clr-gray-100),
-		theme-project-tech-bg: var(--clr-gray-200),
-		theme-project-hex: var(--clr-neutral-100),
-		theme-project-hex-hover: var(--clr-persian-blue-100)
+		theme-project-tech-bg: var(--clr-gray-200)
 	),
 	dark: (
 		theme-primary: var(--clr-royal-blue-100),
@@ -25,8 +23,6 @@ $themes: (
 		theme-skill-hex-hover: var(--clr-gray-400),
 		// Project Display section colours
 		theme-project-bg: var(--clr-gray-500),
-		theme-project-tech-bg: var(--clr-gray-400),
-		theme-project-hex: var(--clr-gray-400),
-		theme-project-hex-hover: var(--clr-gray-400)
+		theme-project-tech-bg: var(--clr-gray-400)
 	)
 );
