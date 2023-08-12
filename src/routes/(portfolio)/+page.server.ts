@@ -27,6 +27,7 @@ export const actions: Actions = {
 	setTheme: async ({ url, cookies }) => {
 		const newTheme = url.searchParams.get('theme') as Theme | null;
 		const redirectTo = url.searchParams.get('redirectTo');
+		const searchParams = url.searchParams.get('searchParams');
 
 		if (newTheme) {
 			cookies.set('theme', newTheme, {
@@ -37,6 +38,8 @@ export const actions: Actions = {
 		}
 
 		if (!pages.some((page) => page.path === redirectTo)) throw redirect(303, '/');
-		throw redirect(302, redirectTo ?? '/');
+
+		if (!searchParams) throw redirect(302, redirectTo ?? '/');
+		throw redirect(302, `${redirectTo}?${searchParams?.split(',').join('&')}`);
 	}
 };

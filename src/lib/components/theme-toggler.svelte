@@ -9,6 +9,7 @@
 	let nextTheme: Theme;
 	$: nextTheme = !currentTheme || currentTheme === 'light' ? 'dark' : 'light';
 	$: path = $page.url.pathname;
+	$: searchParams = $page.url.searchParams.toString().split('&');
 
 	let scrollX: number = 0;
 	let scrollY: number = 0;
@@ -28,7 +29,7 @@
 		aria-label="Toggle theme"
 		class="theme-toggler"
 		type="submit"
-		formaction="/?/setTheme&theme={nextTheme}&redirectTo={path}"
+		formaction="/?/setTheme&theme={nextTheme}&redirectTo={path}&searchParams={searchParams}"
 		on:click={() => {
 			scrollX = window.scrollX;
 			scrollY = window.scrollY;
