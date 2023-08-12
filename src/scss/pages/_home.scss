@@ -146,7 +146,7 @@
 			}
 
 			&__hex {
-				user-select: none;
+				@include no-select();
 				display: flex;
 				pointer-events: initial;
 				width: calc(100% * 2 / 3 - 2px);
