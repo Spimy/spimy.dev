@@ -43,9 +43,6 @@
 		window.onExpire = onExpire;
 		window.onLoad = onLoad;
 	}
-	const execute = () => {
-		console.log('test');
-	};
 </script>
 
 <div
@@ -57,5 +54,4 @@
 	data-expired-callback="onExpire"
 	data-size="invisible"
 	data-theme={theme}
-	data-value={execute}
 />
