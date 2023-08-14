@@ -12,18 +12,9 @@
 		};
 	};
 
-	const onSubmit = (token: string) => {
-		const tokenInput = document.createElement('input');
-		tokenInput.type = 'text';
-		tokenInput.name = 'token';
-		tokenInput.value = token;
-		tokenInput.hidden = true;
-
+	const onSubmit = () => {
 		const form = submitButton.form;
-		form?.appendChild(tokenInput);
 		form?.requestSubmit();
-
-		tokenInput.remove();
 	};
 
 	const onError = (error: Error) => {

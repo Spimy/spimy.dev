@@ -39,7 +39,7 @@ export const actions: Actions = {
 
 		const response = await verify(
 			HCAPTCHA_SECRET,
-			form.data.token,
+			form.data['h-captcha-response'],
 			event.getClientAddress(),
 			PUBLIC_HCAPTCHA_SITEKEY_CONTACT
 		);
