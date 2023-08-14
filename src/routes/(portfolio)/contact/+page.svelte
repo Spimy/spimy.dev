@@ -1,19 +1,58 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import { PUBLIC_HCAPTCHA_SITEKEY_CONTACT } from '$env/static/public';
 	import Hcaptcha, { hCaptcha } from '$lib/components/hcaptcha.svelte';
 	import { contactFormSchema, socialLinks } from '$lib/global';
 	import { faEnvelope, faMessage, faUser } from '@fortawesome/free-solid-svg-icons';
+	import { toast } from '@zerodevx/svelte-toast';
 	import Fa from 'svelte-fa';
 	import { superForm } from 'sveltekit-superforms/client';
 	import type { PageServerData } from './$types';
 
 	export let data: PageServerData;
-	const { form, errors, constraints, enhance } = superForm(data.form, {
+	const { form, errors, constraints, enhance, message } = superForm(data.form, {
 		taintedMessage: 'Are you sure you want to leave?',
 		autoFocusOnError: true,
 		validators: contactFormSchema,
 		clearOnSubmit: 'errors-and-message',
-		resetForm: true
+		resetForm: true,
+		onSubmit: () => {
+			const id = toast.push('Sending message...', {
+				theme: { '--toastBarBackground': 'orange' },
+				duration: 300,
+				initial: 0,
+				next: 0,
+				dismissable: false
+			});
+
+			let progress = 0;
+
+			const randomNumber = (min: number, max: number) => Math.random() * (max - min) + min;
+
+			const updateProgress = () => {
+				setTimeout(() => {
+					if ($message) {
+						toast.set(id, { next: 1 });
+					} else {
+						if (progress < 1) progress += randomNumber(0.01, 0.04);
+						toast.set(id, { next: progress });
+						updateProgress();
+					}
+				}, Math.floor(randomNumber(500, 800)));
+			};
+
+			updateProgress();
+		},
+		onUpdate: ({ form }) => {
+			if (form.message) {
+				toast.push(form.message, {
+					duration: 5000,
+					theme: {
+						'--toastBarBackground': $page.status === 200 ? 'green' : 'red'
+					}
+				});
+			}
+		}
 	});
 </script>
 
@@ -65,7 +104,7 @@
 			<h2>Contact Form</h2>
 			<Hcaptcha
 				siteKey={PUBLIC_HCAPTCHA_SITEKEY_CONTACT}
-				on:submit={(event) => event.detail.form?.requestSubmit()}
+				on:submit={async (event) => event.detail.form?.requestSubmit()}
 				on:error={(error) => console.error(`hCaptcha error: ${error}`)}
 				on:expire={() => console.warn('hCaptcha expired')}
 			/>
