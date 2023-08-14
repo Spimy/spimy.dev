@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
 	import { PUBLIC_HCAPTCHA_SITEKEY_CONTACT } from '$env/static/public';
 	import Hcaptcha from '$lib/components/hcaptcha.svelte';
 	import { contactFormSchema, socialLinks } from '$lib/global';
@@ -22,10 +21,6 @@
 
 <svelte:head>
 	<title>Spimy's Portfolio - Contact</title>
-
-	{#if browser}
-		<script src="https://js.hcaptcha.com/1/api.js?onload=onLoad" async defer></script>
-	{/if}
 </svelte:head>
 
 <section class="contact">

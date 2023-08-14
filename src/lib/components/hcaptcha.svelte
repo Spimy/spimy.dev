@@ -45,6 +45,12 @@
 	}
 </script>
 
+<svelte:head>
+	{#if browser}
+		<script src="https://js.hcaptcha.com/1/api.js?onload=onLoad" async defer></script>
+	{/if}
+</svelte:head>
+
 <div
 	id="hcaptcha"
 	class="h-captcha"
