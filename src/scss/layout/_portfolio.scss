@@ -51,3 +51,8 @@ main {
 :global(h2) {
 	font-size: var(--fs-500);
 }
+
+.toast-wrap {
+	position: absolute;
+	--toastContainerTop: 8.25rem;
+}
