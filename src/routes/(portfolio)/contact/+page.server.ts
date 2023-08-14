@@ -8,10 +8,10 @@ import {
 } from '$env/static/private';
 import { PUBLIC_HCAPTCHA_SITEKEY_CONTACT } from '$env/static/public';
 import { contactFormSchema } from '$lib/global';
-import { fail, type Actions } from '@sveltejs/kit';
+import type { Actions } from '@sveltejs/kit';
 import { verify } from 'hcaptcha';
 import { createTransport } from 'nodemailer';
-import { superValidate } from 'sveltekit-superforms/server';
+import { message, superValidate } from 'sveltekit-superforms/server';
 import type { PageServerLoad } from '../$types';
 
 const transporter = createTransport({
@@ -35,7 +35,7 @@ export const load: PageServerLoad = async (event) => {
 export const actions: Actions = {
 	submitContactForm: async (event) => {
 		const form = await superValidate(event, contactFormSchema);
-		if (!form.valid) return fail(400, { form });
+		if (!form.valid) return message(form, 'Contact form is missing some required fields.');
 
 		const response = await verify(
 			HCAPTCHA_SECRET,
@@ -43,7 +43,11 @@ export const actions: Actions = {
 			event.getClientAddress(),
 			PUBLIC_HCAPTCHA_SITEKEY_CONTACT
 		);
-		if (!response.success) return fail(400, { form });
+		if (!response.success) {
+			return message(form, 'Failed to verify captcha.', {
+				status: 400
+			});
+		}
 
 		await transporter.sendMail({
 			to: EMAIL_TO,
@@ -52,6 +56,6 @@ export const actions: Actions = {
 			subject: `Contact Form filled by ${form.data.name}`
 		});
 
-		return { form };
+		return message(form, 'Email has been sent successfully.');
 	}
 };
