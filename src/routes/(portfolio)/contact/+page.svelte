@@ -66,6 +66,7 @@
 	{#if $message}
 		<noscript class="contact__noscript__message">
 			<p>{$message}</p>
+			<p>Please enable JavaScript and try again.</p>
 		</noscript>
 	{/if}
 
