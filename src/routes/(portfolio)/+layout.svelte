@@ -1,11 +1,23 @@
 <script lang="ts">
 	import Footer from '$lib/components/footer.svelte';
 	import Navbar from '$lib/components/navbar.svelte';
+	import { SvelteToast } from '@zerodevx/svelte-toast';
+	import type { SvelteToastOptions } from '@zerodevx/svelte-toast/stores';
 	import '../../scss/main.scss';
 	import type { LayoutServerData } from './$types';
 
 	export let data: LayoutServerData;
 	$: ({ theme, currentYear } = data);
+
+	const options: SvelteToastOptions = {
+		classes: ['toast'],
+		theme: {
+			'--toastBorderRadius': '0.5rem',
+			'--toastPadding': '0 1rem',
+			'--toastColor': 'var(--theme-text)',
+			'--toastBackground': 'var(--theme-toast)'
+		}
+	};
 </script>
 
 <noscript>
@@ -22,6 +34,9 @@
 <Navbar {theme} />
 
 <main>
+	<div class="toast-wrap">
+		<SvelteToast {options} />
+	</div>
 	<slot />
 </main>
 
