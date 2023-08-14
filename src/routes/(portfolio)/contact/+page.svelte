@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { PUBLIC_HCAPTCHA_SITEKEY_CONTACT } from '$env/static/public';
-	import Hcaptcha from '$lib/components/hcaptcha.svelte';
+	import Hcaptcha, { hCaptcha } from '$lib/components/hcaptcha.svelte';
 	import { contactFormSchema, socialLinks } from '$lib/global';
 	import { faEnvelope, faMessage, faUser } from '@fortawesome/free-solid-svg-icons';
 	import Fa from 'svelte-fa';
@@ -15,8 +15,6 @@
 		clearOnSubmit: 'errors-and-message',
 		resetForm: true
 	});
-
-	let submitButton: HTMLButtonElement;
 </script>
 
 <svelte:head>
@@ -65,7 +63,12 @@
 		</article>
 		<form class="contact__content__form" method="POST" action="?/submitContactForm" use:enhance>
 			<h2>Contact Form</h2>
-			<Hcaptcha siteKey={PUBLIC_HCAPTCHA_SITEKEY_CONTACT} {submitButton} />
+			<Hcaptcha
+				siteKey={PUBLIC_HCAPTCHA_SITEKEY_CONTACT}
+				on:submit={(event) => event.detail.form?.requestSubmit()}
+				on:error={(error) => console.error(`hCaptcha error: ${error}`)}
+				on:expire={() => console.warn('hCaptcha expired')}
+			/>
 			<div class="contact__content__form__group">
 				<label for="name"><i><Fa icon={faUser} /></i></label>
 				<input
@@ -103,7 +106,7 @@
 			{#if $errors.message}
 				<small class="contact__content__form__error">{$errors.message}</small>
 			{/if}
-			<button type="submit" bind:this={submitButton} class="btn">Send</button>
+			<button type="submit" class="btn" on:click|preventDefault={hCaptcha.execute}>Send</button>
 		</form>
 	</div>
 </section>

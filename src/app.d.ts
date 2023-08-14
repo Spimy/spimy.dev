@@ -7,15 +7,6 @@ declare global {
 		// interface PageData {}
 		// interface Platform {}
 	}
-	interface Window {
-		hcaptcha: {
-			execute: () => void;
-		};
-		onSubmit?: (token: string) => void;
-		onError?: (error: Error) => void;
-		onExpire?: () => void;
-		onLoad?: () => void;
-	}
 }
 
 export {};
