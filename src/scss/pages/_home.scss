@@ -145,6 +145,17 @@
 				margin: calc(-9.62% + 2px) auto; // 100% * cos(30) / 9
 			}
 
+			a {
+				outline: none;
+
+				&:focus {
+					img {
+						outline: auto;
+						outline-offset: 1rem;
+					}
+				}
+			}
+
 			&__hex {
 				@include no-select();
 				display: flex;
