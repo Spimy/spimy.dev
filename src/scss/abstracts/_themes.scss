@@ -9,20 +9,20 @@ $themes: (
 		theme-skill-hex: var(--clr-neutral-100),
 		theme-skill-hex-hover: var(--clr-persian-blue-100),
 		// Project Display section colours
-		theme-project-bg: var(--clr-gray-100),
-		theme-project-tech-bg: var(--clr-gray-200)
+		theme-project-bg: var(--clr-gray-shades-100),
+		theme-project-tech-bg: var(--clr-gray-shades-200)
 	),
 	dark: (
 		theme-primary: var(--clr-royal-blue-100),
 		theme-background: var(--clr-neutral-200),
 		theme-text: var(--clr-neutral-100),
 		// Skill section colours
-		theme-skill-bg: var(--clr-gray-500),
+		theme-skill-bg: var(--clr-gray-shades-500),
 		theme-skill-texture: var(--clr-royal-blue-100),
-		theme-skill-hex: var(--clr-gray-400),
-		theme-skill-hex-hover: var(--clr-gray-400),
+		theme-skill-hex: var(--clr-gray-shades-400),
+		theme-skill-hex-hover: var(--clr-gray-shades-400),
 		// Project Display section colours
-		theme-project-bg: var(--clr-gray-500),
-		theme-project-tech-bg: var(--clr-gray-400)
+		theme-project-bg: var(--clr-gray-shades-500),
+		theme-project-tech-bg: var(--clr-gray-shades-400)
 	)
 );
