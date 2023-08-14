@@ -63,6 +63,12 @@
 <section class="contact">
 	<h1>Contact</h1>
 
+	{#if $message}
+		<noscript class="contact__noscript__message">
+			<p>{$message}</p>
+		</noscript>
+	{/if}
+
 	<div class="contact__content">
 		<article class="contact__content__info">
 			<h2>Get in Touch!</h2>
