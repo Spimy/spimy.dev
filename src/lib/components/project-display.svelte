@@ -1,5 +1,10 @@
 <script lang="ts">
+	import MarkdownIt from 'markdown-it';
+	import markdownItSanitizer from 'markdown-it-sanitizer';
+
 	export let project: Project;
+	const md = new MarkdownIt();
+	md.use(markdownItSanitizer);
 </script>
 
 <div class="project">
@@ -29,7 +34,7 @@
 		</header>
 		<div class="sr-only">Project description:</div>
 		<p class="project__info__description">
-			{project.description}
+			{@html md.renderInline(project.description)}
 		</p>
 		<footer>
 			<a href={project.link} target="_blank" class="project__info__cta btn btn--invert"
