@@ -43,6 +43,7 @@
 
 	color: var(--theme-text);
 	background-color: var(--theme-background);
+	transition: color 250ms ease-in-out, background-color 250ms ease-in-out;
 
 	a {
 		color: var(--theme-primary);
