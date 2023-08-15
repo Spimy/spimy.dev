@@ -1,10 +1,10 @@
+import { PROJECTS_PER_PAGE } from '$env/static/private';
 import { Projects } from '$lib/server/database/models/projects.model';
 import { Technology } from '$lib/server/database/models/technologies.model';
 import { json, type RequestHandler } from '@sveltejs/kit';
 import type { Types } from 'mongoose';
 
-// TODO: Set this to 9 for production
-const PER_PAGE_SIZE = 2;
+const PER_PAGE_SIZE = Number(PROJECTS_PER_PAGE);
 
 export const GET: RequestHandler = async ({ url }) => {
 	const number = url.searchParams.get('number');
