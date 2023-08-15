@@ -17,7 +17,15 @@ $menu-item-gap: 2rem;
 
 	&:not([data-scroll='0']) {
 		background-color: var(--theme-project-bg);
-		box-shadow: 0.2rem 0.2rem 0.5rem 0 hsla(0, 0%, 0%, 50%);
+
+		&:not(input[type='checkbox'][name='burger']) {
+			box-shadow: 0.2rem 0.2rem 0.2rem 0 hsla(0, 0%, 0%, 50%);
+		}
+
+		.navbar__items__menu {
+			background-color: var(--theme-project-bg);
+			box-shadow: 0.2rem 0.2rem 0.2rem 0 hsla(0, 0%, 0%, 50%);
+		}
 	}
 
 	&__logo {
@@ -65,11 +73,12 @@ $menu-item-gap: 2rem;
 			left: 0;
 			width: 100%;
 			padding-block: 1rem;
-			background-color: inherit;
+			background-color: var(--theme-background);
 			visibility: hidden;
 			transform: scaleY(0);
 			transform-origin: top;
-			transition: visibility 300ms, transform 250ms ease-in-out;
+			transition: background-color 250ms ease-in-out, box-shadow 250ms ease-in-out, visibility 300ms,
+				transform 250ms ease-in-out;
 
 			@include mq(small) {
 				position: initial;
