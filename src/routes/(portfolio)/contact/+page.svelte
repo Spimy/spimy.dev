@@ -33,6 +33,12 @@
 				setTimeout(() => {
 					if ($message) {
 						toast.set(id, { next: 1 });
+						toast.push($message, {
+							duration: 5000,
+							theme: {
+								'--toastBarBackground': $page.status === 200 ? 'green' : 'red'
+							}
+						});
 					} else {
 						if (progress < 1) progress += randomNumber(0.01, 0.04);
 						toast.set(id, { next: progress });
@@ -42,16 +48,6 @@
 			};
 
 			updateProgress();
-		},
-		onUpdate: ({ form }) => {
-			if (form.message) {
-				toast.push(form.message, {
-					duration: 5000,
-					theme: {
-						'--toastBarBackground': $page.status === 200 ? 'green' : 'red'
-					}
-				});
-			}
 		}
 	});
 </script>
