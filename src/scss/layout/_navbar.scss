@@ -94,6 +94,14 @@ $menu-item-gap: 2rem;
 				padding: 0;
 			}
 
+			li {
+				margin-block-end: 1em;
+
+				@include mq(small) {
+					margin-block-end: 0;
+				}
+			}
+
 			&__item {
 				color: var(--theme-text);
 				text-decoration: none;
