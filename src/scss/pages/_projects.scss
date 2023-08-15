@@ -75,8 +75,11 @@
 				display: flex;
 				position: relative;
 				padding: 0 0.5rem;
+				cursor: pointer;
 
 				input[type='checkbox'] {
+					cursor: pointer;
+
 					&:checked + label {
 						color: var(--clr-neutral-100);
 
@@ -93,6 +96,7 @@
 					gap: 0.5rem;
 					padding: 0.5rem;
 					width: 100%;
+					cursor: pointer;
 
 					&::after {
 						content: '';
