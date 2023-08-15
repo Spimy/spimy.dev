@@ -13,6 +13,12 @@ $menu-item-gap: 2rem;
 	position: fixed;
 	width: 100%;
 	z-index: 9999;
+	transition: background-color 250ms ease-in-out, box-shadow 250ms ease-in-out;
+
+	&:not([data-scroll='0']) {
+		background-color: var(--theme-project-bg);
+		box-shadow: 0.2rem 0.2rem 0.5rem 0 hsla(0, 0%, 0%, 50%);
+	}
 
 	&__logo {
 		aspect-ratio: 1;
@@ -59,7 +65,7 @@ $menu-item-gap: 2rem;
 			left: 0;
 			width: 100%;
 			padding-block: 1rem;
-			background-color: var(--theme-background);
+			background-color: inherit;
 			visibility: hidden;
 			transform: scaleY(0);
 			transform-origin: top;

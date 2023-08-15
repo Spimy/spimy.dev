@@ -1,15 +1,18 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
 	import { pages } from '$lib/global';
 	import BurgerIcon from './burger-icon.svelte';
 	import ThemeToggler from './theme-toggler.svelte';
 
 	export let theme: Theme | undefined;
-
 	$: path = $page.url.pathname;
+
+	let scrollPosition: number = 0;
+	if (browser) window.addEventListener('scroll', () => (scrollPosition = window.scrollY));
 </script>
 
-<header class="navbar">
+<header class="navbar" data-scroll={scrollPosition}>
 	<div class="navbar__logo">
 		<a href="/"><img src="/logos/icon.png" alt="home-logo" /></a>
 	</div>
