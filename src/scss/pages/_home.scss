@@ -81,6 +81,7 @@
 				left: 0;
 				background-color: inherit;
 				border-radius: 50%;
+				transition: background-color 250ms ease-in-out;
 			}
 
 			&:nth-child(even) {
