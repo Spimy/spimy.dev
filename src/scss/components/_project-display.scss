@@ -4,6 +4,7 @@
 	border-radius: 1rem;
 	background-color: var(--theme-project-bg);
 	height: fit-content;
+	transition: background-color 250ms ease-in-out;
 
 	&__preview {
 		border-radius: inherit;
@@ -29,6 +30,7 @@
 			background-color: var(--theme-project-tech-bg);
 			padding: 0.5rem;
 			border-radius: 0.2rem;
+			transition: background-color 250ms ease-in-out;
 
 			img {
 				width: 1.2rem;
