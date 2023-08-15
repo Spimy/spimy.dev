@@ -1,12 +1,12 @@
-import { Document, Model, Schema, model, models } from 'mongoose';
+import mongoose from 'mongoose';
 
-export interface ITechnology extends Document, Technology {}
+export interface ITechnology extends mongoose.Document, Technology {}
 
-const technologiesSchema = new Schema<ITechnology>({
+const technologiesSchema = new mongoose.Schema<ITechnology>({
 	icon: { type: String, unique: true, required: true },
 	name: { type: String, unique: true, required: true }
 });
 
 export const Technology =
-	(models['technologies'] as unknown as Model<ITechnology>) ||
-	model<ITechnology>('technologies', technologiesSchema);
+	(mongoose.models['technologies'] as unknown as mongoose.Model<ITechnology>) ||
+	mongoose.model<ITechnology>('technologies', technologiesSchema);

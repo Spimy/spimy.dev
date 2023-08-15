@@ -1,19 +1,20 @@
-import { Document, Model, Schema, model, models } from 'mongoose';
+import mongoose from 'mongoose';
 
-export interface IProject extends Document, Omit<Project, 'technologies'> {
-	technologies: Schema.Types.ObjectId[];
+export interface IProject extends mongoose.Document, Omit<Project, 'technologies'> {
+	technologies: mongoose.Schema.Types.ObjectId[];
 }
 
-const projectsSchema = new Schema<IProject>(
+const projectsSchema = new mongoose.Schema<IProject>(
 	{
 		title: { type: String, required: true },
 		link: { type: String, required: true },
 		description: { type: String, required: true },
 		previewImageUrl: { type: String, required: true },
-		technologies: { type: [Schema.Types.ObjectId], ref: 'technologies', required: true }
+		technologies: { type: [mongoose.Schema.Types.ObjectId], ref: 'technologies', required: true }
 	},
 	{ timestamps: { createdAt: true, updatedAt: true } }
 );
 
 export const Projects =
-	(models['projects'] as unknown as Model<IProject>) || model<IProject>('projects', projectsSchema);
+	(mongoose.models['projects'] as unknown as mongoose.Model<IProject>) ||
+	mongoose.model<IProject>('projects', projectsSchema);
