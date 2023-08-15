@@ -19,12 +19,16 @@ $menu-item-gap: 2rem;
 		background-color: var(--theme-project-bg);
 
 		&:not(input[type='checkbox'][name='burger']) {
-			box-shadow: 0.2rem 0.2rem 0.2rem 0 hsla(0, 0%, 0%, 50%);
+			box-shadow: 0.2rem 0.2rem 0.5rem 0 hsla(0, 0%, 0%, 50%);
 		}
 
 		.navbar__items__menu {
 			background-color: var(--theme-project-bg);
-			box-shadow: 0.2rem 0.2rem 0.2rem 0 hsla(0, 0%, 0%, 50%);
+			box-shadow: 0.2rem 0.5rem 0.5rem 0 hsla(0, 0%, 0%, 50%);
+
+			@include mq(small) {
+				box-shadow: none;
+			}
 		}
 	}
 
