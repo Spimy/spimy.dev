@@ -1,5 +1,4 @@
 import { faDiscord, faInstagram, faTwitter, faYoutube } from '@fortawesome/free-brands-svg-icons';
-import zod from 'zod';
 import type { Page } from './types/page';
 import type { SocialLink } from './types/social-link';
 
@@ -16,10 +15,3 @@ export const socialLinks: SocialLink[] = [
 	{ name: 'Twitter', url: 'https://twitter.com/officialspimy', icon: faTwitter },
 	{ name: 'Discord', url: 'https://discord.spimy.dev', icon: faDiscord }
 ];
-
-export const contactFormSchema = zod.object({
-	name: zod.string().min(2),
-	email: zod.string().email(),
-	message: zod.string().min(2),
-	'h-captcha-response': zod.string()
-});

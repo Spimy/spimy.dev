@@ -7,7 +7,7 @@ import {
 	HCAPTCHA_SECRET
 } from '$env/static/private';
 import { PUBLIC_HCAPTCHA_SITEKEY_CONTACT } from '$env/static/public';
-import { contactFormSchema } from '$lib/global';
+import { contactFormSchema } from '$lib/forms/contact';
 import type { Actions } from '@sveltejs/kit';
 import { verify } from 'hcaptcha';
 import { createTransport } from 'nodemailer';

@@ -2,7 +2,8 @@
 	import { page } from '$app/stores';
 	import { PUBLIC_HCAPTCHA_SITEKEY_CONTACT } from '$env/static/public';
 	import Hcaptcha, { hCaptcha } from '$lib/components/hcaptcha.svelte';
-	import { contactFormSchema, socialLinks } from '$lib/global';
+	import { contactFormSchema } from '$lib/forms/contact';
+	import { socialLinks } from '$lib/global';
 	import { faEnvelope, faMessage, faUser } from '@fortawesome/free-solid-svg-icons';
 	import { toast } from '@zerodevx/svelte-toast';
 	import Fa from 'svelte-fa';
