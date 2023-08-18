@@ -50,10 +50,22 @@
 			updateProgress();
 		}
 	});
+
+	const title = "Spimy's Portfolio - Contact";
+	const description =
+		'Contact me through a simple contact form to save yourself the hassle of having to open up your email client or social media to get ahold of me.';
 </script>
 
 <svelte:head>
-	<title>Spimy's Portfolio - Contact</title>
+	<title>{title}</title>
+	<meta name="description" content={description} />
+
+	<meta property="og:title" content={title} />
+	<meta property="og:description" content={description} />
+	<meta property="og:url" content="http://www.spimy.dev" />
+
+	<meta name="twitter:title" content={title} />
+	<meta name="twitter:description" content={description} />
 </svelte:head>
 
 <section class="contact">

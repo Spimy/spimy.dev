@@ -16,10 +16,21 @@
 
 	const contactPath = pages.find((page) => page.id == 'contact')?.path;
 	const projectsPath = pages.find((page) => page.id == 'projects')?.path;
+
+	const title = "Spimy's Portfolio - Home";
+	const description = 'The hub to know more about me and the projects that I have worked on.';
 </script>
 
 <svelte:head>
-	<title>Spimy's Portfolio - Home</title>
+	<title>{title}</title>
+	<meta name="description" content={description} />
+
+	<meta property="og:title" content={title} />
+	<meta property="og:description" content={description} />
+	<meta property="og:url" content="http://www.spimy.dev" />
+
+	<meta name="twitter:title" content={title}/>
+	<meta name="twitter:description" content={description} />
 </svelte:head>
 
 <section class="hero">

@@ -54,10 +54,22 @@
 	$: ({ projects, paginator, technologies, searchParams } = data);
 	$: technologiesQuery = $page.url.searchParams.get('technologies');
 	$: technologiesParam = technologiesQuery ? `&technologies=${technologiesQuery}` : '';
+
+	const title = "Spimy's Portfolio - Projects";
+	const description =
+		'View all or filter projects that I have created based on technologies I have used to develop them.';
 </script>
 
 <svelte:head>
-	<title>Spimy's Portfolio - Projects</title>
+	<title>{title}</title>
+	<meta name="description" content={description} />
+
+	<meta property="og:title" content={title} />
+	<meta property="og:description" content={description} />
+	<meta property="og:url" content="http://www.spimy.dev" />
+
+	<meta name="twitter:title" content={title} />
+	<meta name="twitter:description" content={description} />
 </svelte:head>
 
 <section class="projects">
