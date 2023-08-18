@@ -5,5 +5,5 @@
 <slot />
 
 <style lang="scss">
-	@use '../scss/layout/base';
+	@use '../scss/layout';
 </style>
