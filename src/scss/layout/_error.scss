@@ -1,0 +1,24 @@
+@use '../abstracts/mixins' as *;
+
+.error {
+	padding: 3rem;
+	display: grid;
+	place-items: center;
+	place-content: center;
+	height: 100svh;
+	text-align: center;
+
+	@include mq(small) {
+		font-size: 2rem;
+	}
+
+	h1 {
+		font-size: 5em;
+	}
+
+	a {
+		font-size: 0.7em;
+		margin-block-start: 1em;
+		padding-block: 0.7em;
+	}
+}
