@@ -1,5 +1,7 @@
 import { faDiscord, faInstagram, faTwitter, faYoutube } from '@fortawesome/free-brands-svg-icons';
 import zod from 'zod';
+import type { Page } from './types/page';
+import type { SocialLink } from './types/social-link';
 
 export const pages: Page[] = [
 	{ id: 'home', display: 'Home', path: '/', navbar: true },

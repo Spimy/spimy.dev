@@ -1,3 +1,4 @@
+import type { Project } from '$lib/types/project';
 import mongoose from 'mongoose';
 
 export interface IProject extends mongoose.Document, Omit<Project, 'technologies'> {

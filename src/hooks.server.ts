@@ -1,4 +1,5 @@
 import { connectDatabase } from '$lib/server/database';
+import type { Theme } from '$lib/types/theme';
 import type { Handle } from '@sveltejs/kit';
 
 export const handle: Handle = async ({ event, resolve }) => {

@@ -1,4 +1,7 @@
 import { pages } from '$lib/global';
+import type { ProjectResponse } from '$lib/types/project';
+import type { TechnologyResponse } from '$lib/types/technology';
+import type { Theme } from '$lib/types/theme';
 import { redirect, type Actions } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 

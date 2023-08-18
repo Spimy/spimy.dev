@@ -2,6 +2,7 @@
 	import { enhance } from '$app/forms';
 	import { afterNavigate } from '$app/navigation';
 	import { page } from '$app/stores';
+	import type { Theme } from '$lib/types/theme';
 	import type { SubmitFunction } from '@sveltejs/kit';
 
 	export let currentTheme: Theme | undefined;

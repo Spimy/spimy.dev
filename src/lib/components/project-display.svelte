@@ -1,4 +1,5 @@
 <script lang="ts">
+	import type { Project } from '$lib/types/project';
 	import MarkdownIt from 'markdown-it';
 	import markdownItSanitizer from 'markdown-it-sanitizer';
 

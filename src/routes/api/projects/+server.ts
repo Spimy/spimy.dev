@@ -1,6 +1,6 @@
 import { PROJECTS_PER_PAGE } from '$env/static/private';
 import { Projects } from '$lib/server/database/models/projects.model';
-import { Technology } from '$lib/server/database/models/technologies.model';
+import { Technologies } from '$lib/server/database/models/technologies.model';
 import { json, type RequestHandler } from '@sveltejs/kit';
 import type { Types } from 'mongoose';
 
@@ -16,7 +16,7 @@ export const GET: RequestHandler = async ({ url }) => {
 	if (technologies.length > 0) {
 		// Get technologies provided in array of their respective _id attribute
 		const filterTechs = (
-			await Technology.find({
+			await Technologies.find({
 				name: {
 					$in: technologies.map((tech) => new RegExp(`^${tech}$`, 'ig'))
 				}

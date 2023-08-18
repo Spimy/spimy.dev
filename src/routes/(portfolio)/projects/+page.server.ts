@@ -1,3 +1,5 @@
+import type { ProjectResponse } from '$lib/types/project';
+import type { TechnologyResponse } from '$lib/types/technology';
 import { redirect, type Actions } from '@sveltejs/kit';
 import type { PageServerLoad } from '../$types';
 

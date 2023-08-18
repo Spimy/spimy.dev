@@ -2,6 +2,7 @@
 	import Avatar from '$lib/components/avatar.svelte';
 	import ProjectDisplay from '$lib/components/project-display.svelte';
 	import { pages } from '$lib/global';
+	import type { Technology } from '$lib/types/technology';
 	import type { PageServerData } from './$types';
 
 	export let data: PageServerData;
@@ -29,7 +30,7 @@
 	<meta property="og:description" content={description} />
 	<meta property="og:url" content="http://www.spimy.dev" />
 
-	<meta name="twitter:title" content={title}/>
+	<meta name="twitter:title" content={title} />
 	<meta name="twitter:description" content={description} />
 </svelte:head>
 

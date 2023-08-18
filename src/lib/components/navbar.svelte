@@ -2,6 +2,7 @@
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
 	import { pages } from '$lib/global';
+	import type { Theme } from '$lib/types/theme';
 	import BurgerIcon from './burger-icon.svelte';
 	import ThemeToggler from './theme-toggler.svelte';
 
