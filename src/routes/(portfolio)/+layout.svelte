@@ -3,7 +3,6 @@
 	import Navbar from '$lib/components/navbar.svelte';
 	import { SvelteToast } from '@zerodevx/svelte-toast';
 	import type { SvelteToastOptions } from '@zerodevx/svelte-toast/stores';
-	import '../../scss/main.scss';
 	import type { LayoutServerData } from './$types';
 
 	export let data: LayoutServerData;
