@@ -109,7 +109,10 @@
 		</div>
 
 		<button type="submit" class="btn btn--invert">Filter</button>
-		<a href="?page=1" class="btn btn--invert">Clear Filter</a>
+
+		{#if technologiesQuery}
+			<a href="?page=1" class="btn btn--invert">Clear Filter</a>
+		{/if}
 	</form>
 
 	{#if projects.length === 0}
