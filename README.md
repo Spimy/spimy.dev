@@ -21,4 +21,4 @@ Built on [SvelteKit](https://kit.svelte.dev/) and hosted on [Vercel](https://ver
 
 ## Why I Used SvelteKit
 
-Initially the portfolio was created on Nuxt 3 and it is still viewable on my [GitHub](https://github.com/Spimy/spimy.dev_nuxt) but I absolute hated working with [UnJS](https://github.com/unjs) that Nuxt 3 decided to use for its backend. It started becoming messy and some code also kind of difficult to maintain because I just did whatever to made things work. As such, I decided to recode the entire project in SvelteKit. 
+Initially the portfolio was created on Nuxt 3 and it is still viewable on my [GitHub](https://github.com/Spimy/spimy.dev_nuxt) but I absolute hated working with [UnJS](https://github.com/unjs) that Nuxt 3 decided to use for its backend. It started becoming messy and some code also kind of became difficult to maintain because I just did whatever to made things work. As such, I decided to recode the entire project in SvelteKit.
