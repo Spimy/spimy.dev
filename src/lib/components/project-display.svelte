@@ -9,11 +9,13 @@
 </script>
 
 <div class="project">
-	<img
-		class="project__preview"
-		src={project.previewImageUrl}
-		alt="{project.title} project preview"
-	/>
+	<div class="project__preview">
+		<img
+			class="project__preview"
+			src={project.previewImageUrl}
+			alt="{project.title} project preview"
+		/>
+	</div>
 	<article class="project__info">
 		<header>
 			<h2 class="project__info__title">{project.title}</h2>
