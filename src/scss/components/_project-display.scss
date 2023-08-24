@@ -7,9 +7,10 @@
 	transition: background-color 250ms ease-in-out;
 
 	&__preview {
-		border-radius: inherit;
+		border-radius: 1.5rem;
 		aspect-ratio: 16 / 9;
 		object-fit: cover;
+		padding: 1rem 1rem 0;
 		width: 100%;
 	}
 
