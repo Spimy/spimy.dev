@@ -10,11 +10,7 @@
 
 <div class="project">
 	<div class="project__preview">
-		<img
-			class="project__preview"
-			src={project.previewImageUrl}
-			alt="{project.title} project preview"
-		/>
+		<img src={project.previewImageUrl} alt="{project.title} project preview" />
 	</div>
 	<article class="project__info">
 		<header>
