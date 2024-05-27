@@ -11,6 +11,9 @@
 
 	let scrollPosition: number = 0;
 	if (browser) window.addEventListener('scroll', () => (scrollPosition = window.scrollY));
+
+	let burgerMenu: HTMLInputElement;
+	const closeNav = () => (burgerMenu.checked = false);
 </script>
 
 <header class="navbar" data-scroll={scrollPosition}>
@@ -21,7 +24,13 @@
 	<nav class="navbar__items">
 		<ThemeToggler currentTheme={theme} />
 
-		<input aria-label="Toggle menu" type="checkbox" name="burger" id="burger" />
+		<input
+			aria-label="Toggle menu"
+			type="checkbox"
+			name="burger"
+			id="burger"
+			bind:this={burgerMenu}
+		/>
 		<label aria-hidden="true" for="burger"><BurgerIcon /></label>
 
 		<ul role="list" class="navbar__items__menu">
@@ -30,8 +39,10 @@
 					<a
 						href={page.path}
 						aria-current={path === page.path ? 'page' : undefined}
-						class="navbar__items__menu__item">{page.display}</a
-					>
+						class="navbar__items__menu__item"
+						on:click={closeNav}
+						>{page.display}
+					</a>
 				</li>
 			{/each}
 		</ul>
