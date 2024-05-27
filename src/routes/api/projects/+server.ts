@@ -5,6 +5,7 @@ import { json, type RequestHandler } from '@sveltejs/kit';
 import type { Types } from 'mongoose';
 
 const PER_PAGE_SIZE = Number(PROJECTS_PER_PAGE);
+const DEFAULT_PAGE_RANGE = 3;
 
 export const GET: RequestHandler = async ({ url }) => {
 	const number = url.searchParams.get('number');
@@ -60,7 +61,7 @@ export const GET: RequestHandler = async ({ url }) => {
 		technologies.length > 0
 			? Math.ceil(totalFilteredProjects / PER_PAGE_SIZE)
 			: Math.ceil(numProjects / PER_PAGE_SIZE);
-	const pageRange = pageCount >= 5 ? 5 : pageCount;
+	const pageRange = pageCount >= DEFAULT_PAGE_RANGE ? DEFAULT_PAGE_RANGE : pageCount;
 
 	let pageMin: number;
 	if (currentPage - 2 < 1) {

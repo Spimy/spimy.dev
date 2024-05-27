@@ -1,3 +1,5 @@
+@use '../abstracts/mixins' as *;
+
 .footer {
 	display: grid;
 	place-items: center;
@@ -27,8 +29,16 @@
 		transition: background-color 250ms ease-in-out;
 	}
 
-	&__issue a {
-		color: var(--theme-primary);
+	&__issue {
+		font-size: var(--fs-200);
+
+		@include mq(medium) {
+			font-size: var(--fs-300);
+		}
+
+		a {
+			color: var(--theme-primary);
+		}
 	}
 
 	&__socials {
@@ -42,9 +52,13 @@
 	}
 
 	&__links {
-		font-size: var(--fs-300);
+		font-size: var(--fs-200);
 		margin-top: 1rem;
 		margin-bottom: 2rem;
+
+		@include mq(medium) {
+			font-size: var(--fs-300);
+		}
 
 		&__title {
 			font-size: var(--fs-400);
