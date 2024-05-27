@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { pages, socialLinks } from '$lib/global';
-	import { faGithub } from '@fortawesome/free-brands-svg-icons';
 	import Fa from 'svelte-fa';
 
 	export let currentYear: number;
@@ -21,11 +20,6 @@
 				</a>
 			</li>
 		{/each}
-		<li>
-			<a href="https://github.com/spimy" target="_blank">
-				<i aria-label="GitHub icon"><Fa icon={faGithub} /></i>
-			</a>
-		</li>
 	</ul>
 	<div class="footer__links">
 		<h2 class="footer__links__title">Helpful Links</h2>

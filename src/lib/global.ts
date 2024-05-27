@@ -1,4 +1,10 @@
-import { faDiscord, faInstagram, faTwitter, faYoutube } from '@fortawesome/free-brands-svg-icons';
+import {
+	faDiscord,
+	faGithub,
+	faInstagram,
+	faLinkedin,
+	faYoutube
+} from '@fortawesome/free-brands-svg-icons';
 import type { Page } from './types/page';
 import type { SocialLink } from './types/social-link';
 
@@ -12,6 +18,7 @@ export const pages: Page[] = [
 export const socialLinks: SocialLink[] = [
 	{ name: 'YouTube', url: 'https://youtube.com/@officialspimy', icon: faYoutube },
 	{ name: 'Instagram', url: 'hhttps://instagram.com/william3001_lhw', icon: faInstagram },
-	{ name: 'Twitter', url: 'https://twitter.com/officialspimy', icon: faTwitter },
-	{ name: 'Discord', url: 'https://discord.spimy.dev', icon: faDiscord }
+	{ name: 'GitHub', url: 'https://github.com/spimy', icon: faGithub },
+	{ name: 'Discord', url: 'https://discord.spimy.dev', icon: faDiscord },
+	{ name: 'LinkedIn', url: 'https://www.linkedin.com/in/william-law-hong-waye/', icon: faLinkedin }
 ];
