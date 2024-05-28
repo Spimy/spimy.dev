@@ -18,7 +18,7 @@
 
 <header class="navbar" data-scroll={scrollPosition}>
 	<div class="navbar__logo">
-		<a href="/"><img src="/logos/icon.png" alt="home-logo" /></a>
+		<a href="/" on:click={closeNav}><img src="/logos/icon.png" alt="home-logo" /></a>
 	</div>
 
 	<nav class="navbar__items">
