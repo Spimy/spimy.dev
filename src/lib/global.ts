@@ -17,7 +17,7 @@ export const pages: Page[] = [
 
 export const socialLinks: SocialLink[] = [
 	{ name: 'YouTube', url: 'https://youtube.com/@officialspimy', icon: faYoutube },
-	{ name: 'Instagram', url: 'hhttps://instagram.com/william3001_lhw', icon: faInstagram },
+	{ name: 'Instagram', url: 'https://instagram.com/william3001_lhw', icon: faInstagram },
 	{ name: 'GitHub', url: 'https://github.com/spimy', icon: faGithub },
 	{ name: 'Discord', url: 'https://discord.spimy.dev', icon: faDiscord },
 	{ name: 'LinkedIn', url: 'https://www.linkedin.com/in/william-law-hong-waye/', icon: faLinkedin }
