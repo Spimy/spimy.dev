@@ -43,7 +43,11 @@
 			At least that's the username that I've grown quite fond of. My name is actually William and I
 			am {age} years old. Coding since 2016 (~{experienceYears} years of experience) and I got into programming
 			for trying to code a
-			<a href="https://spigotmc.org" rel="external" target="_blank">Spigot plugin</a>
+			<a
+				href="https://www.spigotmc.org/resources/authors/spimy.501643/"
+				rel="external"
+				target="_blank">Spigot plugin</a
+			>
 			for
 			<a href="https://minecraft.net" rel="external" target="_blank">Minecraft</a>; making Java my
 			first programming language.
