@@ -14,6 +14,7 @@
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^7.0.0",
 		"@sveltejs/kit": "^2.48.5",
+		"@sveltejs/vite-plugin-svelte": "^6.2.1",
 		"@types/markdown-it": "^14.1.2",
 		"@types/nodemailer": "^7.0.3",
 		"@typescript-eslint/eslint-plugin": "^8.46.4",
@@ -23,12 +24,12 @@
 		"eslint-plugin-svelte": "^3.13.0",
 		"prettier": "^3.6.2",
 		"prettier-plugin-svelte": "^3.4.0",
-		"sass": "^1.64.1",
+		"sass": "^1.94.0",
 		"svelte": "^5.43.8",
 		"svelte-check": "^4.3.4",
 		"sveltekit-superforms": "^2.28.1",
-		"tslib": "^2.4.1",
-		"typescript": "^5.0.0",
+		"tslib": "^2.8.1",
+		"typescript": "^5.9.3",
 		"vite": "^7.2.2",
 		"zod": "^4.1.12"
 	},
@@ -36,7 +37,7 @@
 	"dependencies": {
 		"@fortawesome/free-brands-svg-icons": "^7.1.0",
 		"@fortawesome/free-solid-svg-icons": "^7.1.0",
-		"@zerodevx/svelte-toast": "^0.9.5",
+		"@zerodevx/svelte-toast": "^0.9.6",
 		"dotenv": "^17.2.3",
 		"hcaptcha": "^0.2.0",
 		"markdown-it": "^14.1.0",

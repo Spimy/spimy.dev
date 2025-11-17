@@ -1,8 +1,9 @@
+@use "sass:map";
 @use 'breakpoints' as *;
 
 // mq = media query
 @mixin mq($key) {
-	$size: map-get($breakpoints, $key);
+	$size: map.get($breakpoints, $key);
 
 	@media only screen and (min-width: $size) {
 		@content;

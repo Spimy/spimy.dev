@@ -5,8 +5,13 @@
 	import type { SvelteToastOptions } from '@zerodevx/svelte-toast/stores';
 	import type { LayoutServerData } from './$types';
 
-	export let data: LayoutServerData;
-	$: ({ theme, currentYear } = data);
+	interface Props {
+		data: LayoutServerData;
+		children?: import('svelte').Snippet;
+	}
+
+	let { data, children }: Props = $props();
+	let { theme, currentYear } = $derived(data);
 
 	const options: SvelteToastOptions = {
 		classes: ['toast'],
@@ -36,7 +41,7 @@
 	<div class="toast-wrap">
 		<SvelteToast {options} />
 	</div>
-	<slot />
+	{@render children?.()}
 </main>
 
 <Footer {currentYear} />

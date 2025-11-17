@@ -3,7 +3,11 @@
 	import MarkdownIt from 'markdown-it';
 	import markdownItSanitizer from 'markdown-it-sanitizer';
 
-	export let project: Project;
+	interface Props {
+		project: Project;
+	}
+
+	let { project }: Props = $props();
 	const md = new MarkdownIt();
 	md.use(markdownItSanitizer);
 </script>

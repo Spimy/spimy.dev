@@ -29,7 +29,7 @@ export const actions: Actions = {
 		const technologies = Object.keys(Object.fromEntries(form)).filter(
 			(x) => x !== 'technologies-toggle'
 		);
-		if (technologies.length === 0) throw redirect(302, `?page=1`);
-		throw redirect(302, `?page=1&technologies=${technologies}`);
+		if (technologies.length === 0) redirect(302, `?page=1`);
+		redirect(302, `?page=1&technologies=${technologies}`);
 	}
 };

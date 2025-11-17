@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
 	declare global {
 		interface Window {
 			hcaptcha: {
@@ -31,10 +31,14 @@
 	import { browser } from '$app/environment';
 	import { createEventDispatcher } from 'svelte';
 
-	export let siteKey: string;
-	export let theme: HCaptchaTheme = 'light';
+	interface Props {
+		siteKey: string;
+		theme?: HCaptchaTheme;
+	}
 
-	let hCaptchaDiv: HTMLDivElement;
+	let { siteKey, theme = $bindable('light') }: Props = $props();
+
+	let hCaptchaDiv: HTMLDivElement = $state();
 
 	const dispatch = createEventDispatcher<HCaptchaEvent>();
 
@@ -70,4 +74,4 @@
 	data-expired-callback="onExpire"
 	data-size="invisible"
 	data-theme={theme}
-/>
+></div>

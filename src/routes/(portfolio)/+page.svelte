@@ -5,8 +5,12 @@
 	import type { Technology } from '$lib/types/technology';
 	import type { PageServerData } from './$types';
 
-	export let data: PageServerData;
-	$: ({ age, experienceYears, projects, technologies } = data);
+	interface Props {
+		data: PageServerData;
+	}
+
+	let { data }: Props = $props();
+	let { age, experienceYears, projects, technologies } = $derived(data);
 
 	function chunk(array: Technology[], size: number): Technology[][] {
 		if (!array) return [];
@@ -60,8 +64,8 @@
 	<section class="skills">
 		<h1>Skills</h1>
 		<div class="skills__container">
-			<div class="skills__container__texture" />
-			<div class="skills__container__texture" />
+			<div class="skills__container__texture"></div>
+			<div class="skills__container__texture"></div>
 			<div class="skills__container__hex-grid">
 				{#each chunk(technologies, 3) as skillsList, i (i)}
 					<div
@@ -79,8 +83,8 @@
 					</div>
 				{/each}
 			</div>
-			<div class="skills__container__texture" />
-			<div class="skills__container__texture" />
+			<div class="skills__container__texture"></div>
+			<div class="skills__container__texture"></div>
 		</div>
 	</section>
 {/if}

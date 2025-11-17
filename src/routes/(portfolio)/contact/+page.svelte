@@ -1,5 +1,7 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+	import { preventDefault } from 'svelte/legacy';
+
+	import { page } from '$app/state';
 	import { PUBLIC_HCAPTCHA_SITEKEY_CONTACT } from '$env/static/public';
 	import Hcaptcha, { hCaptcha } from '$lib/components/hcaptcha.svelte';
 	import { contactFormSchema } from '$lib/forms/contact';
@@ -10,7 +12,11 @@
 	import { superForm } from 'sveltekit-superforms/client';
 	import type { PageServerData } from './$types';
 
-	export let data: PageServerData;
+	interface Props {
+		data: PageServerData;
+	}
+
+	let { data }: Props = $props();
 	const { form, errors, constraints, enhance, message } = superForm(data.form, {
 		taintedMessage: 'Are you sure you want to leave?',
 		autoFocusOnError: true,
@@ -37,7 +43,7 @@
 						toast.push($message, {
 							duration: 5000,
 							theme: {
-								'--toastBarBackground': $page.status === 200 ? 'green' : 'red'
+								'--toastBarBackground': page.status === 200 ? 'green' : 'red'
 							}
 						});
 					} else {
@@ -156,12 +162,12 @@
 					placeholder="Message"
 					bind:value={$form.message}
 					{...$constraints.message}
-				/>
+				></textarea>
 			</div>
 			{#if $errors.message}
 				<small class="contact__content__form__error">{$errors.message}</small>
 			{/if}
-			<button type="submit" class="btn" on:click|preventDefault={hCaptcha.execute}>Send</button>
+			<button type="submit" class="btn" onclick={preventDefault(hCaptcha.execute)}>Send</button>
 		</form>
 	</div>
 </section>

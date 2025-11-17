@@ -1,8 +1,13 @@
 <script lang="ts">
 	import '../scss/main.scss';
+	interface Props {
+		children?: import('svelte').Snippet;
+	}
+
+	let { children }: Props = $props();
 </script>
 
-<slot />
+{@render children?.()}
 
 <style lang="scss">
 	@use '../scss/layout';

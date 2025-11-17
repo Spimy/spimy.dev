@@ -6,19 +6,23 @@
 	import BurgerIcon from './burger-icon.svelte';
 	import ThemeToggler from './theme-toggler.svelte';
 
-	export let theme: Theme | undefined;
-	$: path = $page.url.pathname;
+	interface Props {
+		theme: Theme | undefined;
+	}
 
-	let scrollPosition: number = 0;
+	let { theme }: Props = $props();
+	let path = $derived($page.url.pathname);
+
+	let scrollPosition: number = $state(0);
 	if (browser) window.addEventListener('scroll', () => (scrollPosition = window.scrollY));
 
-	let burgerMenu: HTMLInputElement;
+	let burgerMenu: HTMLInputElement = $state();
 	const closeNav = () => (burgerMenu.checked = false);
 </script>
 
 <header class="navbar" data-scroll={scrollPosition}>
 	<div class="navbar__logo">
-		<a href="/" on:click={closeNav}><img src="/logos/icon.png" alt="home-logo" /></a>
+		<a href="/" onclick={closeNav}><img src="/logos/icon.png" alt="home-logo" /></a>
 	</div>
 
 	<nav class="navbar__items">
@@ -40,7 +44,7 @@
 						href={page.path}
 						aria-current={path === page.path ? 'page' : undefined}
 						class="navbar__items__menu__item"
-						on:click={closeNav}
+						onclick={closeNav}
 						>{page.display}
 					</a>
 				</li>

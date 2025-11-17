@@ -12,9 +12,9 @@
 
 	const animationConstant = 200;
 	const animationDuration = 300;
-	let inX: number;
-	let outX: number;
-	let checked: boolean = false; // Filter selection box toggle
+	let inX: number = $state();
+	let outX: number = $state();
+	let checked: boolean = $state(false); // Filter selection box toggle
 
 	beforeNavigate(({ from, to }) => {
 		const initialPage = Number(from?.url.searchParams.get('page') ?? 1);
@@ -50,10 +50,14 @@
 
 	const contactPath = pages.find((page) => page.id == 'contact')?.path;
 
-	export let data: PageServerData;
-	$: ({ projects, paginator, technologies, searchParams } = data);
-	$: technologiesQuery = $page.url.searchParams.get('technologies');
-	$: technologiesParam = technologiesQuery ? `&technologies=${technologiesQuery}` : '';
+	interface Props {
+		data: PageServerData;
+	}
+
+	let { data }: Props = $props();
+	let { projects, paginator, technologies, searchParams } = $derived(data);
+	let technologiesQuery = $derived($page.url.searchParams.get('technologies'));
+	let technologiesParam = $derived(technologiesQuery ? `&technologies=${technologiesQuery}` : '');
 
 	const title = "Spimy's Portfolio - Projects";
 	const description =

@@ -1,19 +1,23 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import { afterNavigate } from '$app/navigation';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import type { Theme } from '$lib/types/theme';
 	import type { SubmitFunction } from '@sveltejs/kit';
 
-	export let currentTheme: Theme | undefined;
+	interface Props {
+		currentTheme: Theme | undefined;
+	}
 
-	let nextTheme: Theme;
-	$: nextTheme = !currentTheme || currentTheme === 'light' ? 'dark' : 'light';
-	$: path = $page.url.pathname;
-	$: searchParams = $page.url.searchParams.toString().split('&');
+	let { currentTheme }: Props = $props();
 
-	let scrollX: number = 0;
-	let scrollY: number = 0;
+	let nextTheme: Theme = $derived(!currentTheme || currentTheme === 'light' ? 'dark' : 'light');
+	
+	let path = $derived(page.url.pathname);
+	let searchParams = $derived(page.url.searchParams.toString().split('&'));
+
+	let scrollX: number = $state(0);
+	let scrollY: number = $state(0);
 
 	const submitUpdateTheme: SubmitFunction = ({ action }) => {
 		const theme = action.searchParams.get('theme') as Theme;
@@ -31,7 +35,7 @@
 		class="theme-toggler"
 		type="submit"
 		formaction="/?/setTheme&theme={nextTheme}&redirectTo={path}&searchParams={searchParams}"
-		on:click={() => {
+		onclick={() => {
 			scrollX = window.scrollX;
 			scrollY = window.scrollY;
 		}}

@@ -2,7 +2,11 @@
 	import { pages, socialLinks } from '$lib/global';
 	import Fa from 'svelte-fa';
 
-	export let currentYear: number;
+	interface Props {
+		currentYear: number;
+	}
+
+	let { currentYear }: Props = $props();
 </script>
 
 <footer class="footer">

@@ -40,9 +40,9 @@ export const actions: Actions = {
 			});
 		}
 
-		if (!pages.some((page) => page.path === redirectTo)) throw redirect(303, '/');
+		if (!pages.some((page) => page.path === redirectTo)) redirect(303, '/');
 
-		if (!searchParams) throw redirect(302, redirectTo ?? '/');
-		throw redirect(302, `${redirectTo}?${searchParams?.split(',').join('&')}`);
+		if (!searchParams) redirect(302, redirectTo ?? '/');
+		redirect(302, `${redirectTo}?${searchParams?.split(',').join('&')}`);
 	}
 };
