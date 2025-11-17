@@ -9,6 +9,7 @@
 	import { faEnvelope, faMessage, faUser } from '@fortawesome/free-solid-svg-icons';
 	import { toast } from '@zerodevx/svelte-toast';
 	import Fa from 'svelte-fa';
+	import { zod4Client } from 'sveltekit-superforms/adapters';
 	import { superForm } from 'sveltekit-superforms/client';
 	import type { PageServerData } from './$types';
 
@@ -20,7 +21,7 @@
 	const { form, errors, constraints, enhance, message } = superForm(data.form, {
 		taintedMessage: 'Are you sure you want to leave?',
 		autoFocusOnError: true,
-		validators: contactFormSchema,
+		validators: zod4Client(contactFormSchema),
 		clearOnSubmit: 'errors-and-message',
 		resetForm: true,
 		onSubmit: () => {
@@ -37,21 +38,24 @@
 			const randomNumber = (min: number, max: number) => Math.random() * (max - min) + min;
 
 			const updateProgress = () => {
-				setTimeout(() => {
-					if ($message) {
-						toast.set(id, { next: 1 });
-						toast.push($message, {
-							duration: 5000,
-							theme: {
-								'--toastBarBackground': page.status === 200 ? 'green' : 'red'
-							}
-						});
-					} else {
-						if (progress < 1) progress += randomNumber(0.01, 0.04);
-						toast.set(id, { next: progress });
-						updateProgress();
-					}
-				}, Math.floor(randomNumber(500, 800)));
+				setTimeout(
+					() => {
+						if ($message) {
+							toast.set(id, { next: 1 });
+							toast.push($message, {
+								duration: 5000,
+								theme: {
+									'--toastBarBackground': page.status === 200 ? 'green' : 'red'
+								}
+							});
+						} else {
+							if (progress < 1) progress += randomNumber(0.01, 0.04);
+							toast.set(id, { next: progress });
+							updateProgress();
+						}
+					},
+					Math.floor(randomNumber(500, 800))
+				);
 			};
 
 			updateProgress();
@@ -126,9 +130,9 @@
 			<h2>Contact Form</h2>
 			<Hcaptcha
 				siteKey={PUBLIC_HCAPTCHA_SITEKEY_CONTACT}
-				on:submit={async (event) => event.detail.form?.requestSubmit()}
-				on:error={(error) => console.error(`hCaptcha error: ${error}`)}
-				on:expire={() => console.warn('hCaptcha expired')}
+				onsubmit={async (event) => event.form?.requestSubmit()}
+				onerror={(error) => console.error(`hCaptcha error: ${error}`)}
+				onexpire={() => console.warn('hCaptcha expired')}
 			/>
 			<div class="contact__content__form__group">
 				<label for="name"><i><Fa icon={faUser} /></i></label>

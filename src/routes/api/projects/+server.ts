@@ -47,7 +47,7 @@ export const GET: RequestHandler = async ({ url }) => {
 	}
 
 	// All the maths for the necessary data for pagination to work
-	const numProjects = await Projects.count();
+	const numProjects = await Projects.countDocuments();
 	const currentPage = Math.max(1, page);
 
 	const totalFilteredProjects = (await projects.exec()).length;

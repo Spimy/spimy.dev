@@ -14,12 +14,6 @@
 		execute: () => void;
 	}
 
-	export interface HCaptchaEvent {
-		submit: { token: string; form: HTMLFormElement | null };
-		error: { error: Error };
-		expire: void;
-	}
-
 	export type HCaptchaTheme = 'light' | 'dark';
 
 	export const hCaptcha: HCaptcha = {
@@ -29,26 +23,27 @@
 
 <script lang="ts">
 	import { browser } from '$app/environment';
-	import { createEventDispatcher } from 'svelte';
 
 	interface Props {
 		siteKey: string;
 		theme?: HCaptchaTheme;
+		onsubmit: (event: { token: string; form?: HTMLFormElement | null }) => void;
+		onerror: (error: Error) => void;
+		onexpire: () => void;
 	}
 
-	let { siteKey, theme = $bindable('light') }: Props = $props();
+	let { siteKey, theme = $bindable('light'), onsubmit, onerror, onexpire }: Props = $props();
 
-	let hCaptchaDiv: HTMLDivElement = $state();
-
-	const dispatch = createEventDispatcher<HCaptchaEvent>();
+	let hCaptchaDiv: HTMLDivElement | null = $state(null);
 
 	const onSubmit = (token: string) => {
-		const form = hCaptchaDiv.closest('form');
-		dispatch('submit', { token, form });
+		const form = hCaptchaDiv?.closest('form');
+		// dispatch('submit', { token, form });
+		onsubmit({ token, form });
 	};
 
-	const onError = (error: Error) => dispatch('error', { error });
-	const onExpire = () => dispatch('expire');
+	const onError = (error: Error) => onerror(error);
+	const onExpire = () => onexpire();
 
 	if (browser) {
 		theme = (document.documentElement.getAttribute('data-theme') as HCaptchaTheme) ?? theme;

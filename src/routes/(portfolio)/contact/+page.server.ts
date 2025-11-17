@@ -11,6 +11,7 @@ import { contactFormSchema } from '$lib/forms/contact';
 import type { Actions } from '@sveltejs/kit';
 import { verify } from 'hcaptcha';
 import { createTransport } from 'nodemailer';
+import { zod4 } from 'sveltekit-superforms/adapters';
 import { message, superValidate } from 'sveltekit-superforms/server';
 import type { PageServerLoad } from '../$types';
 
@@ -27,14 +28,14 @@ const transporter = createTransport({
 	}
 });
 
-export const load: PageServerLoad = async (event) => {
-	const form = await superValidate(event, contactFormSchema);
+export const load: PageServerLoad = async () => {
+	const form = await superValidate(zod4(contactFormSchema));
 	return { form };
 };
 
 export const actions: Actions = {
 	submitContactForm: async (event) => {
-		const form = await superValidate(event, contactFormSchema);
+		const form = await superValidate(event, zod4(contactFormSchema));
 		if (!form.valid) return message(form, 'Contact form is missing some required fields.');
 
 		const response = await verify(
@@ -52,7 +53,7 @@ export const actions: Actions = {
 		await transporter.sendMail({
 			to: EMAIL_TO,
 			text: [`From: ${form.data.email}`, form.data.message].join('\n'),
-			from: `"Spimy - Automated <${EMAIL_USER}>`,
+			from: `Spimy - Automated <${EMAIL_USER}>`,
 			subject: `Contact Form filled by ${form.data.name}`
 		});
 

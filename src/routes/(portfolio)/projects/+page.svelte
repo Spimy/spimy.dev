@@ -12,8 +12,8 @@
 
 	const animationConstant = 200;
 	const animationDuration = 300;
-	let inX: number = $state();
-	let outX: number = $state();
+	let inX: number = $state(0);
+	let outX: number = $state(0);
 	let checked: boolean = $state(false); // Filter selection box toggle
 
 	beforeNavigate(({ from, to }) => {
