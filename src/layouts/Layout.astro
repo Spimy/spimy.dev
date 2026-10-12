@@ -1,8 +1,10 @@
 ---
+import EdgeNav from '../components/EdgeNav.astro';
 import '../css/styles.css';
 
 interface Props {
 	title: string;
+	description: string;
 }
 ---
 
@@ -11,22 +13,50 @@ interface Props {
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<link href="https://fonts.googleapis.com/css2?family=Anton&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+		<link rel="icon" type="image/png" href="/favicon.png" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Anton&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+			rel="stylesheet"
+		/>
 		<meta name="generator" content={Astro.generator} />
+
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
 		<title>Spimy's Portfolio - {Astro.props.title}</title>
+		<meta name="description" content={Astro.props.description} />
 	</head>
 	<body>
+		<a href="#main-content" class="skip-link">Skip to content</a>
+
+		<slot name="state" />
+
+		<EdgeNav />
+
 		<slot />
+
+		<footer class="build-note">
+			© {new Date().getFullYear()} Spimy - Built with <a
+				href="https://astro.build"
+				target="_blank"
+				rel="noopener noreferrer">Astro</a
+			> and <a
+				href="https://svelte.dev"
+				target="_blank"
+				rel="noopener noreferrer">Svelte</a
+			>.
+		</footer>
 	</body>
 </html>
 
 <style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
+	footer.build-note {
+		position: relative;
+		z-index: 1;
+		text-align: center;
+		padding: 1.25rem 1.25rem 5.625rem;
+		font-family: var(--font-mono);
+		font-size: 0.6875rem;
+		color: var(--text-muted);
 	}
 </style>
