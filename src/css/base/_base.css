@@ -93,7 +93,9 @@ a {
 /* Visually hidden but still keyboard-focusable (display:none would remove it
    from the tab order) */
 .state-checkbox {
-  position: absolute;
+  position: fixed;
+  top: 0;
+  left: 0;
   opacity: 0;
   width: 1px;
   height: 1px;
