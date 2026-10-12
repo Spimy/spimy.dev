@@ -1,0 +1,29 @@
+{
+  "name": "Portfolio (Astro)",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:26-bookworm",
+  "forwardPorts": [4321],
+  "postCreateCommand": "(corepack --version >/dev/null 2>&1 || npm install -g --force corepack) && corepack enable pnpm",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "astro-build.astro-vscode",
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint",
+        "aaron-bond.better-comments",
+        "stordahl.sveltekit-snippets",
+        "dotenv.dotenv-vscode",
+        "svelte.svelte-vscode",
+        "redhat.vscode-yaml",
+        "shd101wyy.markdown-preview-enhanced",
+        "DavidAnson.vscode-markdownlint",
+        "donjayamanne.githistory",
+        "GitHub.vscode-pull-request-github",
+        "ms-azuretools.vscode-docker",
+        "docker.docker",
+        "ms-azuretools.vscode-containers",
+        "BriteSnow.vscode-toggle-quotes"
+      ]
+    }
+  },
+  "remoteUser": "root"
+}
