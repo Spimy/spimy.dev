@@ -2,25 +2,29 @@
 export const prerender = false;
 
 import { Image } from 'astro:assets';
-import { getCollection } from 'astro:content';
 import characterReal from '../assets/character-real.png';
 import character from '../assets/character.png';
 import logo from '../assets/logo.png';
 import Layout from '../layouts/Layout.astro';
 import { getCompletedAnime, getGitHubStats } from '../lib/external';
+import {
+	ANILIST_USERNAME,
+	GITHUB_USERNAME,
+	getProjectCount,
+	getYearsCoding,
+} from '../lib/profile';
 
 type Stat = { label: string; value: string; big?: boolean };
 
 const rosterLocked = 4;
 const level = 34;
 
-const yearsCoding = new Date().getFullYear() - 2016;
-const [projects, github, anime] = await Promise.all([
-	getCollection('projects'),
-	getGitHubStats('Spimy', import.meta.env.GITHUB_TOKEN),
-	getCompletedAnime('Spimy'),
+const yearsCoding = getYearsCoding();
+const [projectsShipped, github, anime] = await Promise.all([
+	getProjectCount(),
+	getGitHubStats(GITHUB_USERNAME, import.meta.env.GITHUB_TOKEN),
+	getCompletedAnime(ANILIST_USERNAME),
 ]);
-const projectsShipped = projects.length;
 
 Astro.response.headers.set(
 	'Cache-Control',
@@ -35,7 +39,7 @@ const stats = [
 		label: 'Anime Completed',
 		value: anime.toLocaleString('en'),
 	},
-	{ label: 'Projects Shipped', value: String(projectsShipped) },
+	{ label: 'Projects Shipped', value: `${projectsShipped}+` },
 	{ label: 'Avg. Sleep', value: '6.5 hrs' },
 	github && {
 		label: 'Commits (YTD)',
