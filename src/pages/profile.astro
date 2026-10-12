@@ -42,13 +42,13 @@ const timeline = [
 	},
 	{
 		year: '2023',
-		title: 'Moved to Svelte and SvelteKit',
-		text: 'I was not happy with how my Nuxt 3 portfolio turned out, so I learned Svelte and SvelteKit and rebuilt it from scratch. Svelte is now the framework I reach for first.',
+		title: 'First portfolio in Nuxt 3, rebuilt in Svelte',
+		text: 'I learned Nuxt 3 for the server-side rendering and contact forms, and used it to build my first portfolio. I was not happy with how it turned out, so I learned Svelte and SvelteKit and rebuilt it from scratch. Svelte is now the framework I reach for first.',
 	},
 	{
-		year: '2021–22',
-		title: 'Nuxt 3 and my first portfolio',
-		text: 'Somewhere between 2021 and 2022 I learned Nuxt 3 and used it to build my first portfolio. I had heard a lot of good things about it and I already knew Vue. Server-side rendering meant the site would be fast and good for SEO, and being able to run server-side code made things like a contact form easy.',
+		year: '2022',
+		title: 'A Spigot plugin for my own server',
+		text: 'I played Minecraft with friends on a server and wanted some quality-of-life features, so I made QoLTweaks, a Spigot plugin that adds things like ladder warping. I published it on SpigotMC in January 2023.',
 	},
 	{
 		year: '2021',
@@ -57,13 +57,18 @@ const timeline = [
 	},
 	{
 		year: '2021',
-		title: 'Picked up Vue',
-		text: "I did not want to build only static pages with nothing dynamic on them. I had already done AJAX requests in plain JavaScript with Django in 2020, but anything bigger meant writing HTML inside JavaScript strings, which got messy fast. I chose Vue over the more popular React because I preferred Vue's template syntax. I started building projects with people I had met while making Minecraft plugins.",
+		title: 'Vue and Django REST framework, with Eray',
+		text: 'I kept working on Subtitles with Eray, using Vue and Django REST framework, until it ended in early 2021. We planned other projects together that year too, but none of them got past the planning stage.',
 	},
 	{
-		year: '2020–21',
+		year: '2020',
+		title: 'Picked up Vue',
+		text: "I did not want to build only static pages with nothing dynamic on them. I had already done AJAX requests in plain JavaScript with Django earlier in 2020, but anything bigger meant writing HTML inside JavaScript strings, which got messy fast. I chose Vue over the more popular React because I preferred Vue's template syntax.",
+	},
+	{
+		year: '2020',
 		title: 'Went full stack with Django',
-		text: 'This was the year I started learning full stack web development properly, beginning with Django. I spent about three quarters of 2020 on a single project, and I kept using Django into 2021.',
+		text: 'From April 2020, because of COVID, I spent my time learning to code and started learning full stack web development properly, beginning with Django. I made Spuiz that spring, tried another project called Manime that never got anywhere, and started Subtitles in September.',
 	},
 	{
 		year: '2019',
@@ -317,7 +322,6 @@ const interests = [
 		color: var(--text);
 	}
 
-	/* Closed: the toggle is the last thing on the line, so end the line there. */
 	.timeline__more:not([open]) > .timeline__more-toggle {
 		border-left-color: transparent;
 		padding-bottom: 0;
