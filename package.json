@@ -1,5 +1,5 @@
 {
-  "name": "tmp-astro",
+  "name": "spimy.dev",
   "type": "module",
   "version": "0.0.1",
   "engines": {
@@ -12,6 +12,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/node": "^11.1.7",
     "@astrojs/svelte": "^9.0.1",
     "astro": "^7.3.8",
     "svelte": "^5.57.2",
