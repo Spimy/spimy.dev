@@ -30,7 +30,7 @@
   /* --- Typography --- */
   --font-display: 'Anton', sans-serif;
   --font-body: 'Hanken Grotesk', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  --font-mono: 'Fira Code', monospace;
 
   /* --- Layout --- */
   /* left edge-nav rail (becomes bottom bar <= 760px) */
