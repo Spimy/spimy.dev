@@ -1,0 +1,156 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/logo.png';
+
+const links = [
+	{ href: '/profile', num: 'I', label: 'Profile' },
+	{ href: '/projects', num: 'II', label: 'Inventory' },
+	{ href: '/equipments', num: 'III', label: 'Equipments' },
+	{ href: '/contact', num: 'IV', label: 'Party Chat' },
+];
+
+// Strip any trailing slash so '/projects/' and '/projects/foo' still match '/projects'
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isCurrent = (href: string) =>
+	path === href || path.startsWith(`${href}/`);
+---
+
+<nav class="edge-nav" aria-label="Primary">
+	<a class="edge-home" href="/" aria-label="Home / Title screen">
+		<Image src={logo} alt="" width="30" height="30" />
+	</a>
+	{
+		links.map(({ href, num, label }) => (
+			<a
+				class="edge-item"
+				href={href}
+				aria-current={isCurrent(href) ? 'page' : undefined}
+			>
+				<span class="num">{num}</span>
+				{label}
+			</a>
+		))
+	}
+</nav>
+
+<style>
+	.edge-nav {
+		position: fixed;
+		z-index: 90;
+		left: 0;
+		top: 0;
+		bottom: 0;
+		width: 64px;
+		display: flex;
+		flex-direction: column;
+		background: var(--ink);
+		border-right: 3px solid var(--accent);
+	}
+
+	.edge-home {
+		height: 64px;
+		flex-shrink: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: var(--panel);
+		border-bottom: 3px solid var(--accent);
+	}
+
+	.edge-home img {
+		width: 30px;
+		height: 30px;
+	}
+
+	.edge-item {
+		flex: 1;
+		position: relative;
+		min-height: 70px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 10px;
+		text-decoration: none;
+		color: var(--text-muted);
+		border-bottom: 2px solid var(--panel);
+		writing-mode: vertical-rl;
+		text-orientation: mixed;
+		font-family: var(--font-mono);
+		font-weight: 700;
+		text-transform: uppercase;
+		font-size: 12px;
+		letter-spacing: 0.06em;
+	}
+
+	.edge-item .num {
+		writing-mode: horizontal-tb;
+		font-family: var(--font-mono);
+		font-size: 10px;
+		color: var(--accent-pop);
+	}
+
+	.edge-item:hover,
+	.edge-item:focus-visible,
+	.edge-item[aria-current='page'] {
+		background: var(--accent);
+		color: var(--on-accent);
+		outline: none;
+	}
+
+	.edge-item:hover .num,
+	.edge-item:focus-visible .num,
+	.edge-item[aria-current='page'] .num {
+		color: var(--on-accent);
+	}
+
+	.edge-item[aria-current='page']::before {
+		content: '';
+		position: absolute;
+		left: 0;
+		top: 0;
+		bottom: 0;
+		width: 5px;
+		background: var(--accent-pop);
+	}
+
+	@media (max-width: 760px) {
+		.edge-nav {
+			left: 0;
+			right: 0;
+			top: auto;
+			bottom: 0;
+			height: 60px;
+			width: auto;
+			flex-direction: row;
+			border-right: 0;
+			border-top: 3px solid var(--accent);
+		}
+
+		.edge-home {
+			height: auto;
+			width: 56px;
+			border-bottom: 0;
+			border-right: 3px solid var(--accent);
+			flex-shrink: 0;
+		}
+
+		.edge-item {
+			writing-mode: horizontal-tb;
+			font-size: 9.5px;
+			min-height: 0;
+			border-bottom: 0;
+			border-right: 2px solid var(--panel);
+			gap: 2px;
+		}
+
+		.edge-item[aria-current='page']::before {
+			left: 0;
+			top: 0;
+			right: 0;
+			bottom: auto;
+			width: auto;
+			height: 4px;
+		}
+	}
+</style>
