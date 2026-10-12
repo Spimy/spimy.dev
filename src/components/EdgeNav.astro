@@ -16,17 +16,20 @@ const isCurrent = (href: string) =>
 ---
 
 <nav class="edge-nav" aria-label="Primary">
-	<a class="edge-home" href="/" aria-label="Home / Title screen">
-		<Image src={logo} alt="" width="30" height="30" />
+	<a class="edge-nav__home" href="/" aria-label="Home / Title screen">
+		<Image src={logo} alt="" width="30" height="30" class="edge-nav__logo" />
 	</a>
 	{
 		links.map(({ href, num, label }) => (
 			<a
-				class="edge-item"
+				class:list={[
+					'edge-nav__item',
+					{ 'edge-nav__item--current': isCurrent(href) },
+				]}
 				href={href}
 				aria-current={isCurrent(href) ? 'page' : undefined}
 			>
-				<span class="num">{num}</span>
+				<span class="edge-nav__number">{num}</span>
 				{label}
 			</a>
 		))
@@ -40,15 +43,15 @@ const isCurrent = (href: string) =>
 		left: 0;
 		top: 0;
 		bottom: 0;
-		width: 64px;
+		width: var(--nav-width);
 		display: flex;
 		flex-direction: column;
 		background: var(--ink);
 		border-right: 3px solid var(--accent);
 	}
 
-	.edge-home {
-		height: 64px;
+	.edge-nav__home {
+		height: 4rem;
 		flex-shrink: 0;
 		display: flex;
 		align-items: center;
@@ -57,20 +60,20 @@ const isCurrent = (href: string) =>
 		border-bottom: 3px solid var(--accent);
 	}
 
-	.edge-home img {
-		width: 30px;
-		height: 30px;
+	.edge-nav__logo {
+		width: 1.875rem;
+		height: 1.875rem;
 	}
 
-	.edge-item {
+	.edge-nav__item {
 		flex: 1;
 		position: relative;
-		min-height: 70px;
+		min-height: 4.375rem;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		gap: 10px;
+		gap: 0.625rem;
 		text-decoration: none;
 		color: var(--text-muted);
 		border-bottom: 2px solid var(--panel);
@@ -79,38 +82,38 @@ const isCurrent = (href: string) =>
 		font-family: var(--font-mono);
 		font-weight: 700;
 		text-transform: uppercase;
-		font-size: 12px;
+		font-size: 0.75rem;
 		letter-spacing: 0.06em;
 	}
 
-	.edge-item .num {
+	.edge-nav__number {
 		writing-mode: horizontal-tb;
 		font-family: var(--font-mono);
-		font-size: 10px;
+		font-size: 0.625rem;
 		color: var(--accent-pop);
 	}
 
-	.edge-item:hover,
-	.edge-item:focus-visible,
-	.edge-item[aria-current='page'] {
+	.edge-nav__item:hover,
+	.edge-nav__item:focus-visible,
+	.edge-nav__item--current {
 		background: var(--accent);
 		color: var(--on-accent);
 		outline: none;
 	}
 
-	.edge-item:hover .num,
-	.edge-item:focus-visible .num,
-	.edge-item[aria-current='page'] .num {
+	.edge-nav__item:hover .edge-nav__number,
+	.edge-nav__item:focus-visible .edge-nav__number,
+	.edge-nav__item--current .edge-nav__number {
 		color: var(--on-accent);
 	}
 
-	.edge-item[aria-current='page']::before {
+	.edge-nav__item--current::before {
 		content: '';
 		position: absolute;
 		left: 0;
 		top: 0;
 		bottom: 0;
-		width: 5px;
+		width: 0.3125rem;
 		background: var(--accent-pop);
 	}
 
@@ -120,37 +123,37 @@ const isCurrent = (href: string) =>
 			right: 0;
 			top: auto;
 			bottom: 0;
-			height: 60px;
+			height: 3.75rem;
 			width: auto;
 			flex-direction: row;
 			border-right: 0;
 			border-top: 3px solid var(--accent);
 		}
 
-		.edge-home {
+		.edge-nav__home {
 			height: auto;
-			width: 56px;
+			width: 3.5rem;
 			border-bottom: 0;
 			border-right: 3px solid var(--accent);
 			flex-shrink: 0;
 		}
 
-		.edge-item {
+		.edge-nav__item {
 			writing-mode: horizontal-tb;
-			font-size: 9.5px;
+			font-size: 0.59375rem;
 			min-height: 0;
 			border-bottom: 0;
 			border-right: 2px solid var(--panel);
-			gap: 2px;
+			gap: 0.125rem;
 		}
 
-		.edge-item[aria-current='page']::before {
+		.edge-nav__item--current::before {
 			left: 0;
 			top: 0;
 			right: 0;
 			bottom: auto;
 			width: auto;
-			height: 4px;
+			height: 0.25rem;
 		}
 	}
 </style>
