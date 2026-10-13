@@ -1,12 +1,14 @@
 // @ts-check
 import node from '@astrojs/node';
+import sitemap from '@astrojs/sitemap';
 import svelte from '@astrojs/svelte';
 import { defineConfig, envField } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
   server: { host: true },
-  integrations: [svelte()],
+  site: 'https://www.spimy.dev',
+  integrations: [svelte(), sitemap()],
 
   adapter: node({
     mode: 'standalone',
