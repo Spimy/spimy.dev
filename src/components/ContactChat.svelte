@@ -417,6 +417,7 @@
             class="compose__textarea"
             id="cf-message"
             name="message"
+            rows="1"
             placeholder="Type your message…"
             required
             maxlength={limits.message}
@@ -753,7 +754,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 0.625rem;
-    align-items: flex-end;
+    align-items: flex-start;
   }
 
   .compose__message {
