@@ -7,4 +7,6 @@ tags: ['Java', 'Spigot']
 links:
   - label: 'SpigotMC'
     url: 'https://www.spigotmc.org/resources/spelp-%C2%BB-powerful-afk-system-vanish-spawn-fully-configurable-1-8-1-12.51382/'
+  - label: 'Code'
+    url: 'https://github.com/Spimy/Spelp'
 ---

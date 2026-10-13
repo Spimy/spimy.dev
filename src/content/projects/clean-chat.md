@@ -7,4 +7,6 @@ tags: ['Java', 'Spigot']
 links:
   - label: 'SpigotMC'
     url: 'https://www.spigotmc.org/resources/cleanchat-%C2%BB-anti-swear-anti-advertise-anti-spam-fully-configurable-1-8-1-12.52445/'
+  - label: 'Code'
+    url: 'https://github.com/Spimy/CleanChat'
 ---

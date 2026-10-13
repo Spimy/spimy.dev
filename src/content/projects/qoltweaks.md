@@ -7,4 +7,6 @@ tags: ['Java', 'Spigot']
 links:
   - label: 'SpigotMC'
     url: 'https://www.spigotmc.org/resources/qoltweaks.107387/'
+  - label: 'Code'
+    url: 'https://github.com/Spimy/QoLTweaks'
 ---
