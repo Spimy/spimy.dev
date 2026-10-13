@@ -1,0 +1,151 @@
+---
+export const prerender = false;
+
+import { getImage } from 'astro:assets';
+import { CONTACT_TO, HCAPTCHA_SITEKEY } from 'astro:env/server';
+import character from '../assets/character.png';
+import ContactChat from '../components/ContactChat.svelte';
+import ContactLinks from '../components/ContactLinks.svelte';
+import PageHeader from '../components/PageHeader.astro';
+import PageMain from '../components/PageMain.astro';
+import Panel from '../components/Panel.astro';
+import Layout from '../layouts/Layout.astro';
+import {
+	type ContactErrors,
+	type ContactFields,
+	LIMITS,
+	SUBMIT_MESSAGES,
+	rememberSent,
+	revealEmail,
+	submitContact,
+	takeSent,
+} from '../lib/contact';
+import { issueFormToken, issueRevealToken } from '../lib/form-token';
+import { DISCORD_URL, GITHUB_USERNAME, TWITTER_USERNAME } from '../lib/profile';
+
+Astro.response.headers.set('Cache-Control', 'no-store');
+
+let fields: ContactFields = { name: '', email: '', message: '' };
+let errors: ContactErrors = {};
+let formError = '';
+
+// A plain form post, for visitors without JS
+// With JS, the chat sends to /api/contact instead and never reloads the page
+if (Astro.request.method === 'POST') {
+	const form = await Astro.request.formData().catch(() => null);
+
+	if (form === null) {
+		formError = SUBMIT_MESSAGES.unreadable;
+		Astro.response.status = 400;
+	} else {
+		const result = await submitContact(form, Astro.clientAddress);
+		fields = result.fields;
+
+		switch (result.kind) {
+			case 'sent':
+			case 'bot':
+				return Astro.redirect(
+					`/contact?sent=${rememberSent(result.fields)}#chat`,
+					303,
+				);
+			case 'invalid':
+				errors = result.errors;
+				Astro.response.status = 422;
+				break;
+			case 'expired':
+				formError = SUBMIT_MESSAGES.expired;
+				Astro.response.status = 400;
+				break;
+			case 'captcha':
+				formError = SUBMIT_MESSAGES.captcha;
+				Astro.response.status = 400;
+				break;
+			case 'limited':
+				formError = SUBMIT_MESSAGES.limited;
+				Astro.response.status = 429;
+				break;
+			case 'failed':
+				formError = SUBMIT_MESSAGES.failed;
+				Astro.response.status = 500;
+				break;
+		}
+	}
+}
+
+const sentToken =
+	Astro.request.method === 'GET' ? Astro.url.searchParams.get('sent') : null;
+const sent = (sentToken && takeSent(sentToken)) || null;
+
+// Every render gets its own token. A used one never works twice.
+const formToken = issueFormToken();
+
+const requestedToken =
+	Astro.request.method === 'GET' ? Astro.url.searchParams.get('reveal') : null;
+const email = revealEmail(requestedToken);
+const revealExpired = requestedToken !== null && email === null;
+
+const links = [
+	{ label: 'GitHub', href: `https://github.com/${GITHUB_USERNAME}` },
+	{ label: 'Twitter', href: `https://x.com/${TWITTER_USERNAME}` },
+	{ label: 'Discord', href: DISCORD_URL },
+];
+
+const avatar = (await getImage({ src: character, width: 160, format: 'webp' }))
+	.src;
+---
+
+<Layout
+	title="Party Chat"
+	description="Send Spimy a message: questions, opportunities, or just hello."
+>
+	<PageHeader
+		title="Party Chat"
+		subtitle="Character page IV - this is where you'd say hi, hypothetically."
+	/>
+
+	<PageMain>
+		<Panel kicker="// 04 — PARTY CHAT" title="Send a message" tone="pop">
+			<Fragment slot="intro">
+				Reachable at the usual places, or just send it straight through the form
+				below.
+			</Fragment>
+
+			<ContactLinks
+				client:load
+				canReveal={Boolean(CONTACT_TO)}
+				email={email}
+				revealToken={issueRevealToken()}
+				expired={revealExpired}
+				links={links}
+			/>
+			<p class="menu__email" id="email" data-email-out hidden={!email}>
+				{
+					email && (
+						<a class="menu__email-link" href={`mailto:${email}`}>
+							{email}
+						</a>
+					)
+				}
+			</p>
+			{
+				revealExpired && (
+					<p class="menu__note" role="status">
+						That link expired. Press Show email again.
+					</p>
+				)
+			}
+
+			<ContactChat
+				client:load
+				avatar={avatar}
+				hCaptchaSitekey={HCAPTCHA_SITEKEY}
+				token={formToken}
+				limits={LIMITS}
+				fields={fields}
+				errors={errors}
+				formError={formError}
+				sent={sent}
+			/>
+		</Panel>
+	</PageMain>
+</Layout>
