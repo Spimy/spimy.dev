@@ -62,9 +62,18 @@ const cards = gear.map((item) => {
 	};
 });
 
+function statusRank(item: Gear): number {
+	if (equippedIds.has(item.id)) return 0;
+	if (item.status === 'stash') return 2;
+	if (item.status === 'locked') return 3;
+	return 1;
+}
+
 const sections = groups.map((group) => ({
 	...group,
-	items: gear.filter((item) => item.group === group.id),
+	items: gear
+		.filter((item) => item.group === group.id)
+		.sort((a, b) => statusRank(a) - statusRank(b)),
 }));
 
 const logoFiles = import.meta.glob<ImageMetadata>(
