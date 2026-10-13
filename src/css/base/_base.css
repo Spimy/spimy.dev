@@ -1,0 +1,139 @@
+:root {
+  /* --- Surfaces (darkest to lightest) --- */
+  /* borders, outlines, hard offset shadows */
+  --ink: #050408;
+  /* page background */
+  --void: #07060b;
+  /* panel background */
+  --panel: #121018;
+  /* raised / nested panel */
+  --panel-2: #191625;
+
+  /* --- Brand --- */
+  /* hsl(225, 70%, 54%): primary brand blue */
+  --accent: #3861dc;
+  /* purple: links, labels, level-up button */
+  --accent-soft: #8b7cf6;
+  /* pink: highlights, focus rings, active states */
+  --accent-pop: #ff2f92;
+
+  /* --- Text --- */
+  --text: #f4f2ff;
+  --text-muted: #a7a6c4;
+  /* text on filled accent buttons / active nav */
+  --on-accent: #000;
+
+  /* --- Status --- */
+  /* online dot, "unlocked" pill */
+  --ok: #3ddc84;
+
+  /* --- Typography --- */
+  --font-display: 'Anton', sans-serif;
+  --font-body: 'Hanken Grotesk', sans-serif;
+  --font-mono: 'Fira Code', monospace;
+
+  /* --- Layout --- */
+  /* left edge-nav rail (becomes bottom bar <= 760px) */
+  --nav-width: 4rem;
+}
+
+/* ---------- Global ---------- */
+body {
+  font-family: var(--font-body);
+  color: var(--text);
+  background: var(--void);
+  position: relative;
+  padding-left: var(--nav-width);
+}
+
+/* Flat halftone / screentone texture. Sits behind content (z-index 0).
+   Dot size and spacing stay in px so the pattern stays crisp at any font size. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image: radial-gradient(circle, color-mix(in srgb, var(--text) 7%, transparent) 1px, transparent 1.3px);
+  background-size: 7px 7px;
+}
+
+@media (max-width: 760px) {
+  body {
+    padding-left: 0;
+    padding-bottom: 3.75rem;
+  }
+}
+
+a {
+  color: var(--accent-soft);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent-pop);
+  outline-offset: 2px;
+}
+
+/* ---------- Utilities ---------- */
+
+/* Visually hidden but still read by screen readers. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Visually hidden but still keyboard-focusable (display:none would remove it
+   from the tab order) */
+.state-checkbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+/* Skip link: off-screen until focused. */
+.skip-link {
+  position: absolute;
+  left: 0.5rem;
+  top: -3rem;
+  z-index: 999;
+  padding: 0.625rem 1rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--on-accent);
+  background: var(--accent);
+  transition: top 0.15s ease;
+}
+
+.skip-link:focus {
+  top: 0.5rem;
+}
+
+/* UI labels: mono, bold, uppercase. Reads fine at any size; keep the italic
+   display font for hero-scale headlines only. */
+.label-caps {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Small outlined tag (skills, tech). Colour follows the parent via currentColor. */
+.tag {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  color: inherit;
+  border: 1px solid currentColor;
+  padding: 0.1875rem 0.5rem;
+  opacity: 0.85;
+}

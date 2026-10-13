@@ -1,0 +1,159 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/logo.png';
+
+const links = [
+	{ href: '/profile', num: 'I', label: 'Profile' },
+	{ href: '/projects', num: 'II', label: 'Inventory' },
+	{ href: '/equipment', num: 'III', label: 'Equipment' },
+	{ href: '/contact', num: 'IV', label: 'Party Chat' },
+];
+
+// Strip any trailing slash so '/projects/' and '/projects/foo' still match '/projects'
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isCurrent = (href: string) =>
+	path === href || path.startsWith(`${href}/`);
+---
+
+<nav class="edge-nav" aria-label="Primary">
+	<a class="edge-nav__home" href="/" aria-label="Home / Title screen">
+		<Image src={logo} alt="" width="30" height="30" class="edge-nav__logo" />
+	</a>
+	{
+		links.map(({ href, num, label }) => (
+			<a
+				class:list={[
+					'edge-nav__item',
+					{ 'edge-nav__item--current': isCurrent(href) },
+				]}
+				href={href}
+				aria-current={isCurrent(href) ? 'page' : undefined}
+			>
+				<span class="edge-nav__number">{num}</span>
+				{label}
+			</a>
+		))
+	}
+</nav>
+
+<style>
+	.edge-nav {
+		position: fixed;
+		z-index: 90;
+		left: 0;
+		top: 0;
+		bottom: 0;
+		width: var(--nav-width);
+		display: flex;
+		flex-direction: column;
+		background: var(--ink);
+		border-right: 3px solid var(--accent);
+	}
+
+	.edge-nav__home {
+		height: 4rem;
+		flex-shrink: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: var(--panel);
+		border-bottom: 3px solid var(--accent);
+	}
+
+	.edge-nav__logo {
+		width: 1.875rem;
+		height: 1.875rem;
+	}
+
+	.edge-nav__item {
+		flex: 1;
+		position: relative;
+		min-height: 4.375rem;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 0.625rem;
+		text-decoration: none;
+		color: var(--text-muted);
+		border-bottom: 2px solid var(--panel);
+		writing-mode: vertical-rl;
+		text-orientation: mixed;
+		font-family: var(--font-mono);
+		font-weight: 700;
+		text-transform: uppercase;
+		font-size: 0.75rem;
+		letter-spacing: 0.06em;
+	}
+
+	.edge-nav__number {
+		writing-mode: horizontal-tb;
+		font-family: var(--font-mono);
+		font-size: 0.625rem;
+		color: var(--accent-pop);
+	}
+
+	.edge-nav__item:hover,
+	.edge-nav__item:focus-visible,
+	.edge-nav__item--current {
+		background: var(--accent);
+		color: var(--on-accent);
+		outline: none;
+	}
+
+	.edge-nav__item:hover .edge-nav__number,
+	.edge-nav__item:focus-visible .edge-nav__number,
+	.edge-nav__item--current .edge-nav__number {
+		color: var(--on-accent);
+	}
+
+	.edge-nav__item--current::before {
+		content: '';
+		position: absolute;
+		left: 0;
+		top: 0;
+		bottom: 0;
+		width: 0.3125rem;
+		background: var(--accent-pop);
+	}
+
+	@media (max-width: 760px) {
+		.edge-nav {
+			left: 0;
+			right: 0;
+			top: auto;
+			bottom: 0;
+			height: 3.75rem;
+			width: auto;
+			flex-direction: row;
+			border-right: 0;
+			border-top: 3px solid var(--accent);
+		}
+
+		.edge-nav__home {
+			height: auto;
+			width: 3.5rem;
+			border-bottom: 0;
+			border-right: 3px solid var(--accent);
+			flex-shrink: 0;
+		}
+
+		.edge-nav__item {
+			writing-mode: horizontal-tb;
+			font-size: 0.59375rem;
+			min-height: 0;
+			border-bottom: 0;
+			border-right: 2px solid var(--panel);
+			gap: 0.125rem;
+		}
+
+		.edge-nav__item--current::before {
+			left: 0;
+			top: 0;
+			right: 0;
+			bottom: auto;
+			width: auto;
+			height: 0.25rem;
+		}
+	}
+</style>

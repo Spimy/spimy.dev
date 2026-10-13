@@ -1,24 +1,46 @@
-# spimy.dev
+# Astro Starter Kit: Basics
 
-Personal portfolio site with a brief introduction to who I am as well as a page dedicated to my past projects.
-You can contact me via the contact form on the site.
+```sh
+pnpm create astro@latest -- --template basics
+```
 
-## Credits
+> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
 
-Icon Logo Design by OmniFX (current username unknown unfortunately)
+## 🚀 Project Structure
 
-Character Logo Design by [dotonBurii](https://twitter.com/dotonBurii)
+Inside of your Astro project, you'll see the following folders and files:
 
-Portfolio Design by [Nikhil Kumar Swain](https://github.com/nikhilswain) using [Figma](https://www.figma.com)
+```text
+/
+├── public/
+│   └── favicon.svg
+├── src
+│   ├── assets
+│   │   └── astro.svg
+│   ├── components
+│   │   └── Welcome.astro
+│   ├── layouts
+│   │   └── Layout.astro
+│   └── pages
+│       └── index.astro
+└── package.json
+```
 
-Tileable hexagons CSS in skill section by [Temani Afif](https://stackoverflow.com/questions/66194160/how-to-make-css-hexagon-honeycomb-grid-based-on-set-math-equations-flexible)
+To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
 
-- Hover fix in reply linked to [JSFiddle also by Temani Afif](https://jsfiddle.net/31rp6dn4/)
+## 🧞 Commands
 
-Coded by [Spimy](https://github.com/Spimy) aka myself
+All commands are run from the root of the project, from a terminal:
 
-Built on [SvelteKit](https://kit.svelte.dev/) and hosted on [Vercel](https://vercel.com)
+| Command                   | Action                                           |
+| :------------------------ | :----------------------------------------------- |
+| `pnpm install`             | Installs dependencies                            |
+| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
+| `pnpm build`           | Build your production site to `./dist/`          |
+| `pnpm preview`         | Preview your build locally, before deploying     |
+| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
+| `pnpm astro -- --help` | Get help using the Astro CLI                     |
 
-## Why I Used SvelteKit
+## 👀 Want to learn more?
 
-Initially the portfolio was created on Nuxt 3 and it is still viewable on my [GitHub](https://github.com/Spimy/spimy.dev_nuxt) but I absolute hated working with [UnJS](https://github.com/unjs) that Nuxt 3 decided to use for its backend. It started becoming messy and some code also kind of became difficult to maintain because I just did whatever to made things work. As such, I decided to recode the entire project in SvelteKit.
+Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).

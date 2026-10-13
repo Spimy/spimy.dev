@@ -1,0 +1,38 @@
+---
+// Icons from Lucide (https://lucide.dev, ISC license).
+// They are drawn with currentColor, so they take the colour of the text around them.
+const ICONS = {
+	pin: '<path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" /><circle cx="12" cy="10" r="3" />',
+	keyboard:
+		'<path d="M10 8h.01" /><path d="M12 12h.01" /><path d="M14 8h.01" /><path d="M16 12h.01" /><path d="M18 8h.01" /><path d="M6 8h.01" /><path d="M7 16h10" /><path d="M8 12h.01" /><rect width="20" height="16" x="2" y="4" rx="2" />',
+	cup: '<path d="M10 2v2" /><path d="M14 2v2" /><path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1" /><path d="M6 2v2" />',
+};
+
+interface Props {
+	name: keyof typeof ICONS;
+	class?: string;
+}
+
+const { name, class: className } = Astro.props;
+---
+
+<svg
+	class:list={['icon', className]}
+	viewBox="0 0 24 24"
+	fill="none"
+	stroke="currentColor"
+	stroke-width="2"
+	stroke-linecap="round"
+	stroke-linejoin="round"
+	aria-hidden="true"
+	focusable="false"
+	set:html={ICONS[name]}
+/>
+
+<style>
+	.icon {
+		flex-shrink: 0;
+		width: 1.25em;
+		height: 1.25em;
+	}
+</style>

@@ -1,0 +1,359 @@
+---
+import PageHeader from '../components/PageHeader.astro';
+import PageMain from '../components/PageMain.astro';
+import Panel from '../components/Panel.astro';
+import Layout from '../layouts/Layout.astro';
+import { getProjectCount, getYearsCoding } from '../lib/profile';
+
+const yearsCoding = getYearsCoding();
+const projectsShipped = await getProjectCount();
+
+const stats = [
+	{ value: `~${yearsCoding}`, label: 'years coding' },
+	{ value: `${projectsShipped}+`, label: 'projects shipped' },
+];
+
+// Newest first
+const timeline = [
+	{
+		year: 'Now',
+		title: 'Full stack, and open to what is next',
+		text: 'These days I build full stack with Svelte on the front end. On the back end I have mostly used Node.js with Express, TypeScript and Drizzle for the past couple of years, and I have just gone back to Django. This portfolio is my latest rewrite, now in Astro. I am looking for a remote, hybrid or on-site role and I am happy to relocate.',
+	},
+	{
+		year: '2026',
+		title: 'Self-hosting behind Traefik',
+		text: 'I now run a lot of self-hosted services, including on my home server, and many of them rely on Traefik to route traffic to the right container. I also set up WireGuard through my VPS, so I can reach private dashboards over a VPN and connect remotely to my home server.',
+	},
+	{
+		year: '2026',
+		title: 'Finished my degree, after an internship',
+		text: 'I completed my degree with first class honours, with my convocation in early 2027. Along the way I did a three-month internship as a web developer on a PHP and Laravel application, adding features, improving the performance and readability of existing code, and fixing bugs reported by QA and by real customers. The AI tooling I had got comfortable with the year before helped me learn the codebase and ship changes faster, and my manager and colleagues were happy with the results. This is also the year I started developing inside dev containers.',
+	},
+	{
+		year: '2025',
+		title: 'Learned to work with AI assistants',
+		text: 'I started to properly learn how to use tools like Copilot and other AI assistants in my coding. I had been using the Gemini API in my own projects since 2024, but this was the year AI became part of how I write code.',
+	},
+	{
+		year: '2024',
+		title: 'Two hackathons',
+		text: 'At KitaHack 2024, a Google hackathon where the project had to use Google products, I learned Angular and used Firebase, and I have not touched Angular since. Later that year I joined ImagineHack 2024, a local hackathon, built with SvelteKit, and our team won Best Pitch and First Runner Up, the only team to take home two awards. I used the Gemini API in what I built during 2024, including at ImagineHack.',
+	},
+	{
+		year: '2023–24',
+		title: 'Learned Docker',
+		text: 'It started with a free, open-source, self-hosted service I wanted to run on my VPS. Setting everything up by hand was tedious, but the project shipped a Docker Compose file, so I tried Docker for the first time. It worked so well that I decided to learn it properly, containerisation and all, and I have deployed my own projects with it ever since.',
+	},
+	{
+		year: '2023',
+		title: 'First portfolio in Nuxt 3, rebuilt in Svelte',
+		text: 'I learned Nuxt 3 for the server-side rendering and contact forms, and used it to build my first portfolio. I was not happy with how it turned out, so I learned Svelte and SvelteKit and rebuilt it from scratch. Svelte is now the framework I reach for first.',
+	},
+	{
+		year: '2022',
+		title: 'A Spigot plugin for my own server',
+		text: 'I played Minecraft with friends on a server and wanted some quality-of-life features, so I made QoLTweaks, a Spigot plugin that adds things like ladder warping. I published it on SpigotMC in January 2023.',
+	},
+	{
+		year: '2021',
+		title: 'Moved from JavaScript to TypeScript',
+		text: 'A lot of the people I knew were starting to move from JavaScript to TypeScript. I had been writing Discord bots in plain JavaScript since 2017, so it felt like about time.',
+	},
+	{
+		year: '2021',
+		title: 'Vue and Django REST framework, with Eray',
+		text: 'I kept working on Subtitles with Eray, using Vue and Django REST framework, until it ended in early 2021. We planned other projects together that year too, but none of them got past the planning stage.',
+	},
+	{
+		year: '2020',
+		title: 'Picked up Vue',
+		text: "I did not want to build only static pages with nothing dynamic on them. I had already done AJAX requests in plain JavaScript with Django earlier in 2020, but anything bigger meant writing HTML inside JavaScript strings, which got messy fast. I chose Vue over the more popular React because I preferred Vue's template syntax.",
+	},
+	{
+		year: '2020',
+		title: 'Went full stack with Django',
+		text: 'From April 2020, because of COVID, I spent my time learning to code and started learning full stack web development properly, beginning with Django. I made Spuiz that spring, tried another project called Manime that never got anywhere, and started Subtitles in September.',
+	},
+	{
+		year: '2019',
+		title: 'Head down, taking commissions',
+		text: 'A quieter year, mostly spent on commission work.',
+	},
+	{
+		year: '2018',
+		title: 'First freelance work',
+		text: 'I started making Discord bots for clients, sometimes with a web dashboard for configuring the bot. That work technically never stopped: I no longer look for clients, but I still take jobs from existing clients and from people they recommend me to.',
+	},
+	{
+		year: '2017–18',
+		title: 'Built Discord bots with discord.js',
+		text: 'Now that I could code, I wanted to experiment. Discord was where I talked to my friends and we all used existing bots, so I wanted to see how they were made and learned discord.js to build my own.',
+	},
+	{
+		year: '2017',
+		title: 'Learned HTML, CSS and jQuery',
+		text: 'A friend wanted to publish a Minecraft server, and it needed a public-facing website. I got into web pages through Bootstrap, using a visual tool called Bootstrap Studio, and then learned the HTML, CSS and jQuery underneath it.',
+	},
+	{
+		year: '2016',
+		title: 'Wrote the first line',
+		text: 'I started coding by making a Spigot plugin for Minecraft, which made Java my first programming language.',
+	},
+];
+
+// How many entries show before the "earlier years" toggle.
+const VISIBLE_COUNT = 5;
+const recentEntries = timeline.slice(0, VISIBLE_COUNT);
+const earlierEntries = timeline.slice(VISIBLE_COUNT);
+
+const interests = [
+	'Anime',
+	'Tea',
+	'Video Games',
+	'Minecraft',
+	'Keyboards',
+	'Close-up Magic',
+];
+---
+
+<Layout
+	title="Profile"
+	description="Who is behind Spimy: background, journey and interests."
+>
+	<PageHeader
+		title="Profile"
+		subtitle="Character page I - the part where you find out who's actually behind this."
+	/>
+
+	<PageMain>
+		<Panel kicker="// 01 - PROFILE" title="Who's playing" tone="accent">
+			<Fragment slot="intro">
+				I go by Spimy online, a username I grew fond of, but my name is William.
+				I build full stack with Svelte and TypeScript, I enjoy working with
+				Django, and I have been coding since 2016.
+			</Fragment>
+
+			<div class="stat-strip">
+				{
+					stats.map(({ value, label }) => (
+						<div class="stat-strip__item">
+							<span class="stat-strip__value">{value}</span>
+							<span class="stat-strip__label">{label}</span>
+						</div>
+					))
+				}
+			</div>
+		</Panel>
+
+		<Panel kicker="// 02 - QUEST LOG" title="The journey so far" tone="soft">
+			<Fragment slot="intro"> How I actually got here, newest first. </Fragment>
+
+			<div class="timeline">
+				{
+					recentEntries.map(({ year, title, text }) => (
+						<div class="timeline__item">
+							<div class="timeline__year">{year}</div>
+							<h3 class="timeline__title">{title}</h3>
+							<p class="timeline__text">{text}</p>
+						</div>
+					))
+				}
+
+				{
+					earlierEntries.length > 0 && (
+						<details class="timeline__more">
+							<summary class="timeline__more-toggle">
+								<span class="timeline__more-label timeline__more-label--closed">
+									Show earlier years ({earlierEntries.length})
+								</span>
+								<span class="timeline__more-label timeline__more-label--open">
+									Hide earlier years
+								</span>
+							</summary>
+
+							{earlierEntries.map(({ year, title, text }) => (
+								<div class="timeline__item">
+									<div class="timeline__year">{year}</div>
+									<h3 class="timeline__title">{title}</h3>
+									<p class="timeline__text">{text}</p>
+								</div>
+							))}
+						</details>
+					)
+				}
+			</div>
+		</Panel>
+
+		<Panel kicker="// 03 - INTERESTS" title="Outside the editor" tone="pop">
+			<Fragment slot="intro">
+				The stuff that ends up shaping how I build things, whether or not it's
+				obviously related.
+			</Fragment>
+
+			<div class="interest-grid">
+				{
+					interests.map((interest) => (
+						<div class="interest-grid__chip">{interest}</div>
+					))
+				}
+			</div>
+		</Panel>
+	</PageMain>
+</Layout>
+
+<style>
+	.stat-strip {
+		display: flex;
+		gap: 0;
+		margin-top: 1.25rem;
+		flex-wrap: wrap;
+	}
+
+	.stat-strip__item {
+		font-family: var(--font-mono);
+		padding: 0.625rem 1.375rem;
+		border-left: 2px solid var(--ink);
+	}
+
+	.stat-strip__item:first-child {
+		border-left: 0;
+		padding-left: 0;
+	}
+
+	.stat-strip__value {
+		display: block;
+		font-family: var(--font-display);
+		font-style: italic;
+		font-size: 1.7rem;
+		color: var(--accent-pop);
+	}
+
+	.stat-strip__label {
+		font-size: 0.65625rem;
+		color: var(--text-muted);
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+
+	.timeline {
+		display: flex;
+		flex-direction: column;
+		margin-top: 1.375rem;
+	}
+
+	.timeline__item {
+		position: relative;
+		padding: 0 0 1.625rem 1.875rem;
+		border-left: 2px solid var(--ink);
+	}
+
+	.timeline__item:last-child {
+		border-left: 2px solid transparent;
+		padding-bottom: 0;
+	}
+
+	.timeline__item::before {
+		content: '';
+		position: absolute;
+		left: -0.5rem;
+		top: 0.125rem;
+		width: 0.875rem;
+		height: 0.875rem;
+		background: var(--accent-pop);
+		border: 2px solid var(--ink);
+		clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+	}
+
+	.timeline__year {
+		font-family: var(--font-mono);
+		font-weight: 700;
+		font-size: 0.6875rem;
+		color: var(--accent-soft);
+		letter-spacing: 0.06em;
+		margin-bottom: 0.25rem;
+	}
+
+	.timeline__title {
+		font-family: var(--font-mono);
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.03em;
+		font-size: 0.875rem;
+		margin: 0 0 0.375rem;
+		color: var(--text);
+	}
+
+	.timeline__text {
+		color: var(--text-muted);
+		font-size: 0.92rem;
+		line-height: 1.6;
+		margin: 0;
+		max-width: 60ch;
+	}
+
+	.timeline__more-toggle {
+		position: relative;
+		display: block;
+		cursor: pointer;
+		list-style: none;
+		padding: 0 0 1.625rem 1.875rem;
+		border-left: 2px solid var(--ink);
+		font-family: var(--font-mono);
+		font-weight: 700;
+		font-size: 0.6875rem;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		color: var(--accent-soft);
+	}
+
+	.timeline__more-toggle::-webkit-details-marker {
+		display: none;
+	}
+
+	.timeline__more-toggle::before {
+		content: '';
+		position: absolute;
+		left: -0.5rem;
+		top: 0.0625rem;
+		width: 0.875rem;
+		height: 0.875rem;
+		background: var(--accent-soft);
+		border: 2px solid var(--ink);
+		clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+	}
+
+	.timeline__more-toggle:hover {
+		color: var(--text);
+	}
+
+	.timeline__more:not([open]) > .timeline__more-toggle {
+		border-left-color: transparent;
+		padding-bottom: 0;
+	}
+
+	.timeline__more[open] .timeline__more-label--closed,
+	.timeline__more:not([open]) .timeline__more-label--open {
+		display: none;
+	}
+
+	.interest-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(8.75rem, 1fr));
+		gap: 0.75rem;
+		margin-top: 1.25rem;
+	}
+
+	.interest-grid__chip {
+		background: var(--panel-2);
+		border: 2px solid var(--ink);
+		box-shadow: 0.1875rem 0.1875rem 0 var(--accent-soft);
+		padding: 0.875rem 0.625rem;
+		text-align: center;
+		font-family: var(--font-mono);
+		font-weight: 700;
+		font-size: 0.71875rem;
+		text-transform: uppercase;
+		letter-spacing: 0.03em;
+	}
+</style>

@@ -1,0 +1,965 @@
+---
+export const prerender = false;
+
+import { Image } from 'astro:assets';
+import { GITHUB_TOKEN } from 'astro:env/server';
+import characterReal from '../assets/character-real.png';
+import character from '../assets/character.png';
+import logo from '../assets/logo.png';
+import Icon from '../components/Icon.astro';
+import Layout from '../layouts/Layout.astro';
+import { getCompletedAnime, getGitHubStats } from '../lib/external';
+import {
+	ANILIST_USERNAME,
+	GITHUB_USERNAME,
+	getProjectCount,
+	getYearsCoding,
+} from '../lib/profile';
+
+type Stat = { label: string; value: string; big?: boolean };
+
+const rosterLocked = 4;
+const level = new Date().getFullYear() - 2003; // age
+
+const yearsCoding = getYearsCoding();
+const [projectsShipped, github, anime] = await Promise.all([
+	getProjectCount(),
+	getGitHubStats(GITHUB_USERNAME, GITHUB_TOKEN),
+	getCompletedAnime(ANILIST_USERNAME),
+]);
+
+Astro.response.headers.set(
+	'Cache-Control',
+	github && anime !== null
+		? 'public, s-maxage=3600, stale-while-revalidate=86400'
+		: 'public, s-maxage=60',
+);
+
+const stats = [
+	{ label: 'Years Coding', value: `~${yearsCoding}` },
+	anime !== null && {
+		label: 'Anime Completed',
+		value: anime.toLocaleString('en'),
+	},
+	{ label: 'Projects Shipped', value: `${projectsShipped}+` },
+	{ label: 'Avg. Sleep', value: '6.5 hrs' },
+	github && {
+		label: 'Commits (YTD)',
+		value: github.commitsYtd.toLocaleString('en'),
+	},
+	{ label: 'Site Load Time', value: '620 ms' },
+	{ label: 'Cups of Coffee /day', value: 'Rarely' },
+	{ label: 'Preferred Browser', value: 'Zen' },
+	{ label: 'Tabs Open Now', value: '∞', big: true },
+	github && { label: 'Active Days (1 yr)', value: String(github.activeDays) },
+].filter((s): s is Stat => Boolean(s));
+---
+
+<Layout
+	title="Home"
+	description="The hub to know more about me and the projects that I have worked on."
+>
+	<Fragment slot="state">
+		<input
+			type="radio"
+			name="skin"
+			id="skin-anime"
+			class="state-checkbox"
+			checked
+		/>
+		<input type="radio" name="skin" id="skin-real" class="state-checkbox" />
+	</Fragment>
+
+	<section class="status-screen" id="main-content">
+		<div class="status-screen__bg" aria-hidden="true">
+			<span class="status-screen__stripe status-screen__stripe--primary"></span>
+			<span class="status-screen__stripe status-screen__stripe--secondary"
+			></span>
+			<span class="status-screen__bg-text status-screen__bg-text--large"
+				>Full Stack</span
+			>
+			<span class="status-screen__bg-text status-screen__bg-text--small"
+				>Dev</span
+			>
+		</div>
+
+		<div class="ticket-stripe" aria-hidden="true">
+			<span class="ticket-stripe__stars">★ ★ ★ ★ ★</span>
+			<span class="ticket-stripe__label">Full Stack Developer</span>
+		</div>
+
+		<div class="roster" aria-hidden="true">
+			<span class="roster__nav-button">LB</span>
+			<div class="roster__strip">
+				<div class="roster__chip roster__chip--active">
+					<Image src={character} alt="" class="roster__avatar" />
+				</div>
+				{
+					Array.from({ length: rosterLocked }, () => (
+						<div class="roster__chip roster__chip--locked">?</div>
+					))
+				}
+			</div>
+			<span class="roster__nav-button">RB</span>
+		</div>
+
+		<div class="status-screen__layout">
+			<div class="character">
+				<span class="character__glow" aria-hidden="true"></span>
+				<div class="character__core">
+					<div class="character__frame">
+						<Image
+							src={character}
+							alt="Illustrated portrait of Spimy"
+							class="character__image character__image--anime"
+						/>
+						<Image
+							src={characterReal}
+							alt="Photo of William"
+							class="character__image character__image--real"
+						/>
+					</div>
+					<span class="character__ground" aria-hidden="true"></span>
+				</div>
+
+				<noscript>
+					<div class="dialogue" role="note">
+						<span class="dialogue__name">
+							<span class="dialogue__name-text dialogue__name-text--anime"
+								>Spimy</span
+							>
+							<span class="dialogue__name-text dialogue__name-text--real"
+								>William</span
+							>
+						</span>
+						<p class="dialogue__text">
+							Welcome! This whole site works without JavaScript, so you can
+							carry on as you are. For the best experience, though, turn it on:
+							a few things, like the contact chat, are smoother with it.
+						</p>
+						<span class="dialogue__next" aria-hidden="true">▼</span>
+					</div>
+				</noscript>
+			</div>
+
+			<div class="skin-switcher">
+				<span class="skin-switcher__label">Skin</span>
+				<label
+					for="skin-anime"
+					class="skin-switcher__swatch skin-switcher__swatch--anime"
+				>
+					<Image src={character} alt="" class="skin-switcher__image" />
+					<span class="sr-only">Switch to anime skin</span>
+				</label>
+				<label
+					for="skin-real"
+					class="skin-switcher__swatch skin-switcher__swatch--real"
+				>
+					<Image src={characterReal} alt="" class="skin-switcher__image" />
+					<span class="sr-only">Switch to photo skin</span>
+				</label>
+			</div>
+
+			<div class="agent-panel">
+				<div class="agent-panel__header">
+					<span class="agent-panel__location">
+						<span class="agent-panel__pin"><Icon name="pin" /></span> Based in Mauritius
+					</span>
+					<span class="agent-panel__emblem"
+						><Image src={logo} alt="" class="agent-panel__emblem-image" /></span
+					>
+				</div>
+				<h1 class="agent-panel__name">
+					<span class="agent-panel__name-text agent-panel__name-text--anime"
+						>Spimy</span
+					>
+					<span class="agent-panel__name-text agent-panel__name-text--real"
+						>William</span
+					>
+				</h1>
+				<div class="agent-panel__title">
+					Full Stack Developer: Svelte & TypeScript
+				</div>
+
+				<div class="agent-panel__level-row">
+					<div class="level-pod">
+						<span class="level-pod__text"
+							>LV. <strong class="level-pod__number">{level}</strong></span
+						>
+						<span class="level-pod__button" aria-hidden="true">Level Up</span>
+					</div>
+					<div class="agent-panel__chip">
+						<Icon name="keyboard" /> Main Weapon: Keyboard
+					</div>
+					<div class="agent-panel__chip">
+						<Icon name="cup" /> Element: Tea
+					</div>
+				</div>
+
+				<div class="agent-panel__stats">
+					{
+						stats.map(({ label, value, big }, i) => (
+							<div
+								class:list={['stat-cell', { 'stat-cell--alt': i % 2 === 1 }]}
+							>
+								<span class="stat-cell__label">{label}</span>
+								<span
+									class:list={[
+										'stat-cell__value',
+										{ 'stat-cell__value--big': big },
+									]}
+								>
+									{value}
+								</span>
+							</div>
+						))
+					}
+				</div>
+
+				<div class="agent-panel__footer">
+					Actively building - willing to relocate
+				</div>
+			</div>
+
+			<p class="status-screen__hint">
+				◀ use the menu on the edge of the screen to continue
+			</p>
+		</div>
+	</section>
+</Layout>
+
+<style>
+	.status-screen {
+		position: relative;
+		z-index: 1;
+		overflow: hidden;
+		min-height: 100svh;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		background: var(--ink);
+		border-bottom: 3px solid var(--accent);
+		padding: 5.625rem 1.5rem 2rem;
+	}
+
+	.status-screen__bg {
+		position: absolute;
+		inset: 0;
+		z-index: 0;
+		overflow: hidden;
+		pointer-events: none;
+	}
+
+	.status-screen__stripe {
+		position: absolute;
+		background: var(--accent);
+		transform: skewX(-14deg);
+	}
+
+	.status-screen__stripe--primary {
+		top: -10%;
+		left: 4%;
+		width: 22%;
+		height: 130%;
+		opacity: 0.85;
+	}
+
+	.status-screen__stripe--secondary {
+		top: -10%;
+		left: 88%;
+		width: 9%;
+		height: 130%;
+		background: var(--accent-pop);
+		opacity: 0.7;
+	}
+
+	.status-screen__bg-text {
+		position: absolute;
+		white-space: nowrap;
+		font-family: var(--font-display);
+		font-style: italic;
+		text-transform: uppercase;
+		color: transparent;
+		-webkit-text-stroke: 2px
+			color-mix(in srgb, var(--accent-soft) 14%, transparent);
+		letter-spacing: 0.375rem;
+		user-select: none;
+	}
+
+	.status-screen__bg-text--large {
+		font-size: min(16vw, 11.875rem);
+		top: 8%;
+		left: -6%;
+		transform: rotate(-6deg);
+	}
+
+	.status-screen__bg-text--small {
+		font-size: min(10vw, 7.5rem);
+		bottom: 2%;
+		left: 30%;
+		transform: rotate(-6deg);
+		-webkit-text-stroke-color: color-mix(
+			in srgb,
+			var(--accent-pop) 14%,
+			transparent
+		);
+	}
+
+	.roster {
+		position: relative;
+		z-index: 3;
+		display: flex;
+		align-items: center;
+		gap: 0.625rem;
+		justify-content: flex-end;
+		max-width: 73.75rem;
+		margin: 0 auto 1.75rem;
+		width: 100%;
+	}
+
+	.roster__nav-button {
+		font-family: var(--font-mono);
+		font-weight: 700;
+		font-size: 0.625rem;
+		color: var(--text-muted);
+		border: 2px solid var(--ink);
+		background: var(--panel);
+		padding: 0.375rem 0.5625rem;
+		flex-shrink: 0;
+	}
+
+	.roster__strip {
+		display: flex;
+		gap: 0.5rem;
+		overflow-x: auto;
+		max-width: 21.25rem;
+		padding: 0.1875rem;
+	}
+
+	.roster__chip {
+		width: 2.75rem;
+		height: 2.75rem;
+		flex-shrink: 0;
+		border: 2px solid var(--ink);
+		background: var(--panel-2);
+		overflow: hidden;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.roster__chip--active {
+		border-color: var(--accent-soft);
+		box-shadow: 0 0 0 2px var(--accent-soft);
+	}
+
+	.roster__avatar {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: top center;
+		transform: scale(1.7) translateY(0.3125rem);
+	}
+
+	.roster__chip--locked {
+		color: var(--text-muted);
+		font-family: var(--font-mono);
+		font-weight: 700;
+		font-size: 1rem;
+		opacity: 0.5;
+	}
+
+	@media (max-width: 980px) {
+		.roster {
+			justify-content: flex-start;
+		}
+
+		.roster__strip {
+			max-width: none;
+		}
+	}
+
+	.ticket-stripe {
+		position: absolute;
+		z-index: 1;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		width: 4.875rem;
+		background: var(--accent-pop);
+		transform: skewX(-8deg);
+		transform-origin: top left;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: space-between;
+		padding: 1.625rem 0;
+		opacity: 0.92;
+	}
+
+	.ticket-stripe__stars {
+		writing-mode: vertical-rl;
+		font-size: 0.6875rem;
+		letter-spacing: 0.375rem;
+		color: var(--on-pop);
+		transform: skewX(8deg);
+	}
+
+	.ticket-stripe__label {
+		writing-mode: vertical-rl;
+		text-orientation: mixed;
+		transform: skewX(8deg) rotate(180deg);
+		font-family: var(--font-mono);
+		font-weight: 700;
+		font-size: 0.6875rem;
+		letter-spacing: 0.15em;
+		color: var(--on-pop);
+	}
+
+	@media (max-width: 980px) {
+		.ticket-stripe {
+			width: 2.75rem;
+		}
+
+		.ticket-stripe__stars {
+			font-size: 0.5625rem;
+			letter-spacing: 0.1875rem;
+		}
+
+		.ticket-stripe__label {
+			font-size: 0.5625rem;
+		}
+	}
+
+	@media (max-width: 560px) {
+		.ticket-stripe {
+			display: none;
+		}
+	}
+
+	.status-screen__layout {
+		max-width: 73.75rem;
+		margin: 0 auto;
+		width: 100%;
+		display: grid;
+		grid-template-columns: 1fr 1.05fr;
+		grid-template-areas:
+			'character panel'
+			'character hint';
+		align-items: center;
+		gap: 0.875rem 1.75rem;
+		padding-left: 6.25rem;
+	}
+
+	@media (max-width: 980px) {
+		.status-screen__layout {
+			grid-template-columns: 1fr;
+			grid-template-areas: 'character' 'switcher' 'panel' 'hint';
+			padding-left: 3.375rem;
+		}
+	}
+
+	@media (max-width: 560px) {
+		.status-screen__layout {
+			padding-left: 0;
+		}
+	}
+
+	.character {
+		grid-area: character;
+		position: relative;
+		z-index: 2;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: flex-end;
+		min-height: min(64vh, 35rem);
+	}
+
+	.character__core {
+		width: 100%;
+		max-width: 27.5rem;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.character__glow {
+		position: absolute;
+		z-index: 0;
+		left: 50%;
+		top: 42%;
+		transform: translate(-50%, -50%);
+		width: min(90%, 32.5rem);
+		aspect-ratio: 1;
+		border-radius: 50%;
+		background: radial-gradient(
+			circle,
+			color-mix(in srgb, var(--accent-soft) 38%, transparent),
+			color-mix(in srgb, var(--accent-pop) 12%, transparent) 45%,
+			transparent 72%
+		);
+		filter: blur(4px);
+	}
+
+	.character__frame {
+		position: relative;
+		z-index: 2;
+		width: 100%;
+		max-width: 27.5rem;
+		height: min(62vh, 35rem);
+	}
+
+	.character__image {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		max-width: none;
+		object-fit: contain;
+		object-position: bottom center;
+		filter: drop-shadow(
+			0 26px 34px color-mix(in srgb, var(--ink) 55%, transparent)
+		);
+		display: none;
+	}
+
+	.character__image--anime {
+		display: block;
+	}
+
+	:global(body:has(#skin-real:checked)) .character__image--anime {
+		display: none;
+	}
+
+	:global(body:has(#skin-real:checked)) .character__image--real {
+		display: block;
+	}
+
+	.character__ground {
+		position: relative;
+		z-index: 1;
+		width: 70%;
+		max-width: 16.25rem;
+		height: 2.125rem;
+		margin-top: -0.875rem;
+		background: radial-gradient(
+			ellipse,
+			color-mix(in srgb, var(--accent-soft) 55%, transparent),
+			transparent 72%
+		);
+		filter: blur(2px);
+	}
+
+	/* ---------- Visual novel text box shown when no JS ---------- */
+	.dialogue {
+		position: relative;
+		z-index: 3;
+		width: 100%;
+		max-width: 30rem;
+		margin-top: 1.25rem;
+		padding: 1.5rem 1.5rem 1.25rem;
+		background: color-mix(in srgb, var(--panel) 92%, transparent);
+		border: 2px solid var(--ink);
+		box-shadow: 0.375rem 0.375rem 0 var(--accent-pop);
+	}
+
+	.dialogue__name {
+		position: absolute;
+		top: -0.9375rem;
+		left: 1rem;
+		padding: 0.25rem 1.25rem 0.25rem 1rem;
+		font-family: var(--font-display);
+		font-style: italic;
+		text-transform: uppercase;
+		font-size: 1rem;
+		line-height: 1.2;
+		color: var(--on-pop);
+		background: var(--accent-pop);
+		clip-path: polygon(0 0, 100% 0, calc(100% - 0.5rem) 100%, 0 100%);
+	}
+
+	.dialogue__name-text--real {
+		display: none;
+	}
+
+	:global(body:has(#skin-real:checked)) .dialogue__name-text--anime {
+		display: none;
+	}
+
+	:global(body:has(#skin-real:checked)) .dialogue__name-text--real {
+		display: inline;
+	}
+
+	.dialogue__text {
+		margin: 0;
+		padding-right: 1rem;
+		font-size: 0.9375rem;
+		line-height: 1.6;
+		color: var(--text);
+	}
+
+	.dialogue__next {
+		position: absolute;
+		right: 0.875rem;
+		bottom: 0.5rem;
+		font-size: 0.625rem;
+		color: var(--accent-soft);
+	}
+
+	@media (scripting: none) and (max-width: 980px) {
+		.character {
+			min-height: 0;
+			justify-content: center;
+		}
+
+		.character__frame {
+			height: min(34vh, 19rem);
+		}
+	}
+
+	@media (scripting: none) and (min-width: 981px) {
+		.character {
+			align-self: stretch;
+			justify-content: flex-start;
+			min-height: 0;
+			contain: size;
+		}
+
+		.character__core {
+			flex: 1;
+			min-height: 0;
+			padding-bottom: 7rem;
+		}
+
+		.character__frame {
+			flex: 1;
+			height: auto;
+			min-height: 0;
+		}
+
+		.dialogue {
+			position: absolute;
+			bottom: 0.375rem;
+			left: 50%;
+			max-width: 25rem;
+			margin: 0;
+			transform: translateX(-50%);
+		}
+	}
+
+	@media (scripting: none) and (min-width: 981px) and (max-width: 1439px) {
+		.skin-switcher {
+			top: 9rem;
+			bottom: auto;
+		}
+	}
+
+	@media (max-width: 980px) {
+		.character {
+			min-height: min(42vh, 21.25rem);
+		}
+
+		.character__frame {
+			height: min(38vh, 21.25rem);
+		}
+	}
+
+	.skin-switcher {
+		grid-area: switcher;
+		position: relative;
+		z-index: 3;
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		align-self: center;
+		margin: 0.875rem auto 0;
+		padding: 0.5rem 0.75rem;
+		background: var(--panel);
+		border: 2px solid var(--ink);
+		box-shadow: 0.1875rem 0.1875rem 0 var(--accent-soft);
+		width: fit-content;
+	}
+
+	@media (min-width: 981px) {
+		.skin-switcher {
+			position: absolute;
+			left: 6.25rem;
+			bottom: 2rem;
+			margin: 0;
+		}
+	}
+
+	.skin-switcher__label {
+		font-family: var(--font-mono);
+		font-weight: 700;
+		font-size: 0.59375rem;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		color: var(--text-muted);
+		margin-right: 0.125rem;
+	}
+
+	.skin-switcher__swatch {
+		width: 2rem;
+		height: 2rem;
+		flex-shrink: 0;
+		cursor: pointer;
+		border: 2px solid var(--ink);
+		overflow: hidden;
+		display: block;
+	}
+
+	.skin-switcher__image {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: top center;
+		transform: scale(1.7) translateY(0.3125rem);
+	}
+
+	.skin-switcher__swatch:hover {
+		border-color: var(--accent-soft);
+	}
+
+	:global(body:has(#skin-anime:checked)) .skin-switcher__swatch--anime,
+	:global(body:has(#skin-real:checked)) .skin-switcher__swatch--real {
+		border-color: var(--accent-soft);
+		box-shadow: 0 0 0 2px var(--accent-soft);
+	}
+
+	@media (max-width: 980px) {
+		.skin-switcher {
+			margin: 0.875rem auto 0;
+		}
+
+		.character {
+			align-items: center;
+		}
+	}
+
+	.agent-panel {
+		grid-area: panel;
+		position: relative;
+		z-index: 2;
+		background: color-mix(in srgb, var(--panel) 82%, transparent);
+		backdrop-filter: blur(6px);
+		border: 2px solid var(--ink);
+		box-shadow: 0.5rem 0.5rem 0 var(--accent);
+		padding: 1.625rem 1.75rem 1.375rem;
+		clip-path: polygon(0 1.125rem, 1.125rem 0, 100% 0, 100% 100%, 0 100%);
+	}
+
+	.agent-panel__header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-bottom: 0.875rem;
+	}
+
+	.agent-panel__location {
+		font-family: var(--font-mono);
+		font-weight: 700;
+		font-size: 0.75rem;
+		color: var(--text-muted);
+		display: flex;
+		align-items: center;
+		gap: 0.375rem;
+	}
+
+	.agent-panel__pin {
+		display: inline-flex;
+		color: var(--accent-pop);
+	}
+
+	.agent-panel__emblem {
+		width: 2.75rem;
+		height: 2.75rem;
+		border: 2px solid var(--accent-soft);
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: var(--panel);
+		flex-shrink: 0;
+	}
+
+	.agent-panel__emblem-image {
+		width: 1.5rem;
+		height: 1.5rem;
+	}
+
+	.agent-panel__name {
+		font-family: var(--font-display);
+		font-style: italic;
+		text-transform: uppercase;
+		font-size: clamp(2rem, 5.5vw, 3rem);
+		line-height: 0.92;
+		margin: 0 0 0.625rem;
+		color: var(--text);
+		text-shadow: 0.1875rem 0.1875rem 0 var(--accent-pop);
+	}
+
+	.agent-panel__name-text--real {
+		display: none;
+	}
+
+	:global(body:has(#skin-real:checked)) .agent-panel__name-text--anime {
+		display: none;
+	}
+
+	:global(body:has(#skin-real:checked)) .agent-panel__name-text--real {
+		display: inline;
+	}
+
+	.agent-panel__title {
+		font-family: var(--font-mono);
+		font-weight: 700;
+		font-size: 0.78125rem;
+		color: var(--accent-soft);
+		display: flex;
+		align-items: center;
+		gap: 0.4375rem;
+		margin-bottom: 1.125rem;
+	}
+
+	.agent-panel__level-row {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.625rem;
+		margin-bottom: 1.25rem;
+	}
+
+	.level-pod {
+		display: inline-flex;
+		align-items: stretch;
+		border: 2px solid var(--ink);
+		box-shadow: 0.25rem 0.25rem 0 var(--accent-soft);
+	}
+
+	.level-pod__text {
+		display: flex;
+		align-items: center;
+		font-family: var(--font-mono);
+		font-weight: 700;
+		font-size: 0.8125rem;
+		color: var(--text);
+		letter-spacing: 0.03em;
+		padding: 0.5625rem 0.875rem;
+		background: var(--panel-2);
+	}
+
+	.level-pod__number {
+		color: var(--accent-soft);
+		font-size: 1rem;
+		margin-left: 0.25rem;
+	}
+
+	.level-pod__button {
+		display: flex;
+		align-items: center;
+		gap: 0.375rem;
+		flex-shrink: 0;
+		background: var(--accent-soft);
+		color: var(--on-accent);
+		font-family: var(--font-mono);
+		font-weight: 700;
+		font-size: 0.65625rem;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+		padding: 0 0.75rem;
+		border-left: 2px solid var(--ink);
+		clip-path: polygon(0.625rem 0, 100% 0, 100% 100%, 0 100%, 0 0.625rem);
+	}
+
+	.level-pod__button::after {
+		content: '»';
+		font-size: 0.8125rem;
+	}
+
+	.agent-panel__chip {
+		font-family: var(--font-mono);
+		font-size: 0.71875rem;
+		color: var(--text-muted);
+		border: 1px solid var(--ink);
+		background: var(--panel-2);
+		padding: 0.5rem 0.75rem;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.375rem;
+	}
+
+	.agent-panel__stats {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 0 1.25rem;
+		border-top: 1px solid var(--ink);
+		padding-top: 0.875rem;
+		margin-bottom: 1rem;
+	}
+
+	.stat-cell {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		padding: 0.5rem 0;
+		border-bottom: 1px solid var(--ink);
+		font-family: var(--font-mono);
+		font-size: 0.75rem;
+	}
+
+	.stat-cell__label {
+		color: var(--text-muted);
+	}
+
+	.stat-cell__value {
+		color: var(--text);
+		font-weight: 700;
+	}
+
+	.stat-cell__value--big {
+		font-size: 1.25rem;
+		line-height: 1;
+	}
+
+	.stat-cell--alt .stat-cell__value {
+		color: var(--accent-soft);
+	}
+
+	.agent-panel__footer {
+		font-family: var(--font-mono);
+		font-size: 0.6875rem;
+		color: var(--accent-pop);
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		letter-spacing: 0.04em;
+	}
+
+	.agent-panel__footer::before {
+		content: '●';
+		font-size: 0.5rem;
+	}
+
+	@media (max-width: 560px) {
+		.agent-panel__stats {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.status-screen__hint {
+		grid-area: hint;
+		align-self: start;
+		font-family: var(--font-mono);
+		font-size: 0.6875rem;
+		color: var(--text-muted);
+		letter-spacing: 0.06em;
+		margin: 0;
+	}
+
+	@media (max-width: 980px) {
+		.status-screen__hint {
+			display: none;
+		}
+	}
+</style>

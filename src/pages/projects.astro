@@ -1,0 +1,579 @@
+---
+export const prerender = false;
+
+import PageHeader from '../components/PageHeader.astro';
+import PageMain from '../components/PageMain.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import Layout from '../layouts/Layout.astro';
+import { filterProjects, getProjects, getTagOptions } from '../lib/projects';
+
+const projects = await getProjects();
+const tagOptions = getTagOptions(projects);
+
+const params = Astro.url.searchParams;
+const query = (params.get('q') ?? '').trim().slice(0, 100);
+const knownSlugs = new Set(tagOptions.map((tag) => tag.slug));
+const activeTags = [...new Set(params.getAll('tech'))].filter((slug) =>
+	knownSlugs.has(slug),
+);
+
+// Cards per page
+const PAGE_SIZE = 9;
+
+const results = filterProjects(projects, { query, tags: activeTags });
+const totalPages = Math.max(1, Math.ceil(results.length / PAGE_SIZE));
+const requestedPage = Math.floor(Number(params.get('page'))) || 1;
+const page = Math.min(Math.max(requestedPage, 1), totalPages);
+const pageResults = results.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
+
+// Link to another page of the same search, keeping the query and filters.
+function pageHref(n: number): string {
+	const next = new URLSearchParams();
+	if (query !== '') next.set('q', query);
+
+	for (const tag of activeTags) next.append('tech', tag);
+	if (n > 1) next.set('page', String(n));
+
+	const qs = next.toString();
+	return `/projects${qs ? `?${qs}` : ''}#project-grid`;
+}
+
+const isFiltered = query !== '' || activeTags.length > 0;
+const activeLabels = tagOptions
+	.filter((tag) => activeTags.includes(tag.slug))
+	.map((tag) => tag.label);
+
+const resultsText = [
+	`Showing ${results.length} of ${projects.length} projects`,
+	activeLabels.length > 0 ? `using ${activeLabels.join(' + ')}` : '',
+	query !== '' ? `matching "${query}"` : '',
+]
+	.filter(Boolean)
+	.join(' ');
+---
+
+<Layout
+	title="Inventory"
+	description="Everything Spimy has built and is willing to show people: websites, games, hackathon projects and open-source packages."
+>
+	<Fragment slot="state">
+		<input type="checkbox" id="filter-open" class="state-checkbox" />
+		<label for="filter-open" class="filters__backdrop" aria-hidden="true"
+		></label>
+
+		<form
+			id="projects-form"
+			class="filters"
+			method="get"
+			action="/projects"
+			role="search"
+			aria-label="Search and filter projects"
+		>
+			<fieldset class="filters__fieldset">
+				<label for="filter-open" class="filters__close">✕ Close</label>
+				<legend class="filters__legend">Filter by skill</legend>
+
+				<ul class="filters__pills" role="list">
+					{
+						tagOptions.map(({ slug, label, count }) => (
+							<li class="filters__pill">
+								<input
+									class="filters__input"
+									type="checkbox"
+									name="tech"
+									value={slug}
+									id={`tech-${slug}`}
+									checked={activeTags.includes(slug)}
+								/>
+								<label class="filters__label" for={`tech-${slug}`}>
+									{label} <span class="filters__count">{count}</span>
+								</label>
+							</li>
+						))
+					}
+				</ul>
+
+				<p class="filters__note">
+					Pick more than one to narrow the list: a project has to use every
+					skill you pick.
+				</p>
+
+				<div class="filters__actions">
+					<button type="submit" class="filters__submit">Apply</button>
+					<a href="/projects" class="filters__reset">Reset</a>
+				</div>
+			</fieldset>
+		</form>
+	</Fragment>
+
+	<PageHeader
+		title="Inventory"
+		subtitle="Character page II - everything I've built and am willing to show people."
+	/>
+
+	<PageMain>
+		<div class="toolbar">
+			<div class="toolbar__bar">
+				<label for="filter-open" class="toolbar__toggle">
+					Filters
+					{
+						activeTags.length > 0 && (
+							<span class="toolbar__badge">
+								{activeTags.length}
+								<span class="sr-only"> active</span>
+							</span>
+						)
+					}
+				</label>
+
+				<input
+					type="search"
+					name="q"
+					form="projects-form"
+					class="toolbar__search"
+					value={query}
+					placeholder="Search projects"
+					aria-label="Search projects"
+					maxlength="100"
+				/>
+				<button type="submit" form="projects-form" class="toolbar__submit">
+					Search
+				</button>
+			</div>
+
+			<p class="toolbar__results">
+				{resultsText}
+				{
+					isFiltered && (
+						<a href="/projects" class="toolbar__clear">
+							Clear all
+						</a>
+					)
+				}
+			</p>
+		</div>
+
+		{
+			results.length > 0 ? (
+				<ul class="project-grid" id="project-grid" role="list">
+					{pageResults.map((project) => (
+						<li class="project-grid__item">
+							<ProjectCard project={project} />
+						</li>
+					))}
+				</ul>
+			) : (
+				<p class="empty-state">
+					Nothing matches that combination. Try removing a filter.
+				</p>
+			)
+		}
+
+		{
+			totalPages > 1 && (
+				<nav class="pagination" aria-label="Project pages">
+					{page > 1 ? (
+						<a class="pagination__link" href={pageHref(page - 1)} rel="prev">
+							← Prev
+						</a>
+					) : (
+						<span class="pagination__link pagination__link--disabled">
+							← Prev
+						</span>
+					)}
+
+					<ol class="pagination__pages" role="list">
+						{pageNumbers.map((n) => (
+							<li>
+								{n === page ? (
+									<span
+										class="pagination__link pagination__link--current"
+										aria-current="page"
+									>
+										{n}
+									</span>
+								) : (
+									<a
+										class="pagination__link"
+										href={pageHref(n)}
+										aria-label={`Page ${n}`}
+									>
+										{n}
+									</a>
+								)}
+							</li>
+						))}
+					</ol>
+
+					{page < totalPages ? (
+						<a class="pagination__link" href={pageHref(page + 1)} rel="next">
+							Next →
+						</a>
+					) : (
+						<span class="pagination__link pagination__link--disabled">
+							Next →
+						</span>
+					)}
+				</nav>
+			)
+		}
+	</PageMain>
+</Layout>
+
+<style>
+	.toolbar {
+		display: flex;
+		flex-direction: column;
+		gap: 0.875rem;
+	}
+
+	.toolbar__bar {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.625rem;
+	}
+
+	.toolbar__toggle {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.625rem;
+		cursor: pointer;
+		user-select: none;
+		font-family: var(--font-mono);
+		font-weight: 700;
+		font-size: 0.78125rem;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+		color: var(--text);
+		background: var(--panel);
+		border: 2px solid var(--ink);
+		box-shadow: 0.25rem 0.25rem 0 var(--accent-soft);
+		padding: 0.6875rem 1.125rem;
+	}
+
+	.toolbar__toggle::before {
+		content: '☰';
+		font-size: 0.75rem;
+		color: var(--accent-soft);
+	}
+
+	.toolbar__badge {
+		min-width: 1.25rem;
+		padding: 0.0625rem 0.3125rem;
+		text-align: center;
+		font-size: 0.6875rem;
+		color: var(--on-accent);
+		background: var(--accent-pop);
+	}
+
+	:global(body:has(#filter-open:checked)) .toolbar__toggle {
+		background: var(--accent);
+		color: var(--on-accent);
+	}
+
+	:global(body:has(#filter-open:checked)) .toolbar__toggle::before {
+		color: var(--on-accent);
+	}
+
+	:global(body:has(#filter-open:focus-visible)) .toolbar__toggle {
+		outline: 2px solid var(--accent-pop);
+		outline-offset: 2px;
+	}
+
+	.toolbar__search {
+		flex: 1;
+		min-width: 12.5rem;
+		font-family: var(--font-mono);
+		font-size: 0.8125rem;
+		color: var(--text);
+		background: var(--panel);
+		border: 2px solid var(--ink);
+		box-shadow: 0.3125rem 0.3125rem 0 var(--accent);
+		padding: 0.75rem 1rem;
+	}
+
+	.toolbar__search::placeholder {
+		color: var(--text-muted);
+	}
+
+	.toolbar__search:focus {
+		outline: none;
+		border-color: var(--accent-soft);
+	}
+
+	.toolbar__search:focus-visible {
+		outline: 2px solid var(--accent-pop);
+		outline-offset: 2px;
+	}
+
+	.toolbar__submit {
+		font-family: var(--font-mono);
+		font-weight: 700;
+		font-size: 0.75rem;
+		text-transform: uppercase;
+		color: var(--on-accent);
+		background: var(--accent-pop);
+		border: 2px solid var(--ink);
+		box-shadow: 0.25rem 0.25rem 0 var(--ink);
+		padding: 0 1.25rem;
+		cursor: pointer;
+	}
+
+	.toolbar__results {
+		margin: 0;
+		font-family: var(--font-mono);
+		font-size: 0.75rem;
+		color: var(--text-muted);
+	}
+
+	.toolbar__clear {
+		margin-left: 0.5rem;
+	}
+
+	.filters__backdrop {
+		position: fixed;
+		inset: 0;
+		z-index: 95;
+		cursor: default;
+		background: color-mix(in srgb, var(--ink) 70%, transparent);
+		backdrop-filter: blur(2px);
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 0.15s ease;
+	}
+
+	:global(body:has(#filter-open:checked)) .filters__backdrop {
+		opacity: 1;
+		pointer-events: auto;
+	}
+
+	.filters {
+		position: fixed;
+		z-index: 96;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		width: min(86vw, 21.25rem);
+		overflow-y: auto;
+		background: var(--panel);
+		border-left: 3px solid var(--ink);
+		transform: translateX(100%);
+		visibility: hidden;
+		transition:
+			transform 0.18s ease,
+			visibility 0s linear 0.18s;
+	}
+
+	:global(body:has(#filter-open:checked)) .filters {
+		transform: translateX(0);
+		visibility: visible;
+		box-shadow: -0.625rem 0 0 var(--accent-soft);
+		transition-delay: 0s;
+	}
+
+	@media (max-width: 640px) {
+		.filters {
+			width: 100vw;
+		}
+	}
+
+	.filters__fieldset {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		min-width: 0;
+		margin: 0;
+		padding: 5rem 1.5rem 1.5rem;
+		border: 0;
+	}
+
+	.filters__close {
+		position: absolute;
+		top: 1.25rem;
+		right: 1.25rem;
+		cursor: pointer;
+		font-family: var(--font-mono);
+		font-weight: 700;
+		font-size: 0.6875rem;
+		text-transform: uppercase;
+		color: var(--text-muted);
+		background: var(--panel-2);
+		border: 2px solid var(--ink);
+		padding: 0.5rem 0.75rem;
+	}
+
+	.filters__close:hover {
+		color: var(--text);
+		border-color: var(--accent-soft);
+	}
+
+	.filters__legend {
+		float: left;
+		width: 100%;
+		padding: 0 0.25rem 0.625rem;
+		font-family: var(--font-mono);
+		font-weight: 700;
+		font-size: 0.71875rem;
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+		color: var(--accent-soft);
+	}
+
+	.filters__pills {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.filters__pill {
+		position: relative;
+	}
+
+	.filters__input {
+		position: absolute;
+		opacity: 0;
+		width: 1px;
+		height: 1px;
+	}
+
+	.filters__label {
+		display: inline-block;
+		cursor: pointer;
+		font-family: var(--font-mono);
+		font-size: 0.75rem;
+		color: var(--text-muted);
+		background: var(--panel-2);
+		border: 2px solid var(--ink);
+		padding: 0.4375rem 0.75rem;
+	}
+
+	.filters__count {
+		margin-left: 0.25rem;
+		font-size: 0.625rem;
+		opacity: 0.6;
+	}
+
+	.filters__input:checked + .filters__label {
+		color: var(--on-accent);
+		background: var(--accent);
+	}
+
+	.filters__input:focus-visible + .filters__label {
+		outline: 2px solid var(--accent-pop);
+		outline-offset: 2px;
+	}
+
+	.filters__note {
+		margin: 0.25rem 0.25rem 0;
+		font-family: var(--font-mono);
+		font-size: 0.6875rem;
+		color: var(--text-muted);
+	}
+
+	.filters__actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.625rem;
+		margin-top: 0.875rem;
+	}
+
+	.filters__submit,
+	.filters__reset {
+		display: inline-flex;
+		align-items: center;
+		cursor: pointer;
+		font-family: var(--font-mono);
+		font-weight: 700;
+		font-size: 0.71875rem;
+		letter-spacing: 0.03em;
+		text-decoration: none;
+		text-transform: uppercase;
+		border: 2px solid var(--ink);
+		padding: 0.5625rem 1rem;
+	}
+
+	.filters__submit {
+		color: var(--on-accent);
+		background: var(--accent);
+		box-shadow: 0.1875rem 0.1875rem 0 var(--ink);
+	}
+
+	.filters__reset {
+		color: var(--text);
+		background: var(--panel-2);
+	}
+
+	.project-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(17.5rem, 1fr));
+		gap: 1.125rem;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.project-grid {
+		scroll-margin-top: 1.5rem;
+	}
+
+	.project-grid__item {
+		min-width: 0;
+	}
+
+	.pagination {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: center;
+		gap: 0.75rem;
+	}
+
+	.pagination__pages {
+		display: flex;
+		gap: 0.5rem;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.pagination__link {
+		display: inline-block;
+		min-width: 2.5rem;
+		text-align: center;
+		font-family: var(--font-mono);
+		font-weight: 700;
+		font-size: 0.75rem;
+		text-decoration: none;
+		text-transform: uppercase;
+		color: var(--text);
+		background: var(--panel-2);
+		border: 2px solid var(--ink);
+		padding: 0.5625rem 0.875rem;
+	}
+
+	a.pagination__link:hover {
+		border-color: var(--accent-soft);
+	}
+
+	.pagination__link--current {
+		color: var(--on-accent);
+		background: var(--accent);
+	}
+
+	.pagination__link--disabled {
+		opacity: 0.35;
+	}
+
+	.empty-state {
+		margin: 0;
+		padding: 1.875rem 0;
+		text-align: center;
+		font-family: var(--font-mono);
+		font-size: 0.8125rem;
+		color: var(--text-muted);
+	}
+</style>
