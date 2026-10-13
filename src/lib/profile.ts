@@ -5,6 +5,7 @@ export const GITHUB_USERNAME = 'Spimy';
 export const ANILIST_USERNAME = 'Spimy';
 export const TWITTER_USERNAME = 'OfficialSpimy';
 export const DISCORD_URL = 'https://discord.spimy.dev';
+export const REPO_URL = `https://github.com/${GITHUB_USERNAME}/spimy.dev`;
 
 export function getYearsCoding(): number {
   return new Date().getFullYear() - CODING_START_YEAR;

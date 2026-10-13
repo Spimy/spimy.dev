@@ -2,7 +2,7 @@
 import Analytics from '@vercel/analytics/astro';
 import EdgeNav from '../components/EdgeNav.astro';
 import '../css/styles.css';
-import { TWITTER_USERNAME } from '../lib/profile';
+import { REPO_URL, TWITTER_USERNAME } from '../lib/profile';
 
 interface Props {
 	title: string;
@@ -86,7 +86,14 @@ const image = new URL('/logos/character.png', Astro.site);
 					rel="noopener noreferrer">Svelte</a
 				>.
 			</p>
-			<nav class="build-note__links" aria-label="Legal">
+			<nav class="build-note__links" aria-label="Footer">
+				<a
+					class="build-note__link"
+					href={REPO_URL}
+					target="_blank"
+					rel="noopener noreferrer">Source code</a
+				>
+				<span class="build-note__separator" aria-hidden="true">·</span>
 				<a class="build-note__link" href="/privacy">Privacy Policy</a>
 			</nav>
 		</footer>
@@ -110,6 +117,18 @@ const image = new URL('/logos/character.png', Astro.site);
 
 	.build-note__credit {
 		margin: 0;
+	}
+
+	.build-note__links {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		align-items: center;
+		gap: 0.25rem 0.75rem;
+	}
+
+	.build-note__separator {
+		color: var(--text-muted);
 	}
 
 	.build-note__link {
