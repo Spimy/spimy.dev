@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /*?reveal=
+Disallow: /*?sent=
+
+Sitemap: https://www.spimy.dev/sitemap-index.xml
