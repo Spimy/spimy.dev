@@ -18,7 +18,7 @@ import {
 type Stat = { label: string; value: string; big?: boolean };
 
 const rosterLocked = 4;
-const level = 34;
+const level = new Date().getFullYear() - 2003; // age
 
 const yearsCoding = getYearsCoding();
 const [projectsShipped, github, anime] = await Promise.all([
