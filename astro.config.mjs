@@ -1,7 +1,7 @@
 // @ts-check
 import node from '@astrojs/node';
 import svelte from '@astrojs/svelte';
-import { defineConfig } from 'astro/config';
+import { defineConfig, envField } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
@@ -11,4 +11,14 @@ export default defineConfig({
   adapter: node({
     mode: 'standalone',
   }),
+
+  env: {
+    schema: {
+      GITHUB_TOKEN: envField.string({
+        context: 'server',
+        access: 'secret',
+        optional: true,
+      }),
+    },
+  },
 });

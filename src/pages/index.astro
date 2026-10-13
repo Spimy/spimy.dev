@@ -2,6 +2,7 @@
 export const prerender = false;
 
 import { Image } from 'astro:assets';
+import { GITHUB_TOKEN } from 'astro:env/server';
 import characterReal from '../assets/character-real.png';
 import character from '../assets/character.png';
 import logo from '../assets/logo.png';
@@ -22,7 +23,7 @@ const level = 34;
 const yearsCoding = getYearsCoding();
 const [projectsShipped, github, anime] = await Promise.all([
 	getProjectCount(),
-	getGitHubStats(GITHUB_USERNAME, import.meta.env.GITHUB_TOKEN),
+	getGitHubStats(GITHUB_USERNAME, GITHUB_TOKEN),
 	getCompletedAnime(ANILIST_USERNAME),
 ]);
 
