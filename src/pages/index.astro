@@ -120,6 +120,25 @@ const stats = [
 					</div>
 					<span class="character__ground" aria-hidden="true"></span>
 				</div>
+
+				<noscript>
+					<div class="dialogue" role="note">
+						<span class="dialogue__name">
+							<span class="dialogue__name-text dialogue__name-text--anime"
+								>Spimy</span
+							>
+							<span class="dialogue__name-text dialogue__name-text--real"
+								>William</span
+							>
+						</span>
+						<p class="dialogue__text">
+							Welcome! This whole site works without JavaScript, so you can
+							carry on as you are. For the best experience, though, turn it on:
+							a few things, like the contact chat, are smoother with it.
+						</p>
+						<span class="dialogue__next" aria-hidden="true">▼</span>
+					</div>
+				</noscript>
 			</div>
 
 			<div class="skin-switcher">
@@ -523,6 +542,110 @@ const stats = [
 			transparent 72%
 		);
 		filter: blur(2px);
+	}
+
+	/* ---------- Visual novel text box shown when no JS ---------- */
+	.dialogue {
+		position: relative;
+		z-index: 3;
+		width: 100%;
+		max-width: 30rem;
+		margin-top: 1.25rem;
+		padding: 1.5rem 1.5rem 1.25rem;
+		background: color-mix(in srgb, var(--panel) 92%, transparent);
+		border: 2px solid var(--ink);
+		box-shadow: 0.375rem 0.375rem 0 var(--accent-pop);
+	}
+
+	.dialogue__name {
+		position: absolute;
+		top: -0.9375rem;
+		left: 1rem;
+		padding: 0.25rem 1.25rem 0.25rem 1rem;
+		font-family: var(--font-display);
+		font-style: italic;
+		text-transform: uppercase;
+		font-size: 1rem;
+		line-height: 1.2;
+		color: var(--on-pop);
+		background: var(--accent-pop);
+		clip-path: polygon(0 0, 100% 0, calc(100% - 0.5rem) 100%, 0 100%);
+	}
+
+	.dialogue__name-text--real {
+		display: none;
+	}
+
+	:global(body:has(#skin-real:checked)) .dialogue__name-text--anime {
+		display: none;
+	}
+
+	:global(body:has(#skin-real:checked)) .dialogue__name-text--real {
+		display: inline;
+	}
+
+	.dialogue__text {
+		margin: 0;
+		padding-right: 1rem;
+		font-size: 0.9375rem;
+		line-height: 1.6;
+		color: var(--text);
+	}
+
+	.dialogue__next {
+		position: absolute;
+		right: 0.875rem;
+		bottom: 0.5rem;
+		font-size: 0.625rem;
+		color: var(--accent-soft);
+	}
+
+	@media (scripting: none) and (max-width: 980px) {
+		.character {
+			min-height: 0;
+			justify-content: center;
+		}
+
+		.character__frame {
+			height: min(34vh, 19rem);
+		}
+	}
+
+	@media (scripting: none) and (min-width: 981px) {
+		.character {
+			align-self: stretch;
+			justify-content: flex-start;
+			min-height: 0;
+			contain: size;
+		}
+
+		.character__core {
+			flex: 1;
+			min-height: 0;
+			padding-bottom: 7rem;
+		}
+
+		.character__frame {
+			flex: 1;
+			height: auto;
+			min-height: 0;
+		}
+
+		.dialogue {
+			position: absolute;
+			bottom: 0.375rem;
+			left: 50%;
+			max-width: 25rem;
+			margin: 0;
+			transform: translateX(-50%);
+		}
+	}
+
+	@media (scripting: none) and (min-width: 981px) and (max-width: 1439px) {
+		.skin-switcher {
+			top: 9rem;
+			bottom: auto;
+		}
 	}
 
 	@media (max-width: 980px) {
