@@ -1,0 +1,888 @@
+---
+export const prerender = true;
+
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+import EquipmentState from '../components/EquipmentState.svelte';
+import PageHeader from '../components/PageHeader.astro';
+import PageMain from '../components/PageMain.astro';
+import Layout from '../layouts/Layout.astro';
+import { gear, groups, loadouts, type Gear } from '../lib/equipment';
+import { equipmentCss } from '../lib/equipment-css';
+import { getProjects, tagSlug } from '../lib/projects';
+
+const projects = await getProjects();
+const groupById = new Map(groups.map((group) => [group.id, group]));
+const gearById = new Map(gear.map((item) => [item.id, item]));
+
+const tabs = loadouts.map((loadout) => ({
+	...loadout,
+	slots: loadout.slots.map(({ id, slot }) => {
+		const item = gearById.get(id);
+		if (!item)
+			throw new Error(
+				`equipment.ts: "${id}" in loadout "${loadout.id}" is not in \`gear\``,
+			);
+		return { item, slot };
+	}),
+}));
+
+const equippedIds = new Set(
+	loadouts.flatMap((loadout) => loadout.slots.map((slot) => slot.id)),
+);
+
+// object tracking loadout gear for the tab-follows-selection progressive enhancement
+const loadoutGear = loadouts.map(({ id, slots }) => ({
+	id,
+	gear: slots.map((slot) => slot.id),
+}));
+
+function connectedProjects(item: Gear) {
+	const tags = item.tags ?? [];
+	return projects.filter((project) =>
+		project.data.tags.some((tag) => tags.includes(tag)),
+	);
+}
+
+const MAX_LISTED = 4;
+const cards = gear.map((item) => {
+	const matches = connectedProjects(item);
+	const group = groupById.get(item.group)!;
+	return {
+		item,
+		tier: `${group.slotName} / ${item.kind}`,
+		hasTags: (item.tags ?? []).length > 0,
+		total: matches.length,
+		listed: matches.slice(0, MAX_LISTED),
+		// pick up only the first tag if there's only one, so the link is more specific
+		filterHref:
+			item.tags?.length === 1
+				? `/projects?tech=${tagSlug(item.tags[0])}`
+				: null,
+	};
+});
+
+const sections = groups.map((group) => ({
+	...group,
+	items: gear.filter((item) => item.group === group.id),
+}));
+
+const logoFiles = import.meta.glob<ImageMetadata>(
+	'../assets/logos/*.{svg,png,webp}',
+	{ eager: true, import: 'default' },
+);
+
+function logoFor(id: string): ImageMetadata | undefined {
+	for (const ext of ['svg', 'png', 'webp']) {
+		const logo = logoFiles[`../assets/logos/${id}.${ext}`];
+		if (logo) return logo;
+	}
+}
+---
+
+<Layout
+	title="Equipments"
+	description="The languages, frameworks and tools Spimy builds with, and the projects each one shows up in."
+>
+	<Fragment slot="state">
+		<EquipmentState
+			client:load
+			loadouts={loadoutGear}
+			gear={gear.map((item) => item.id)}
+		/>
+		<style is:inline set:html={equipmentCss}></style>
+	</Fragment>
+
+	<PageHeader
+		title="Equipments"
+		subtitle="Character page III - What I build with. Select any gear to see what it is, how I came to it, and which projects in my inventory use it."
+	/>
+
+	<PageMain>
+		<div class="equipment">
+			<section class="loadout" aria-labelledby="loadout-title">
+				<h2 class="equipment__heading" id="loadout-title">Loadouts</h2>
+
+				{
+					tabs.length > 1 && (
+						<div class="loadout__tabs">
+							{tabs.map(({ id, label }) => (
+								<label class="loadout__tab" for={`ld-${id}`}>
+									{label}
+								</label>
+							))}
+						</div>
+					)
+				}
+
+				{
+					tabs.map(({ id, label, slots }) => (
+						<div
+							class={`loadout__block loadout__block--${id}`}
+							role="group"
+							aria-label={label}
+						>
+							<p class="loadout__caption">Currently equipped</p>
+							<ul class="loadout__list" role="list">
+								{slots.map(({ item, slot }) => (
+									<li>
+										<label class="gear" for={`eq-${item.id}`}>
+											<span class="gear__icon" aria-hidden="true">
+												{logoFor(item.id) ? (
+													<Image
+														class="gear__logo"
+														src={logoFor(item.id)!}
+														alt=""
+														width={56}
+													/>
+												) : (
+													item.abbr
+												)}
+											</span>
+											<span class="gear__info">
+												<span class="gear__type">{slot}</span>
+												<span class="gear__name">{item.name}</span>
+											</span>
+										</label>
+									</li>
+								))}
+							</ul>
+						</div>
+					))
+				}
+			</section>
+
+			<div class="equipment__body">
+				<div class="stash">
+					<h2 class="stash__title">Inventory stash</h2>
+
+					{
+						sections.map((section) => (
+							<section
+								class="stash__group"
+								aria-labelledby={`group-${section.id}`}
+							>
+								<h3 class="stash__group-title" id={`group-${section.id}`}>
+									{section.title}{' '}
+									<span class="stash__group-sub">({section.subtitle})</span>
+								</h3>
+								<ul class="stash__grid" role="list">
+									{section.items.map((item) => (
+										<li>
+											<label
+												class:list={[
+													'tile',
+													{
+														'tile--equipped': equippedIds.has(item.id),
+														'tile--stash': item.status === 'stash',
+														'tile--locked': item.status === 'locked',
+													},
+												]}
+												for={`eq-${item.id}`}
+											>
+												{item.status === 'locked' && (
+													<svg
+														class="tile__lock"
+														viewBox="0 0 16 16"
+														aria-hidden="true"
+														fill="currentColor"
+													>
+														<path d="M8 1a3.5 3.5 0 0 0-3.5 3.5V6H4a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1h-.5V4.5A3.5 3.5 0 0 0 8 1zm-2 3.5a2 2 0 1 1 4 0V6H6z" />
+													</svg>
+												)}
+												<span class="tile__abbr" aria-hidden="true">
+													{logoFor(item.id) ? (
+														<Image
+															class="tile__logo"
+															src={logoFor(item.id)!}
+															alt=""
+															width={64}
+														/>
+													) : (
+														item.abbr
+													)}
+												</span>
+												<span class="tile__name">
+													{item.name}
+													{equippedIds.has(item.id) && (
+														<span class="sr-only"> (equipped)</span>
+													)}
+													{!equippedIds.has(item.id) &&
+														item.status === 'active' && (
+															<span class="sr-only"> (in use)</span>
+														)}
+													{item.status === 'stash' && (
+														<span class="sr-only"> (in stash)</span>
+													)}
+													{item.status === 'locked' && (
+														<span class="sr-only"> (locked)</span>
+													)}
+												</span>
+											</label>
+										</li>
+									))}
+								</ul>
+							</section>
+						))
+					}
+				</div>
+
+				<aside class="inspector" aria-label="Gear inspector">
+					<div class="inspector__default">
+						<span class="inspector__tier">// Item status</span>
+						<h2 class="inspector__heading">Select gear</h2>
+						<p class="inspector__text">
+							Pick any equipped item or inventory tile to inspect it.
+						</p>
+					</div>
+
+					{
+						cards.map(({ item, tier, hasTags, total, listed, filterHref }) => (
+							<article class={`inspector__card inspector__card--${item.id}`}>
+								<label class="inspector__close" for="eq-close">
+									Close
+									<span class="sr-only"> {item.name} details</span>
+								</label>
+
+								<header class="inspector__header">
+									<div class="inspector__title-row">
+										<h2 class="inspector__title">{item.name}</h2>
+										{equippedIds.has(item.id) && (
+											<span class="inspector__pill inspector__pill--equipped">
+												Equipped
+											</span>
+										)}
+										{!equippedIds.has(item.id) && item.status === 'active' && (
+											<span class="inspector__pill inspector__pill--active">
+												In use
+											</span>
+										)}
+										{item.status === 'stash' && (
+											<span class="inspector__pill">In stash</span>
+										)}
+										{item.status === 'locked' && (
+											<span class="inspector__pill inspector__pill--locked">
+												Locked
+											</span>
+										)}
+									</div>
+									<span class="inspector__tier">{tier}</span>
+								</header>
+
+								<p class="inspector__desc">{item.blurb}</p>
+
+								{item.status === 'locked' && item.unlock && (
+									<div class="inspector__req">
+										<h3 class="inspector__req-title">Unlock requirement</h3>
+										<p class="inspector__req-text">{item.unlock}</p>
+									</div>
+								)}
+
+								{item.note && (
+									<>
+										<h3 class="inspector__label">My experience</h3>
+										<p class="inspector__desc">{item.note}</p>
+									</>
+								)}
+
+								{hasTags && total > 0 && (
+									<>
+										<h3 class="inspector__label">Connected inventory</h3>
+										<ul class="inspector__projects" role="list">
+											{listed.map((project) => (
+												<li>
+													{project.body?.trim() ? (
+														<a href={`/projects/${project.id}`}>
+															{project.data.title}
+														</a>
+													) : (
+														project.data.title
+													)}
+													<span class="inspector__year">
+														{' '}
+														{project.data.date.slice(0, 4)}
+													</span>
+												</li>
+											))}
+										</ul>
+										{total > listed.length && (
+											<p class="inspector__more">
+												and {total - listed.length} more
+											</p>
+										)}
+										{filterHref && (
+											<a class="inspector__button" href={filterHref}>
+												View in Inventory
+												<span class="sr-only"> filtered to {item.name}</span> →
+											</a>
+										)}
+									</>
+								)}
+							</article>
+						))
+					}
+				</aside>
+			</div>
+		</div>
+	</PageMain>
+</Layout>
+
+<style>
+	.equipment {
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+		width: 100%;
+		--locked: #f5bb47;
+		--logo-halo: drop-shadow(0 0 0.2px var(--text))
+			drop-shadow(0 0 0.375rem color-mix(in srgb, var(--text) 25%, transparent));
+	}
+
+	.equipment__heading {
+		margin: 0 0 0.75rem;
+		font-family: var(--font-mono);
+		font-size: 0.8125rem;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--accent-soft);
+	}
+
+	/* ---------- Currently equipped ---------- */
+	.loadout {
+		padding: 1.25rem 1.25rem 1.5rem;
+		background: var(--panel);
+		border: 3px solid var(--ink);
+		box-shadow: 0.375rem 0.375rem 0 var(--accent);
+	}
+
+	.loadout__tabs {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		margin-bottom: 1rem;
+	}
+
+	.loadout__tab {
+		padding: 0.625rem 1rem;
+		font-family: var(--font-mono);
+		font-size: 0.6875rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		white-space: nowrap;
+		color: var(--text-muted);
+		background: var(--panel-2);
+		border: 2px solid var(--ink);
+		cursor: pointer;
+	}
+
+	.loadout__tab:hover {
+		color: var(--text);
+		border-color: var(--accent-soft);
+	}
+
+	.loadout__block {
+		display: none;
+	}
+
+	.loadout__caption {
+		margin: 0 0 0.75rem;
+		font-family: var(--font-mono);
+		font-size: 0.6875rem;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		color: var(--text-muted);
+	}
+
+	.loadout__list {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+		gap: 0.75rem;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.gear {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		height: 100%;
+		padding: 0.625rem;
+		background: var(--panel-2);
+		border: 2px solid var(--ink);
+		cursor: pointer;
+		transition:
+			transform 0.1s,
+			border-color 0.1s;
+	}
+
+	.gear:hover {
+		transform: translateX(0.25rem);
+		border-color: var(--accent-soft);
+	}
+
+	.gear__icon {
+		position: relative;
+		isolation: isolate;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+		width: 2.75rem;
+		height: 2.75rem;
+		font-family: var(--font-display);
+		font-style: italic;
+		font-size: 1.125rem;
+		color: var(--accent-soft);
+		background: var(--panel);
+		border: 1px solid color-mix(in srgb, var(--accent-soft) 30%, transparent);
+	}
+
+	.gear__logo {
+		width: 1.75rem;
+		height: 1.75rem;
+		object-fit: contain;
+		filter: var(--logo-halo);
+	}
+
+	.gear__info {
+		display: flex;
+		flex-direction: column;
+		min-width: 0;
+	}
+
+	.gear__type {
+		font-family: var(--font-mono);
+		font-size: 0.6rem;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		color: var(--accent-pop);
+	}
+
+	.gear__name {
+		font-family: var(--font-mono);
+		font-weight: 700;
+		font-size: 0.8125rem;
+		text-transform: uppercase;
+		color: var(--text);
+	}
+
+	/* ---------- Stash + inspector ---------- */
+	.equipment__body {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) 21rem;
+		gap: 2rem;
+		align-items: start;
+	}
+
+	.stash {
+		padding: 1.75rem;
+		background: var(--panel);
+		border: 3px solid var(--ink);
+		box-shadow: 0.375rem 0.375rem 0 var(--ink);
+	}
+
+	.stash__title {
+		display: inline-block;
+		position: relative;
+		margin: 0 0 1.5rem;
+		font-family: var(--font-display);
+		font-style: italic;
+		font-weight: 400;
+		font-size: 2rem;
+		text-transform: uppercase;
+		color: var(--text);
+	}
+
+	.stash__title::before {
+		content: '';
+		position: absolute;
+		z-index: -1;
+		left: -0.75rem;
+		top: 48%;
+		width: 70%;
+		height: 1rem;
+		background: var(--accent-pop);
+		opacity: 0.85;
+		transform: skewX(-12deg);
+	}
+
+	.stash__group + .stash__group {
+		margin-top: 2rem;
+	}
+
+	.stash__group-title {
+		margin: 0 0 1rem;
+		padding-bottom: 0.5rem;
+		font-family: var(--font-mono);
+		font-size: 0.6875rem;
+		font-weight: 500;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		color: var(--accent-soft);
+		border-bottom: 1px solid var(--panel-2);
+	}
+
+	.stash__group-sub {
+		color: var(--text-muted);
+	}
+
+	.stash__grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(5.5rem, 1fr));
+		gap: 0.75rem;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.tile {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		position: relative;
+		gap: 0.25rem;
+		height: 100%;
+		min-height: 5.5rem;
+		padding: 0.5rem 0.25rem;
+		text-align: center;
+		background: var(--panel-2);
+		border: 2px solid var(--ink);
+		cursor: pointer;
+		transition:
+			transform 0.1s,
+			border-color 0.1s;
+	}
+
+	.tile:hover {
+		transform: translateY(-0.1875rem);
+		border-color: var(--accent-soft);
+	}
+
+	.tile--equipped::after {
+		content: '';
+		position: absolute;
+		top: 0.375rem;
+		right: 0.375rem;
+		width: 0.4375rem;
+		height: 0.4375rem;
+		border-radius: 50%;
+		background: var(--ok);
+	}
+
+	.tile--stash {
+		border-style: dashed;
+		border-color: var(--text-muted);
+	}
+
+	.tile--locked {
+		border-style: dashed;
+		border-color: color-mix(in srgb, var(--locked) 35%, transparent);
+	}
+
+	.tile__lock {
+		position: absolute;
+		top: 0.3125rem;
+		right: 0.3125rem;
+		width: 0.75rem;
+		height: 0.75rem;
+		color: color-mix(in srgb, var(--locked) 35%, transparent);
+	}
+
+	.tile--locked .tile__abbr,
+	.tile--locked .tile__name {
+		color: var(--text-muted);
+	}
+
+	.tile__abbr {
+		position: relative;
+		isolation: isolate;
+		font-family: var(--font-display);
+		font-style: italic;
+		font-size: 1.375rem;
+		color: var(--accent-soft);
+	}
+
+	.tile__logo {
+		display: block;
+		width: 2rem;
+		height: 2rem;
+		object-fit: contain;
+		filter: var(--logo-halo);
+	}
+
+	.tile--locked .tile__logo {
+		opacity: 0.7;
+		filter: brightness(0) invert(0.55) var(--logo-halo);
+	}
+
+	.tile__name {
+		font-family: var(--font-mono);
+		font-size: 0.625rem;
+		font-weight: 700;
+		line-height: 1.25;
+		text-transform: uppercase;
+		color: var(--text);
+		overflow-wrap: anywhere;
+	}
+
+	/* ---------- Inspector ---------- */
+	.inspector {
+		position: sticky;
+		top: 1.5rem;
+		padding: 1.5rem;
+		background: var(--panel);
+		border: 3px solid var(--ink);
+		box-shadow: 0.375rem 0.375rem 0 var(--accent-pop);
+	}
+
+	.inspector__default {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	.inspector__heading {
+		margin: 0;
+		font-family: var(--font-display);
+		font-style: italic;
+		font-weight: 400;
+		font-size: 1.8rem;
+		text-transform: uppercase;
+	}
+
+	.inspector__text {
+		margin: 0;
+		font-size: 0.9rem;
+		line-height: 1.6;
+		color: var(--text-muted);
+	}
+
+	:global(body:has(input[name='gear']:not(#eq-close):checked))
+		.inspector__default {
+		display: none;
+	}
+
+	.inspector__card {
+		display: none;
+		flex-direction: column;
+	}
+
+	.inspector__close {
+		display: none;
+	}
+
+	.inspector__header {
+		margin-bottom: 1rem;
+		padding-bottom: 0.75rem;
+		border-bottom: 2px solid var(--panel-2);
+	}
+
+	.inspector__title-row {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.75rem;
+		margin-bottom: 0.375rem;
+	}
+
+	.inspector__title {
+		margin: 0;
+		font-family: var(--font-display);
+		font-style: italic;
+		font-weight: 400;
+		font-size: 1.8rem;
+		line-height: 1.1;
+		text-transform: uppercase;
+		color: var(--text);
+	}
+
+	.inspector__pill {
+		flex-shrink: 0;
+		padding: 0.25rem 0.5rem;
+		font-family: var(--font-mono);
+		font-size: 0.625rem;
+		font-weight: 700;
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+		color: var(--text-muted);
+		border: 1px solid currentColor;
+	}
+
+	.inspector__pill--equipped {
+		color: var(--ok);
+	}
+
+	.inspector__pill--active {
+		color: var(--accent-soft);
+	}
+
+	.inspector__pill--locked {
+		color: var(--accent-pop);
+	}
+
+	.inspector__req {
+		margin-bottom: 1.25rem;
+		padding: 0.875rem;
+		background: var(--panel-2);
+		border-left: 3px solid var(--accent-pop);
+	}
+
+	.inspector__req-title {
+		margin: 0 0 0.375rem;
+		font-family: var(--font-mono);
+		font-size: 0.75rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		color: var(--accent-pop);
+	}
+
+	.inspector__req-text {
+		margin: 0;
+		font-family: var(--font-mono);
+		font-size: 0.6875rem;
+		line-height: 1.6;
+		color: var(--text-muted);
+	}
+
+	.inspector__tier {
+		display: block;
+		font-family: var(--font-mono);
+		font-size: 0.625rem;
+		font-weight: 700;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		color: var(--accent-soft);
+	}
+
+	.inspector__desc {
+		margin: 0 0 1.25rem;
+		font-size: 0.92rem;
+		line-height: 1.6;
+		color: var(--text-muted);
+	}
+
+	.inspector__label {
+		margin: 0 0 0.5rem;
+		font-family: var(--font-mono);
+		font-size: 0.65625rem;
+		font-weight: 700;
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+		color: var(--accent-pop);
+	}
+
+	.inspector__projects {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		margin: 0 0 0.75rem;
+		padding: 0;
+		list-style: none;
+		font-size: 0.85rem;
+		line-height: 1.4;
+		color: var(--text);
+	}
+
+	.inspector__projects a {
+		font-weight: 600;
+		color: var(--text);
+		text-decoration: none;
+	}
+
+	.inspector__projects a:hover {
+		color: var(--accent-soft);
+		text-decoration: underline;
+	}
+
+	.inspector__year {
+		font-family: var(--font-mono);
+		font-size: 0.6875rem;
+		color: var(--text-muted);
+	}
+
+	.inspector__more {
+		margin: 0 0 0.75rem;
+		font-size: 0.8rem;
+		color: var(--text-muted);
+	}
+
+	.inspector__button {
+		align-self: flex-start;
+		display: inline-block;
+		margin-top: 0.25rem;
+		padding: 0.625rem 1rem;
+		font-family: var(--font-mono);
+		font-size: 0.65625rem;
+		font-weight: 700;
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+		text-decoration: none;
+		color: var(--on-accent);
+		background: var(--accent);
+		box-shadow: 0.25rem 0.25rem 0 var(--ink);
+	}
+
+	.inspector__button:hover,
+	.inspector__button:focus-visible {
+		background: var(--accent-pop);
+	}
+
+	/* ---------- Narrow screens inspector becomes a pop-up ---------- */
+	@media (max-width: 1100px) {
+		.equipment__body {
+			grid-template-columns: minmax(0, 1fr);
+		}
+
+		.inspector {
+			display: none;
+		}
+
+		:global(body:has(input[name='gear']:not(#eq-close):checked)) {
+			overflow: hidden;
+		}
+
+		:global(body:has(input[name='gear']:not(#eq-close):checked)) .inspector {
+			position: fixed;
+			inset: 0;
+			z-index: 999;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 1.25rem;
+			background: color-mix(in srgb, var(--ink) 85%, transparent);
+			border: 0;
+			box-shadow: none;
+		}
+
+		.inspector__card {
+			width: 100%;
+			max-width: 25rem;
+			max-height: 85vh;
+			overflow-y: auto;
+			padding: 1.5rem;
+			background: var(--panel);
+			border: 3px solid var(--ink);
+			box-shadow: 0.375rem 0.375rem 0 var(--accent-pop);
+		}
+
+		.inspector__close {
+			display: inline-flex;
+			align-self: flex-end;
+			margin-bottom: 1rem;
+			padding: 0.5rem 0.75rem;
+			font-family: var(--font-mono);
+			font-size: 0.625rem;
+			text-transform: uppercase;
+			color: var(--text-muted);
+			border: 1px solid var(--text-muted);
+			cursor: pointer;
+		}
+
+		.inspector__close:hover {
+			color: var(--on-accent);
+			background: var(--accent);
+		}
+	}
+</style>

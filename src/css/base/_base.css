@@ -26,8 +26,6 @@
   /* --- Status --- */
   /* online dot, "unlocked" pill */
   --ok: #3ddc84;
-  /* locked gear: warm amber, so it never looks like a selected (pink) item */
-  --locked: #f5bb47;
 
   /* --- Typography --- */
   --font-display: 'Anton', sans-serif;
