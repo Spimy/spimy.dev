@@ -15,6 +15,7 @@ export default defineConfig({
   security: {
     allowedDomains: [
       { hostname: 'spimy.dev', protocol: 'https' },
+      { hostname: 'www.spimy.dev', protocol: 'https' },
       { hostname: 'localhost', protocol: 'http' },
       { hostname: '127.0.0.1', protocol: 'http' },
     ],
