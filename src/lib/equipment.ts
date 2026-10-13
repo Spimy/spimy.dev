@@ -88,6 +88,7 @@ export const loadouts: Loadout[] = [
     label: 'Mobile',
     slots: [
       { id: 'typescript', slot: 'Main weapon' },
+      { id: 'nodejs', slot: 'Sub weapon' },
       { id: 'sveltekit', slot: 'Artifact' },
       { id: 'capacitor', slot: 'Artifact' },
       { id: 'docker', slot: 'Armour' },
