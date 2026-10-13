@@ -1,0 +1,175 @@
+---
+import PageHeader from '../components/PageHeader.astro';
+import PageMain from '../components/PageMain.astro';
+import Panel from '../components/Panel.astro';
+import Layout from '../layouts/Layout.astro';
+
+const UPDATED = '13 October 2026';
+---
+
+<Layout
+	title="Privacy Policy"
+	description="What happens to the details you send through the contact form."
+>
+	<PageHeader
+		title="Privacy Policy"
+		subtitle="What happens to the details you send through the Party Chat form."
+	/>
+
+	<PageMain>
+		<Panel kicker="// 01 - WHAT I COLLECT" title="What I collect">
+			<Fragment slot="intro">
+				The only place on this site where you can send me information is the
+				form on the <a class="policy__link" href="/contact">Party Chat</a>
+				page. I am William (Spimy), based in Mauritius, and I am the person responsible
+				for what you send there.
+			</Fragment>
+
+			<ul class="policy__list" role="list">
+				<li>
+					<strong>Your name, email address and message.</strong> You type these in
+					yourself, and the form needs all three. You do not have to use the form:
+					the other links on the contact page work too.
+				</li>
+				<li>
+					<strong>Your IP address.</strong> The site uses it to limit how many messages
+					one person can send in an hour, and passes it to hCaptcha to check that
+					you are not a bot. It is kept in the server's memory only, not in a database.
+				</li>
+				<li>
+					<strong>hCaptcha.</strong> With JavaScript on, the form uses hCaptcha, a
+					security service from Intuition Machines, Inc. (a US company), to check
+					that you are a person and not a bot. It is loaded when you open the <a
+						class="policy__link"
+						href="/contact">contact page</a
+					>, and shows you a short challenge when you send a message. It looks
+					at information such as your IP address, how long you have been on the
+					page and your mouse movements, and sends it to Intuition Machines.
+					This may start before the challenge appears. I use it only to protect
+					the form from spam and abuse. hCaptcha acts on my behalf as a data
+					processor, and its{' '}
+					<a class="policy__link" href="https://www.hcaptcha.com/privacy"
+						>Privacy Policy</a
+					>{' '}
+					and{' '}
+					<a class="policy__link" href="https://www.hcaptcha.com/terms"
+						>Terms of Service</a
+					>{' '}
+					apply. Without JavaScript, the form uses a hidden check instead, which sends
+					nothing to hCaptcha.
+				</li>
+				<li>
+					<strong>Hosting logs.</strong> The site is hosted on Vercel, which may log
+					basic details of each visit, such as the IP address, as part of running
+					the site.
+				</li>
+			</ul>
+
+			<p class="policy__text">
+				I use your name, email and message only to read your message and, if I
+				reply, to write back to you.
+			</p>
+		</Panel>
+
+		<Panel kicker="// 02 - WHERE IT GOES" title="Where it goes" tone="soft">
+			<ul class="policy__list" role="list">
+				<li>
+					<strong>It becomes an email.</strong> Your message is sent through Microsoft's
+					email service (Office 365) to my inbox. It is not saved in any database
+					on this site, so the only copy is the one in my inbox.
+				</li>
+				<li>
+					<strong>One short exception.</strong> If you send a message without JavaScript,
+					the site keeps your name and message in the server's memory for up to 5
+					minutes so it can show them back to you after the page reloads. They are
+					forgotten as soon as they are shown, or when the time runs out.
+				</li>
+				<li>
+					<strong>How long I keep it.</strong> If we end up in a real conversation,
+					such as with a recruiter or a freelance client, I keep it and archive it
+					as a record. Anything else, like spam or a casual hello, I almost always
+					delete as soon as I have replied, if I reply at all.
+				</li>
+				<li>
+					<strong>Outside Mauritius.</strong> Microsoft, hCaptcha and Vercel are international
+					services, so some of your data may be processed outside Mauritius.
+				</li>
+			</ul>
+		</Panel>
+
+		<Panel kicker="// 03 - YOUR CHOICES" title="Your choices" tone="pop">
+			<ul class="policy__list" role="list">
+				<li>
+					You can ask what I hold about you, ask me to correct it, or ask me to
+					delete it.
+				</li>
+				<li>
+					You can take back your consent at any time by asking me to delete your
+					message.
+				</li>
+				<li>
+					To do any of this, write to me using the <strong>Show email</strong> button
+					on the{' '}
+					<a class="policy__link" href="/contact#links">contact page</a>.
+				</li>
+				<li>
+					If you are not happy with how I handled your data, you can complain to
+					the Data Protection Commissioner in Mauritius, through the{' '}
+					<a class="policy__link" href="https://dataprotection.govmu.org"
+						>Data Protection Office</a
+					>.
+				</li>
+			</ul>
+
+			<p class="policy__text">
+				If this changes, I will update this page and the date below.
+			</p>
+			<p class="policy__updated">Last updated: {UPDATED}</p>
+		</Panel>
+	</PageMain>
+</Layout>
+
+<style>
+	.policy__list {
+		display: flex;
+		flex-direction: column;
+		gap: 0.875rem;
+		max-width: 64ch;
+		margin: 1.25rem 0 0;
+		padding: 0 0 0 1.125rem;
+		list-style: disc;
+		line-height: 1.7;
+		color: var(--text-muted);
+	}
+
+	.policy__list li::marker {
+		color: var(--accent-pop);
+	}
+
+	.policy__list strong {
+		color: var(--text);
+	}
+
+	.policy__text {
+		max-width: 64ch;
+		margin: 1.25rem 0 0;
+		line-height: 1.7;
+		color: var(--text-muted);
+	}
+
+	.policy__link {
+		color: var(--accent-soft);
+		text-underline-offset: 0.2em;
+	}
+
+	.policy__link:hover {
+		color: var(--text);
+	}
+
+	.policy__updated {
+		margin: 1rem 0 0;
+		font-family: var(--font-mono);
+		font-size: 0.75rem;
+		color: var(--text-muted);
+	}
+</style>

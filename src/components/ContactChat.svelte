@@ -434,12 +434,18 @@
         >
       </div>
 
-      <p class="compose__hint">Any reply will go to the email you give here.</p>
+      <p class="compose__hint">
+        Any reply will go to the email you give here.
+        {#if captcha !== 'ready'}
+          <a href="/privacy">Privacy Policy</a>
+        {/if}
+      </p>
       {#if captcha === 'ready'}
         <p class="compose__hint">
           This site is protected by hCaptcha and its
           <a href="https://www.hcaptcha.com/privacy">Privacy Policy</a> and
-          <a href="https://www.hcaptcha.com/terms">Terms of Service</a> apply.
+          <a href="https://www.hcaptcha.com/terms">Terms of Service</a> apply,
+          except as noted in our <a href="/privacy">Privacy Policy</a>.
         </p>
       {/if}
     </form>

@@ -36,27 +36,42 @@ interface Props {
 		<slot />
 
 		<footer class="build-note">
-			© {new Date().getFullYear()} Spimy - Built with <a
-				href="https://astro.build"
-				target="_blank"
-				rel="noopener noreferrer">Astro</a
-			> and <a
-				href="https://svelte.dev"
-				target="_blank"
-				rel="noopener noreferrer">Svelte</a
-			>.
+			<p class="build-note__credit">
+				© {new Date().getFullYear()} Spimy - Built with <a
+					href="https://astro.build"
+					target="_blank"
+					rel="noopener noreferrer">Astro</a
+				> and <a
+					href="https://svelte.dev"
+					target="_blank"
+					rel="noopener noreferrer">Svelte</a
+				>.
+			</p>
+			<nav class="build-note__links" aria-label="Legal">
+				<a class="build-note__link" href="/privacy">Privacy Policy</a>
+			</nav>
 		</footer>
 	</body>
 </html>
 
 <style>
 	footer.build-note {
-		position: relative;
-		z-index: 1;
-		text-align: center;
-		padding: 1.25rem 1.25rem 5.625rem;
-		font-family: var(--font-mono);
-		font-size: 0.6875rem;
-		color: var(--text-muted);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.5rem;
+	}
+
+	.build-note__credit {
+		margin: 0;
+	}
+
+	.build-note__link {
+		color: inherit;
+		text-underline-offset: 0.2em;
+	}
+
+	.build-note__link:hover {
+		color: var(--text);
 	}
 </style>
