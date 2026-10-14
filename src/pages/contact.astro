@@ -21,7 +21,12 @@ import {
 	takeSent,
 } from '../lib/contact';
 import { issueFormToken, issueRevealToken } from '../lib/form-token';
-import { DISCORD_URL, GITHUB_USERNAME, TWITTER_USERNAME } from '../lib/profile';
+import {
+	DISCORD_URL,
+	GITHUB_USERNAME,
+	LINKEDIN_URL,
+	X_USERNAME,
+} from '../lib/profile';
 
 Astro.response.headers.set('Cache-Control', 'no-store');
 
@@ -86,8 +91,9 @@ const revealExpired = requestedToken !== null && email === null;
 
 const links = [
 	{ label: 'GitHub', href: `https://github.com/${GITHUB_USERNAME}` },
-	{ label: 'Twitter', href: `https://x.com/${TWITTER_USERNAME}` },
+	{ label: 'LinkedIn', href: LINKEDIN_URL },
 	{ label: 'Discord', href: DISCORD_URL },
+	{ label: 'X', href: `https://x.com/${X_USERNAME}` },
 ];
 
 const avatar = (await getImage({ src: character, width: 160, format: 'webp' }))

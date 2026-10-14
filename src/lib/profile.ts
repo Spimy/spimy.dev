@@ -3,9 +3,11 @@ import { getCollection } from 'astro:content';
 export const CODING_START_YEAR = 2016;
 export const GITHUB_USERNAME = 'Spimy';
 export const ANILIST_USERNAME = 'Spimy';
-export const TWITTER_USERNAME = 'OfficialSpimy';
+export const X_USERNAME = 'OfficialSpimy';
 export const DISCORD_URL = 'https://discord.spimy.dev';
 export const REPO_URL = `https://github.com/${GITHUB_USERNAME}/spimy.dev`;
+export const LINKEDIN_URL =
+  'https://www.linkedin.com/in/william-law-hong-waye/';
 
 export function getYearsCoding(): number {
   return new Date().getFullYear() - CODING_START_YEAR;

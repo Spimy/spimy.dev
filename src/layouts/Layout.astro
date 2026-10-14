@@ -2,7 +2,7 @@
 import Analytics from '@vercel/analytics/astro';
 import EdgeNav from '../components/EdgeNav.astro';
 import '../css/styles.css';
-import { REPO_URL, TWITTER_USERNAME } from '../lib/profile';
+import { REPO_URL, X_USERNAME } from '../lib/profile';
 
 interface Props {
 	title: string;
@@ -57,8 +57,8 @@ const image = new URL('/logos/character.png', Astro.site);
 		<meta property="og:image:height" content="200" />
 
 		<meta name="twitter:card" content="summary" />
-		<meta name="twitter:site" content={`@${TWITTER_USERNAME}`} />
-		<meta name="twitter:creator" content={`@${TWITTER_USERNAME}`} />
+		<meta name="twitter:site" content={`@${X_USERNAME}`} />
+		<meta name="twitter:creator" content={`@${X_USERNAME}`} />
 		<meta name="twitter:title" content={pageTitle} />
 		<meta name="twitter:description" content={description} />
 		<meta name="twitter:image" content={image} />
