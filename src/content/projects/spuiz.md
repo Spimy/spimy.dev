@@ -7,4 +7,6 @@ tags: ['Python', 'Django', 'JavaScript', 'SQLite', 'Nginx']
 links:
   - label: 'Demo'
     url: 'https://spuiz.spimy.dev'
+  - label: 'Code'
+    url: 'https://github.com/Spimy/spuiz-old'
 ---

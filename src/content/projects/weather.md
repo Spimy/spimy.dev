@@ -6,4 +6,6 @@ tags: ['SvelteKit', 'TypeScript', 'SCSS']
 links:
   - label: 'Demo'
     url: 'https://weather.spimy.dev'
+  - label: 'Code'
+    url: 'https://github.com/Spimy/weather-app'
 ---

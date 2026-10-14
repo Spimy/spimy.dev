@@ -8,4 +8,6 @@ tags: ['Python', 'Django', 'Vue', 'TypeScript', 'Nginx']
 links:
   - label: 'Demo'
     url: 'https://subtitles.spimy.dev'
+  - label: 'Code'
+    url: 'https://github.com/iNeedSubs/legacy'
 ---

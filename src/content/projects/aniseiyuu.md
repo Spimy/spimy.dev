@@ -7,4 +7,6 @@ tags: ['Vue', 'TypeScript', 'SCSS', 'GraphQL']
 links:
   - label: 'Demo'
     url: 'https://aniseiyuu.spimy.dev'
+  - label: 'Code'
+    url: 'https://github.com/spimy/aniseiyuu'
 ---

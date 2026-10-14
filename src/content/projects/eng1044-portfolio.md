@@ -7,4 +7,6 @@ tags: ['SvelteKit', 'TypeScript', 'SCSS', 'MongoDB']
 links:
   - label: 'Demo'
     url: 'https://eng1044.spimy.dev'
+  - label: 'Code'
+    url: 'https://github.com/Spimy/english_research_paper_portfolio/'
 ---

@@ -7,4 +7,6 @@ tags: ['Node.js', 'TypeScript', 'discord.js']
 links:
   - label: 'npm'
     url: 'https://www.npmjs.com/package/embed-paginator'
+  - label: 'Code'
+    url: 'https://github.com/Spimy/embed-paginator'
 ---
