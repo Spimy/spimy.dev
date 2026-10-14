@@ -7,4 +7,6 @@ tags: ['PHP', 'MariaDB', 'Apache', 'Docker']
 links:
   - label: 'Demo'
     url: 'https://recipe-roots.spimy.dev'
+  - label: 'Code'
+    url: 'https://github.com/Spimy/recipe-roots'
 ---
