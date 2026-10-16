@@ -4,12 +4,12 @@ date: '2026-09'
 context: 'Commission'
 role: 'Mobile App Developer'
 summary: 'A mobile app I built for a friend that works as a Bluetooth remote for the microcontroller in his cosplay, so he can change the LED settings from his phone. Built with Capacitor and Svelte.'
-tags: ['Capacitor', 'Svelte', 'Git']
+tags: ['Capacitor', 'SvelteKit', 'Git']
 ---
 
 ## Mission briefing
 
-A friend commissioned me to build an app for his cosplay. The costume has LEDs driven by a microcontroller, and he wanted to change their settings from his phone instead of reprogramming the board. I never gave the app a proper name, so it is just the cosplay app.
+A friend commissioned me to build an app for his cosplay. The costume has LEDs driven by a microcontroller, and he wanted to change their settings from his phone. He is more familiar with hardware, so he programs the microcontroller himself while I build the app that talks to it. When I asked what he wanted to call the app, he did not have a name in mind either, so it is just the cosplay app.
 
 ## Screenshots
 
