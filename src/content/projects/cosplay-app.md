@@ -4,7 +4,7 @@ date: '2026-09'
 context: 'Commission'
 role: 'Mobile App Developer'
 summary: 'A mobile app I built for a friend that works as a Bluetooth remote for the microcontroller in his cosplay, so he can change the LED settings from his phone. Built with Capacitor and Svelte.'
-tags: ['Capacitor', 'SvelteKit', 'Git']
+tags: ['Capacitor', 'SvelteKit', 'Docker', 'Git']
 ---
 
 ## Mission briefing
