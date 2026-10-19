@@ -1,7 +1,7 @@
 // @ts-check
-import node from '@astrojs/node';
 import sitemap from '@astrojs/sitemap';
 import svelte from '@astrojs/svelte';
+import vercel from '@astrojs/vercel';
 import { defineConfig, envField } from 'astro/config';
 
 // https://astro.build/config
@@ -10,9 +10,7 @@ export default defineConfig({
   site: 'https://www.spimy.dev',
   integrations: [svelte(), sitemap()],
 
-  adapter: node({
-    mode: 'standalone',
-  }),
+  adapter: vercel(),
 
   security: {
     allowedDomains: [
