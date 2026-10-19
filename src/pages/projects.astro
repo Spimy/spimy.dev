@@ -5,7 +5,13 @@ import PageHeader from '../components/PageHeader.astro';
 import PageMain from '../components/PageMain.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import Layout from '../layouts/Layout.astro';
-import { filterProjects, getProjects, getTagOptions } from '../lib/projects';
+import {
+	filterProjects,
+	getProjects,
+	getTagOptions,
+	paginate,
+	readProjectQuery,
+} from '../lib/projects';
 
 Astro.response.headers.set(
 	'Cache-Control',
@@ -15,21 +21,18 @@ Astro.response.headers.set(
 const projects = await getProjects();
 const tagOptions = getTagOptions(projects);
 
-const params = Astro.url.searchParams;
-const query = (params.get('q') ?? '').trim().slice(0, 100);
-const knownSlugs = new Set(tagOptions.map((tag) => tag.slug));
-const activeTags = [...new Set(params.getAll('tech'))].filter((slug) =>
-	knownSlugs.has(slug),
-);
-
-// Cards per page
-const PAGE_SIZE = 9;
+const {
+	query,
+	tags: activeTags,
+	page: requestedPage,
+} = readProjectQuery(Astro.url.searchParams, tagOptions);
 
 const results = filterProjects(projects, { query, tags: activeTags });
-const totalPages = Math.max(1, Math.ceil(results.length / PAGE_SIZE));
-const requestedPage = Math.floor(Number(params.get('page'))) || 1;
-const page = Math.min(Math.max(requestedPage, 1), totalPages);
-const pageResults = results.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+const {
+	items: pageResults,
+	page,
+	totalPages,
+} = paginate(results, requestedPage);
 const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
 
 // Link to another page of the same search, keeping the query and filters.
