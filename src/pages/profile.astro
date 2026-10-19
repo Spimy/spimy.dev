@@ -3,7 +3,7 @@ import PageHeader from '../components/PageHeader.astro';
 import PageMain from '../components/PageMain.astro';
 import Panel from '../components/Panel.astro';
 import Layout from '../layouts/Layout.astro';
-import { getProjectCount, getYearsCoding } from '../lib/profile';
+import { cutscenes, getProjectCount, getYearsCoding } from '../lib/profile';
 
 const yearsCoding = getYearsCoding();
 const projectsShipped = await getProjectCount();
@@ -112,8 +112,8 @@ const interests = [
 	'Tea',
 	'Video Games',
 	'Minecraft',
-	'Keyboards',
 	'Close-up Magic',
+	'Video Editing',
 ];
 ---
 
@@ -185,7 +185,53 @@ const interests = [
 			</div>
 		</Panel>
 
-		<Panel kicker="// 03 - INTERESTS" title="Outside the editor" tone="pop">
+		<Panel kicker="// 03 - CUTSCENES" title="Watch the replays" tone="accent">
+			<Fragment slot="intro">
+				Video editing is my side skill: DaVinci Resolve now, Adobe Premiere Pro
+				before that. These are two university assignments I edited. The tools
+				are on the <a class="cutscenes__link" href="/equipment">Equipments</a> page.
+			</Fragment>
+
+			<ul class="cutscenes" role="list">
+				{
+					cutscenes.map((video) => (
+						<li>
+							<a
+								class="cut"
+								href={`https://www.youtube.com/watch?v=${video.id}`}
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								<span class="cut__thumb">
+									<img
+										src={`https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`}
+										alt=""
+										loading="lazy"
+										width="480"
+										height="360"
+										onerror="this.remove()"
+									/>
+									<span class="cut__play" aria-hidden="true">
+										▶
+									</span>
+								</span>
+
+								<span class="cut__body">
+									<span class="cut__meta">{video.meta}</span>
+									<span class="cut__name">
+										{video.title}
+										<span class="sr-only"> (opens YouTube)</span>
+									</span>
+									<span class="cut__note">{video.note}</span>
+								</span>
+							</a>
+						</li>
+					))
+				}
+			</ul>
+		</Panel>
+
+		<Panel kicker="// 04 - INTERESTS" title="Outside the editor" tone="pop">
 			<Fragment slot="intro">
 				The stuff that ends up shaping how I build things, whether or not it's
 				obviously related.
@@ -335,6 +381,98 @@ const interests = [
 	.timeline__more[open] .timeline__more-label--closed,
 	.timeline__more:not([open]) .timeline__more-label--open {
 		display: none;
+	}
+
+	.cutscenes {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+		gap: 1.25rem;
+		margin: 1.25rem 0 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.cutscenes__link {
+		color: var(--accent-soft);
+	}
+
+	.cut {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		color: inherit;
+		text-decoration: none;
+		background: var(--panel-2);
+		border: 2px solid var(--ink);
+		box-shadow: 0.1875rem 0.1875rem 0 var(--accent-soft);
+		transition:
+			transform 0.15s,
+			box-shadow 0.15s;
+	}
+
+	.cut:hover,
+	.cut:focus-visible {
+		transform: translate(-2px, -2px);
+		box-shadow: 0.3125rem 0.3125rem 0 var(--accent-pop);
+	}
+
+	.cut__thumb {
+		position: relative;
+		display: block;
+		aspect-ratio: 16 / 9;
+		overflow: hidden;
+		background: linear-gradient(135deg, var(--panel), var(--ink));
+	}
+
+	.cut__thumb img {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.cut__play {
+		position: absolute;
+		right: 0.75rem;
+		bottom: 0.75rem;
+		display: grid;
+		place-items: center;
+		width: 2.25rem;
+		height: 2.25rem;
+		font-size: 0.75rem;
+		color: var(--on-accent);
+		background: var(--accent-pop);
+		clip-path: polygon(0 0, 100% 0, 100% 70%, 85% 100%, 0 100%);
+	}
+
+	.cut__body {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+		padding: 1rem;
+	}
+
+	.cut__meta {
+		font-family: var(--font-mono);
+		font-size: 0.6rem;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		color: var(--accent-pop);
+	}
+
+	.cut__name {
+		font-family: var(--font-mono);
+		font-weight: 700;
+		font-size: 0.875rem;
+		text-transform: uppercase;
+		letter-spacing: 0.03em;
+		color: var(--text);
+	}
+
+	.cut__note {
+		font-size: 0.875rem;
+		color: var(--text-muted);
 	}
 
 	.interest-grid {

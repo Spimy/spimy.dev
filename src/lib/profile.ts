@@ -16,3 +16,25 @@ export function getYearsCoding(): number {
 export async function getProjectCount(): Promise<number> {
   return (await getCollection('projects')).length;
 }
+
+export interface Cutscene {
+  id: string;
+  title: string;
+  meta: string;
+  note: string;
+}
+
+export const cutscenes: Cutscene[] = [
+  {
+    id: 'uCLp_x-FUKE',
+    title: 'Malay Language Oral Test',
+    meta: 'Sunway University · Mar 2024',
+    note: 'Scripted and edited in DaVinci Resolve.',
+  },
+  {
+    id: 'PoGLyc7fTL8',
+    title: 'Digital Transformation ft. ZUS Coffee',
+    meta: 'Sunway University · Dec 2024',
+    note: 'Group presentation, edited in DaVinci Resolve.',
+  },
+];

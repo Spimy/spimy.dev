@@ -1,4 +1,4 @@
-export type GearGroup = 'weapon' | 'artifact' | 'armour';
+export type GearGroup = 'weapon' | 'artifact' | 'armour' | 'support';
 
 export interface Gear {
   /** Used in the HTML ids, so lowercase letters, numbers and dashes only */
@@ -49,6 +49,12 @@ export const groups: {
     title: 'Armour & relics',
     subtitle: 'Ops & data',
     slotName: 'Armour',
+  },
+  {
+    id: 'support',
+    title: 'Support skills',
+    subtitle: 'Design & media',
+    slotName: 'Support',
   },
 ];
 
@@ -500,5 +506,67 @@ export const gear: Gear[] = [
     note: 'What my older projects used in front of their apps, before I moved to Traefik.',
     status: 'stash',
     tags: ['Nginx'],
+  },
+  // ---- Support skills: design & media ----
+  {
+    id: 'figma',
+    name: 'Figma',
+    abbr: 'FG',
+    group: 'support',
+    kind: 'UI design',
+    blurb: 'Collaborative design tool for interfaces and prototypes.',
+    note: 'I design my screens here before building them, like the SVPS app. I moved over from Adobe XD.',
+    status: 'active',
+    tags: ['Figma'],
+  },
+  {
+    id: 'davinci-resolve',
+    name: 'DaVinci Resolve',
+    abbr: 'DR',
+    group: 'support',
+    kind: 'Video editing',
+    blurb: 'Video editor with colour grading and audio tools.',
+    note: 'My editor for recent videos, including my university presentation assignments. You can watch them in the Cutscenes section of my Profile.',
+    status: 'active',
+  },
+  {
+    id: 'photopea',
+    name: 'Photopea',
+    abbr: 'PP',
+    group: 'support',
+    kind: 'Image editing',
+    blurb: 'Photoshop-style image editor that runs in the browser.',
+    note: 'What I use now for profile pictures, banners and thumbnails, in place of Photoshop.',
+    status: 'active',
+  },
+  {
+    id: 'premiere',
+    name: 'Premiere Pro',
+    abbr: 'PR',
+    group: 'support',
+    kind: 'Video editing',
+    blurb: 'Adobe\u2019s video editor.',
+    note: 'What I edited my early gaming videos in, before I moved to DaVinci Resolve.',
+    status: 'stash',
+  },
+  {
+    id: 'photoshop',
+    name: 'Photoshop',
+    abbr: 'PS',
+    group: 'support',
+    kind: 'Image editing',
+    blurb: 'Adobe\u2019s image editor.',
+    note: 'How I used to make profile pictures, banners and thumbnails, before I moved to Photopea.',
+    status: 'stash',
+  },
+  {
+    id: 'adobe-xd',
+    name: 'Adobe XD',
+    abbr: 'XD',
+    group: 'support',
+    kind: 'UI design',
+    blurb: 'Adobe\u2019s tool for designing and prototyping interfaces.',
+    note: 'What I designed in before I moved to Figma.',
+    status: 'stash',
   },
 ];
