@@ -1,7 +1,7 @@
 ---
 title: 'Aniseiyuu'
 date: '2020-11-17'
-summary: "Compare the voice actors (seiyuu) of two anime to find characters who share a voice. It uses AniList's GraphQL API and started as a learning project. AniList's rate limits broke it in 2025, so I rewrote how it fetches data: it now loads each anime's cast directly, queues requests and retries when rate limited. I also moved it from Vue CLI to Vite."
+summary: "Compare the voice actors (seiyuu) of two anime to find characters who share a voice. It uses AniList's GraphQL API and started as a learning project. AniList's rate limits broke it sometime between 2024-2025, so I rewrote how it fetches data: it now loads each anime's cast directly, queues requests and retries when rate limited. I also moved it from Vue CLI to Vite."
 tags: ['Vue', 'TypeScript', 'SCSS', 'GraphQL', 'Vite']
 links:
   - label: 'Live'
@@ -12,7 +12,7 @@ links:
 
 ## What broke
 
-AniSeiyuu finds the voice actors two anime have in common. The original version did this in two steps: it listed the cast of each anime, then for every shared actor it paged through their entire list of roles on AniList, 25 at a time. A popular actor can have hundreds of roles, so one comparison could send hundreds of requests at once. When AniList tightened its rate limits in July 2025, those requests started failing. The retry code for rate limit responses was never reached because it ran after code that assumed a successful response, and the loading spinner never stopped.
+AniSeiyuu finds the voice actors two anime have in common. The original version did this in two steps: it listed the cast of each anime, then for every shared actor it paged through their entire list of roles on AniList, 25 at a time. A popular actor can have hundreds of roles, so one comparison could send hundreds of requests at once. When AniList tightened its rate limits sometime between 2024-2025, those requests started failing. The retry code for rate limit responses was never reached because it ran after code that assumed a successful response, and the loading spinner never stopped.
 
 ## Rethinking the comparison
 
