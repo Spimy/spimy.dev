@@ -359,6 +359,29 @@ export const gear: Gear[] = [
     status: 'stash',
     tags: ['Spigot'],
   },
+  {
+    id: 'react',
+    name: 'React',
+    abbr: 'R',
+    group: 'artifact',
+    kind: 'Library',
+    blurb: 'Library for building user interfaces from components.',
+    status: 'locked',
+    unlock:
+      'This will be unlocked automatically upon publishing a Next.js project.',
+  },
+  {
+    id: 'next',
+    name: 'Next.js',
+    abbr: 'Nx',
+    group: 'artifact',
+    kind: 'Framework',
+    blurb:
+      'React’s full-stack framework, with server rendering and API routes.',
+    status: 'locked',
+    unlock:
+      'The future is connected to the past... a project is incoming as this artifact gets studied. El Psy Kongroo.',
+  },
 
   // ---- Armour & relics: ops & data ----
   {
