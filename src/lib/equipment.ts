@@ -296,6 +296,7 @@ export const gear: Gear[] = [
     blurb: 'PHP web framework.',
     note: 'The framework behind the application I worked on during my internship.',
     status: 'stash',
+    tags: ['Laravel'],
   },
   {
     id: 'astro',
