@@ -9,6 +9,7 @@ import PageMain from '../components/PageMain.astro';
 import Layout from '../layouts/Layout.astro';
 import { gear, groups, loadouts, type Gear } from '../lib/equipment';
 import { equipmentCss } from '../lib/equipment-css';
+import { getJobs, jobsForGear } from '../lib/experience';
 import { getProjects, tagSlug } from '../lib/projects';
 
 const projects = await getProjects();
@@ -44,6 +45,8 @@ function connectedProjects(item: Gear) {
 	);
 }
 
+const allJobs = await getJobs();
+
 const MAX_LISTED = 4;
 const cards = gear.map((item) => {
 	const matches = connectedProjects(item);
@@ -54,6 +57,7 @@ const cards = gear.map((item) => {
 		hasTags: (item.tags ?? []).length > 0,
 		total: matches.length,
 		listed: matches.slice(0, MAX_LISTED),
+		jobs: jobsForGear(item, allJobs),
 		// pick up only the first tag if there's only one, so the link is more specific
 		filterHref:
 			item.tags?.length === 1
@@ -104,136 +108,132 @@ function logoFor(id: string): ImageMetadata | undefined {
 
 	<PageHeader
 		title="Equipments"
-		subtitle="Character page III - What I build with. Select any gear to see what it is, how I came to it, and which projects in my inventory use it."
+		subtitle="Character page IV - What I build with. Select any gear to see what it is, how I came to it, and which projects in my inventory use it."
 	/>
 
 	<PageMain>
 		<div class="equipment">
 			<section class="loadout" aria-labelledby="loadout-title">
-				<h2 class="equipment__heading" id="loadout-title">Loadouts</h2>
+				<h2 class="equipment__heading" id="loadout-title">
+					Loadouts
+				</h2>
 
-				{
-					tabs.length > 1 && (
-						<div class="loadout__tabs">
-							{tabs.map(({ id, label }) => (
-								<label class="loadout__tab" for={`ld-${id}`}>
-									{label}
-								</label>
+				{tabs.length > 1 && (
+					<div class="loadout__tabs">
+						{tabs.map(({ id, label }) => (
+							<label class="loadout__tab" for={`ld-${id}`}>
+								{label}
+							</label>
+						))}
+					</div>
+				)}
+
+				{tabs.map(({ id, label, slots }) => (
+					<div
+						class={`loadout__block loadout__block--${id}`}
+						role="group"
+						aria-label={label}
+					>
+						<p class="loadout__caption">Currently equipped</p>
+						<ul class="loadout__list" role="list">
+							{slots.map(({ item, slot }) => (
+								<li>
+									<label class="gear" for={`eq-${item.id}`}>
+										<span class="gear__icon" aria-hidden="true">
+											{logoFor(item.id) ? (
+												<Image
+													class="gear__logo"
+													src={logoFor(item.id)!}
+													alt=""
+													width={56}
+												/>
+											) : (
+												item.abbr
+											)}
+										</span>
+										<span class="gear__info">
+											<span class="gear__type">{slot}</span>
+											<span class="gear__name">{item.name}</span>
+										</span>
+									</label>
+								</li>
 							))}
-						</div>
-					)
-				}
-
-				{
-					tabs.map(({ id, label, slots }) => (
-						<div
-							class={`loadout__block loadout__block--${id}`}
-							role="group"
-							aria-label={label}
-						>
-							<p class="loadout__caption">Currently equipped</p>
-							<ul class="loadout__list" role="list">
-								{slots.map(({ item, slot }) => (
-									<li>
-										<label class="gear" for={`eq-${item.id}`}>
-											<span class="gear__icon" aria-hidden="true">
-												{logoFor(item.id) ? (
-													<Image
-														class="gear__logo"
-														src={logoFor(item.id)!}
-														alt=""
-														width={56}
-													/>
-												) : (
-													item.abbr
-												)}
-											</span>
-											<span class="gear__info">
-												<span class="gear__type">{slot}</span>
-												<span class="gear__name">{item.name}</span>
-											</span>
-										</label>
-									</li>
-								))}
-							</ul>
-						</div>
-					))
-				}
+						</ul>
+					</div>
+				))}
 			</section>
 
 			<div class="equipment__body">
 				<div class="stash">
 					<h2 class="stash__title">Inventory stash</h2>
 
-					{
-						sections.map((section) => (
-							<section
-								class="stash__group"
-								aria-labelledby={`group-${section.id}`}
-							>
-								<h3 class="stash__group-title" id={`group-${section.id}`}>
-									{section.title}{' '}
-									<span class="stash__group-sub">({section.subtitle})</span>
-								</h3>
-								<ul class="stash__grid" role="list">
-									{section.items.map((item) => (
-										<li>
-											<label
-												class:list={[
-													'tile',
-													{
-														'tile--equipped': equippedIds.has(item.id),
-														'tile--stash': item.status === 'stash',
-														'tile--locked': item.status === 'locked',
-													},
-												]}
-												for={`eq-${item.id}`}
-											>
-												{item.status === 'locked' && (
-													<svg
-														class="tile__lock"
-														viewBox="0 0 16 16"
-														aria-hidden="true"
-														fill="currentColor"
-													>
-														<path d="M8 1a3.5 3.5 0 0 0-3.5 3.5V6H4a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1h-.5V4.5A3.5 3.5 0 0 0 8 1zm-2 3.5a2 2 0 1 1 4 0V6H6z" />
-													</svg>
+					{sections.map((section) => (
+						<section
+							class="stash__group"
+							aria-labelledby={`group-${section.id}`}
+						>
+							<h3 class="stash__group-title" id={`group-${section.id}`}>
+								{section.title}{' '}
+								<span class="stash__group-sub">({section.subtitle})</span>
+							</h3>
+							<ul class="stash__grid" role="list">
+								{section.items.map((item) => (
+									<li>
+										<label
+											class:list={[
+												'tile',
+												{
+													'tile--equipped': equippedIds.has(item.id),
+													'tile--stash': item.status === 'stash',
+													'tile--locked': item.status === 'locked',
+												},
+											]}
+											for={`eq-${item.id}`}
+										>
+											{item.status === 'locked' && (
+												<svg
+													class="tile__lock"
+													viewBox="0 0 16 16"
+													aria-hidden="true"
+													fill="currentColor"
+												>
+													<path d="M8 1a3.5 3.5 0 0 0-3.5 3.5V6H4a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1h-.5V4.5A3.5 3.5 0 0 0 8 1zm-2 3.5a2 2 0 1 1 4 0V6H6z" />
+												</svg>
+											)}
+											<span class="tile__abbr" aria-hidden="true">
+												{logoFor(item.id) ? (
+													<Image
+														class="tile__logo"
+														src={logoFor(item.id)!}
+														alt=""
+														width={64}
+													/>
+												) : (
+													item.abbr
 												)}
-												<span class="tile__abbr" aria-hidden="true">
-													{logoFor(item.id) ? (
-														<Image
-															class="tile__logo"
-															src={logoFor(item.id)!}
-															alt=""
-															width={64}
-														/>
-													) : (
-														item.abbr
+											</span>
+											<span class="tile__name">
+												{item.name}
+												{equippedIds.has(item.id) && (
+													<span class="sr-only"> (equipped)</span>
+												)}
+												{!equippedIds.has(item.id) &&
+													item.status === 'active' && (
+														<span class="sr-only"> (in use)</span>
 													)}
-												</span>
-												<span class="tile__name">
-													{item.name}
-													{equippedIds.has(item.id) && (
-														<span class="sr-only"> (equipped)</span>
-													)}
-													{!equippedIds.has(item.id) &&
-														item.status === 'active' && (
-															<span class="sr-only"> (in use)</span>
-														)}
-													{item.status === 'stash' && (
-														<span class="sr-only"> (in stash)</span>
-													)}
-													{item.status === 'locked' && (
-														<span class="sr-only"> (locked)</span>
-													)}
-												</span>
-											</label>
-										</li>
-									))}
-								</ul>
-							</section>
-						))
-					}
+												{item.status === 'stash' && (
+													<span class="sr-only"> (in stash)</span>
+												)}
+												{item.status === 'locked' && (
+													<span class="sr-only"> (locked)</span>
+												)}
+											</span>
+										</label>
+									</li>
+								))}
+							</ul>
+						</section>
+					))}
 				</div>
 
 				<aside class="inspector" aria-label="Gear inspector">
@@ -245,8 +245,8 @@ function logoFor(id: string): ImageMetadata | undefined {
 						</p>
 					</div>
 
-					{
-						cards.map(({ item, tier, hasTags, total, listed, filterHref }) => (
+					{cards.map(
+						({ item, tier, hasTags, total, listed, filterHref, jobs }) => (
 							<article class={`inspector__card inspector__card--${item.id}`}>
 								<label class="inspector__close" for="eq-close">
 									Close
@@ -294,6 +294,25 @@ function logoFor(id: string): ImageMetadata | undefined {
 									</>
 								)}
 
+								{jobs.length > 0 && (
+									<>
+										<h3 class="inspector__label">Connected experience</h3>
+										<ul class="inspector__projects" role="list">
+											{jobs.map((job) => (
+												<li>
+													<a href={`/experience#${job.id}`}>
+														{job.data.company}
+													</a>
+													<span class="inspector__year">
+														{' '}
+														{job.data.start.slice(0, 4)}
+													</span>
+												</li>
+											))}
+										</ul>
+									</>
+								)}
+
 								{hasTags && total > 0 && (
 									<>
 										<h3 class="inspector__label">Connected inventory</h3>
@@ -328,8 +347,8 @@ function logoFor(id: string): ImageMetadata | undefined {
 									</>
 								)}
 							</article>
-						))
-					}
+						),
+					)}
 				</aside>
 			</div>
 		</div>
