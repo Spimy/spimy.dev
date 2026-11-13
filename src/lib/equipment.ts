@@ -1,4 +1,4 @@
-export type GearGroup = 'weapon' | 'artifact' | 'armour' | 'support';
+export type GearGroup = 'weapon' | 'artifact' | 'armour' | 'relic' | 'support';
 
 export interface Gear {
   /** Used in the HTML ids, so lowercase letters, numbers and dashes only */
@@ -27,80 +27,89 @@ export interface Gear {
 }
 
 export const groups: {
-  id: GearGroup;
+  id: string;
   title: string;
   subtitle: string;
-  slotName: string;
+  includes: GearGroup[];
 }[] = [
   {
     id: 'weapon',
     title: 'Weapons',
     subtitle: 'Languages & runtimes',
-    slotName: 'Weapon',
+    includes: ['weapon'],
   },
   {
     id: 'artifact',
     title: 'Artifacts',
     subtitle: 'Frameworks & libraries',
-    slotName: 'Artifact',
+    includes: ['artifact'],
   },
   {
     id: 'armour',
     title: 'Armour & relics',
     subtitle: 'Ops & data',
-    slotName: 'Armour',
+    includes: ['armour', 'relic'],
   },
   {
     id: 'support',
     title: 'Support skills',
     subtitle: 'Design & media',
-    slotName: 'Support',
+    includes: ['support'],
   },
 ];
+
+export const slotNames: Record<GearGroup, string> = {
+  weapon: 'Weapon',
+  artifact: 'Artifact',
+  armour: 'Armour',
+  relic: 'Relic',
+  support: 'Support',
+};
 
 export interface Loadout {
   /** Used in the HTML ids: lowercase letters, numbers and dashes only */
   id: string;
   /** Tab label. */
   label: string;
-  /** Each id must exist in `gear` below. `slot` is the small caption. */
-  slots: { id: string; slot: string }[];
+  /**
+   * Each id must exist in `gear` below. Use `{ id, slot }` to override the
+   * caption (e.g. "Main weapon"); otherwise it comes from the gear's group.
+   */
+  gear: (string | { id: string; slot: string })[];
 }
 
 export const loadouts: Loadout[] = [
   {
     id: 'web',
     label: 'Web Stack',
-    slots: [
+    gear: [
       { id: 'typescript', slot: 'Main weapon' },
-      { id: 'sveltekit', slot: 'Artifact' },
+      'sveltekit',
       { id: 'nodejs', slot: 'Sub weapon' },
-      { id: 'postgresql', slot: 'Relic' },
-      { id: 'django', slot: 'Artifact' },
+      'postgresql',
+      'django',
     ],
   },
   {
     id: 'server',
     label: 'Server Infra',
-    slots: [
-      { id: 'docker', slot: 'Armour' },
-      { id: 'traefik', slot: 'Accessory' },
-      { id: 'git', slot: 'Accessory' },
-      { id: 'wireguard', slot: 'Accessory' },
-    ],
+    gear: ['docker', 'traefik', 'git', 'wireguard'],
   },
   {
     id: 'mobile',
     label: 'Mobile',
-    slots: [
+    gear: [
       { id: 'typescript', slot: 'Main weapon' },
       { id: 'nodejs', slot: 'Sub weapon' },
-      { id: 'sveltekit', slot: 'Artifact' },
-      { id: 'capacitor', slot: 'Artifact' },
-      { id: 'docker', slot: 'Armour' },
+      'sveltekit',
+      'capacitor',
+      'docker',
     ],
   },
 ];
+
+export const loadoutEntry = (entry: Loadout['gear'][number]) =>
+  typeof entry === 'string' ? { id: entry, slot: undefined } : entry;
 
 export const gear: Gear[] = [
   // ---- Weapons: languages & runtimes ----
@@ -426,7 +435,7 @@ export const gear: Gear[] = [
     id: 'mongodb',
     name: 'MongoDB',
     abbr: 'MG',
-    group: 'armour',
+    group: 'relic',
     kind: 'Database',
     blurb: 'Document database that stores JSON-like records.',
     note: 'My go-to NoSQL database but nowadays I prefer relational databases. I still use it for some smaller projects like Discord bots.',
@@ -437,7 +446,7 @@ export const gear: Gear[] = [
     id: 'postgresql',
     name: 'PostgreSQL',
     abbr: 'PG',
-    group: 'armour',
+    group: 'relic',
     kind: 'Database',
     blurb: 'Open-source relational database.',
     note: 'My usual choice of database.',
@@ -447,7 +456,7 @@ export const gear: Gear[] = [
     id: 'mysql',
     name: 'MySQL',
     abbr: 'MY',
-    group: 'armour',
+    group: 'relic',
     kind: 'Database',
     blurb: 'Relational database.',
     note: 'Part of the stack I worked on during my internship.',
@@ -458,7 +467,7 @@ export const gear: Gear[] = [
     id: 'mariadb',
     name: 'MariaDB',
     abbr: 'MD',
-    group: 'armour',
+    group: 'relic',
     kind: 'Database',
     blurb: 'Open-source relational database, forked from MySQL.',
     note: 'What I use when a project needs a MySQL-compatible database, such as an assignment.',
@@ -469,7 +478,7 @@ export const gear: Gear[] = [
     id: 'sqlite',
     name: 'SQLite',
     abbr: 'SQ',
-    group: 'armour',
+    group: 'relic',
     kind: 'Database',
     blurb: 'Relational database stored in a single file.',
     note: 'Used for small projects or when a lightweight database is needed. Also used when I first started learning Django, because it is the default database for new Django projects.',

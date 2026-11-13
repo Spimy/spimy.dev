@@ -7,35 +7,44 @@ import EquipmentState from '../components/EquipmentState.svelte';
 import PageHeader from '../components/PageHeader.astro';
 import PageMain from '../components/PageMain.astro';
 import Layout from '../layouts/Layout.astro';
-import { gear, groups, loadouts, type Gear } from '../lib/equipment';
+import {
+	gear,
+	groups,
+	loadoutEntry,
+	loadouts,
+	slotNames,
+	type Gear,
+} from '../lib/equipment';
 import { equipmentCss } from '../lib/equipment-css';
 import { getJobs, jobsForGear } from '../lib/experience';
 import { getProjects, tagSlug } from '../lib/projects';
 
 const projects = await getProjects();
-const groupById = new Map(groups.map((group) => [group.id, group]));
 const gearById = new Map(gear.map((item) => [item.id, item]));
 
 const tabs = loadouts.map((loadout) => ({
 	...loadout,
-	slots: loadout.slots.map(({ id, slot }) => {
+	items: loadout.gear.map((entry) => {
+		const { id, slot } = loadoutEntry(entry);
 		const item = gearById.get(id);
 		if (!item)
 			throw new Error(
 				`equipment.ts: "${id}" in loadout "${loadout.id}" is not in \`gear\``,
 			);
-		return { item, slot };
+		return { item, slot: slot ?? slotNames[item.group] };
 	}),
 }));
 
 const equippedIds = new Set(
-	loadouts.flatMap((loadout) => loadout.slots.map((slot) => slot.id)),
+	loadouts.flatMap((loadout) =>
+		loadout.gear.map((entry) => loadoutEntry(entry).id),
+	),
 );
 
 // object tracking loadout gear for the tab-follows-selection progressive enhancement
-const loadoutGear = loadouts.map(({ id, slots }) => ({
+const loadoutGear = loadouts.map(({ id, gear }) => ({
 	id,
-	gear: slots.map((slot) => slot.id),
+	gear: gear.map((entry) => loadoutEntry(entry).id),
 }));
 
 function connectedProjects(item: Gear) {
@@ -50,10 +59,9 @@ const allJobs = await getJobs();
 const MAX_LISTED = 4;
 const cards = gear.map((item) => {
 	const matches = connectedProjects(item);
-	const group = groupById.get(item.group)!;
 	return {
 		item,
-		tier: `${group.slotName} / ${item.kind}`,
+		tier: `${slotNames[item.group]} / ${item.kind}`,
 		hasTags: (item.tags ?? []).length > 0,
 		total: matches.length,
 		listed: matches.slice(0, MAX_LISTED),
@@ -76,7 +84,7 @@ function statusRank(item: Gear): number {
 const sections = groups.map((group) => ({
 	...group,
 	items: gear
-		.filter((item) => item.group === group.id)
+		.filter((item) => group.includes.includes(item.group))
 		.sort((a, b) => statusRank(a) - statusRank(b)),
 }));
 
@@ -128,7 +136,7 @@ function logoFor(id: string): ImageMetadata | undefined {
 					</div>
 				)}
 
-				{tabs.map(({ id, label, slots }) => (
+				{tabs.map(({ id, label, items }) => (
 					<div
 						class={`loadout__block loadout__block--${id}`}
 						role="group"
@@ -136,7 +144,7 @@ function logoFor(id: string): ImageMetadata | undefined {
 					>
 						<p class="loadout__caption">Currently equipped</p>
 						<ul class="loadout__list" role="list">
-							{slots.map(({ item, slot }) => (
+							{items.map(({ item, slot }) => (
 								<li>
 									<label class="gear" for={`eq-${item.id}`}>
 										<span class="gear__icon" aria-hidden="true">
