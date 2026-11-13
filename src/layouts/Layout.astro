@@ -66,7 +66,13 @@ const image = new URL('/logos/character.png', Astro.site);
 		<Analytics />
 	</head>
 	<body>
-		<a href="#main-content" class="skip-link">Skip to content</a>
+		<!-- Added to force browser to wait for CSS to load first -->
+		<script is:inline>
+			0;
+		</script>
+		<a href="#main-content" class="skip-link">
+			Skip to content
+		</a>
 
 		<slot name="state" />
 
@@ -76,25 +82,31 @@ const image = new URL('/logos/character.png', Astro.site);
 
 		<footer class="build-note">
 			<p class="build-note__credit">
-				© {new Date().getFullYear()} Spimy - Built with <a
-					href="https://astro.build"
-					target="_blank"
-					rel="noopener noreferrer">Astro</a
-				> and <a
-					href="https://svelte.dev"
-					target="_blank"
-					rel="noopener noreferrer">Svelte</a
-				>.
+				© {new Date().getFullYear()} Spimy - Built with{' '}
+				<a href="https://astro.build" target="_blank" rel="noopener noreferrer">
+					Astro
+				</a>{' '}
+				and{' '}
+				<a href="https://svelte.dev" target="_blank" rel="noopener noreferrer">
+					Svelte
+				</a>
+				.
 			</p>
 			<nav class="build-note__links" aria-label="Footer">
 				<a
 					class="build-note__link"
 					href={REPO_URL}
 					target="_blank"
-					rel="noopener noreferrer">Source Code</a
+					rel="noopener noreferrer"
 				>
-				<span class="build-note__separator" aria-hidden="true">·</span>
-				<a class="build-note__link" href="/privacy">Privacy Policy</a>
+					Source Code
+				</a>
+				<span class="build-note__separator" aria-hidden="true">
+					·
+				</span>
+				<a class="build-note__link" href="/privacy">
+					Privacy Policy
+				</a>
 			</nav>
 		</footer>
 	</body>
