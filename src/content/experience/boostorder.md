@@ -13,7 +13,7 @@ bonuses:
   - { label: 'Workflow', before: 'Solo', after: 'Agile team + QA' }
   - { label: 'Catalog load', before: '~12 s', after: '~2 s' }
   - { label: 'Catalog payload', before: '3 MB', after: '500 KB' }
-tags: ['Laravel', 'Vue', 'PHP', 'MySQL']
+tags: ['Laravel', 'PHP', 'MySQL', 'Vue', 'Docker']
 ---
 
 - Shipped full-stack Laravel and Vue.js features from Figma specs, including an e-invoicing compliance feature.
