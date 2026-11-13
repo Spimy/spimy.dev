@@ -8,6 +8,7 @@ import spimyLogo from '../assets/logo.png';
 import Icon from '../components/Icon.astro';
 import Layout from '../layouts/Layout.astro';
 import { dateRange, gearForJob, getJobs, numeral } from '../lib/experience';
+import { getLevel } from '../lib/profile';
 
 const jobs = await getJobs();
 const phases = await Promise.all(
@@ -34,7 +35,6 @@ const phases = await Promise.all(
 const defaultPhaseId =
 	phases.find((p) => p.status !== 'upcoming')?.id ?? phases[0]?.id;
 
-const level = new Date().getFullYear() - 2003;
 const cleared = phases.filter((p) => p.status !== 'upcoming').length;
 const totalPhases = phases.length + 1;
 const nextNumeral = numeral(phases.length);
@@ -132,7 +132,7 @@ const statusLabel = {
 				<nav class="track" aria-label="Jobs">
 					<div class="track__meter">
 						<span class="track__level">
-							LV. <strong>{level}</strong>
+							LV. <strong>{getLevel()}</strong>
 						</span>
 						<span
 							class="track__stars"

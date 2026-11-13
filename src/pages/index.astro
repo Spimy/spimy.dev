@@ -12,6 +12,7 @@ import { getCompletedAnime, getGitHubStats } from '../lib/external';
 import {
 	ANILIST_USERNAME,
 	GITHUB_USERNAME,
+	getLevel,
 	getProjectCount,
 	getYearsCoding,
 } from '../lib/profile';
@@ -19,9 +20,6 @@ import {
 type Stat = { label: string; value: string; big?: boolean };
 
 const rosterLocked = 4;
-const level = new Date().getFullYear() - 2003; // age
-
-const yearsCoding = getYearsCoding();
 const [projectsShipped, github, anime] = await Promise.all([
 	getProjectCount(),
 	getGitHubStats(GITHUB_USERNAME, GITHUB_TOKEN),
@@ -36,7 +34,7 @@ Astro.response.headers.set(
 );
 
 const stats = [
-	{ label: 'Years Coding', value: `~${yearsCoding}` },
+	{ label: 'Years Coding', value: `~${getYearsCoding()}` },
 	anime !== null && {
 		label: 'Anime Completed',
 		value: anime.toLocaleString('en'),
@@ -188,7 +186,7 @@ const stats = [
 				<div class="agent-panel__level-row">
 					<a class="level-pod" href="/experience">
 						<span class="level-pod__text">
-							LV. <strong class="level-pod__number">{level}</strong>
+							LV. <strong class="level-pod__number">{getLevel()}</strong>
 						</span>
 						<span class="level-pod__button">
 							Level Up
