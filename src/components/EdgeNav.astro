@@ -4,9 +4,10 @@ import logo from '../assets/logo.png';
 
 const links = [
 	{ href: '/profile', num: 'I', label: 'Profile' },
-	{ href: '/projects', num: 'II', label: 'Inventory' },
-	{ href: '/equipment', num: 'III', label: 'Equipment' },
-	{ href: '/contact', num: 'IV', label: 'Party Chat' },
+	{ href: '/experience', num: 'II', label: 'Experience' },
+	{ href: '/projects', num: 'III', label: 'Inventory' },
+	{ href: '/equipment', num: 'IV', label: 'Equipment' },
+	{ href: '/contact', num: 'V', label: 'Party Chat' },
 ];
 
 // Strip any trailing slash so '/projects/' and '/projects/foo' still match '/projects'
@@ -141,6 +142,10 @@ const isCurrent = (href: string) =>
 		.edge-nav__item {
 			writing-mode: horizontal-tb;
 			font-size: 0.59375rem;
+			letter-spacing: 0.02em;
+			line-height: 1.15;
+			text-align: center;
+			padding: 0 0.125rem;
 			min-height: 0;
 			border-bottom: 0;
 			border-right: 2px solid var(--panel);
