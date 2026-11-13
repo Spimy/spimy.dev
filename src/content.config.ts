@@ -34,4 +34,36 @@ const projects = defineCollection({
   }),
 });
 
-export const collections = { projects };
+const experience = defineCollection({
+  loader: glob({ base: './src/content/experience', pattern: '**/*.md' }),
+  schema: z.object({
+    company: z.string(),
+    logo: z.string(),
+    role: z.string(),
+    type: z.enum([
+      'Freelance',
+      'Contract',
+      'Internship',
+      'Part-time',
+      'Full-time',
+    ]),
+    location: z.string(),
+    start: z
+      .string()
+      .regex(/^\d{4}-\d{2}(-\d{2})?$/, 'Use YYYY-MM or YYYY-MM-DD'),
+    end: z
+      .string()
+      .regex(/^\d{4}-\d{2}(-\d{2})?$/, 'Use YYYY-MM or YYYY-MM-DD')
+      .optional(),
+    summary: z.string(),
+    url: z.url().optional(),
+    bonuses: z
+      .array(
+        z.object({ label: z.string(), before: z.string(), after: z.string() }),
+      )
+      .default([]),
+    tags: z.array(z.string()).default([]),
+  }),
+});
+
+export const collections = { projects, experience };
