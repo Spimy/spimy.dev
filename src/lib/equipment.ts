@@ -344,6 +344,7 @@ export const gear: Gear[] = [
     group: 'artifact',
     kind: 'Styling',
     blurb: 'CSS with variables, nesting and mixins.',
+    note: 'Modern CSS now covers most of what I used it for, like nesting and variables, so I write plain CSS in my own projects instead.',
     status: 'stash',
     tags: ['SCSS'],
   },
