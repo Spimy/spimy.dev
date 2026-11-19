@@ -435,6 +435,7 @@ export const gear: Gear[] = [
     kind: 'Reverse proxy',
     blurb: 'Routes incoming requests to the right container.',
     note: 'Now sits in front of my containers, including older projects like Recipe Roots (Apache in its own container) and the self-hosted services on my home server.',
+    tags: ['Traefik'],
   },
   {
     id: 'wireguard',
@@ -444,6 +445,7 @@ export const gear: Gear[] = [
     kind: 'VPN',
     blurb: 'Lightweight VPN that creates encrypted tunnels between machines.',
     note: 'I use it through my VPS for private access to dashboards, and for a separate tunnel that lets me connect remotely to my home server.',
+    tags: ['WireGuard'],
   },
   {
     id: 'git',
