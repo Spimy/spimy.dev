@@ -187,17 +187,17 @@ export const gear: Gear[] = [
     status: 'active',
     tags: ['PHP'],
   },
-  {
-    id: 'rust',
-    name: 'Rust',
-    abbr: 'RS',
-    group: 'weapon',
-    kind: 'Language',
-    blurb: 'Memory-safe systems language prioritising speed and thread safety.',
-    status: 'locked',
-    unlock:
-      'Currently in the active research phase: I am still learning it. Check back later.',
-  },
+  // {
+  //   id: 'rust',
+  //   name: 'Rust',
+  //   abbr: 'RS',
+  //   group: 'weapon',
+  //   kind: 'Language',
+  //   blurb: 'Memory-safe systems language prioritising speed and thread safety.',
+  //   status: 'locked',
+  //   unlock:
+  //     'Currently in the active research phase: I am still learning it. Check back later.',
+  // },
   {
     id: 'scala',
     name: 'Scala',
