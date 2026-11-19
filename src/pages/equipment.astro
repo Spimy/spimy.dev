@@ -650,7 +650,7 @@ function logoFor(id: string): ImageMetadata | undefined {
 
 	.tile--locked .tile__logo {
 		opacity: 0.7;
-		filter: brightness(0) invert(0.55) var(--logo-halo);
+		filter: grayscale(1) brightness(0.75) var(--logo-halo);
 	}
 
 	.tile__name {
