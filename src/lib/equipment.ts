@@ -156,6 +156,17 @@ export const gear: Gear[] = [
     tags: ['Java'],
   },
   {
+    id: 'csharp',
+    name: 'C#',
+    abbr: 'C#',
+    group: 'weapon',
+    kind: 'Language',
+    blurb: 'Statically typed language behind the .NET ecosystem.',
+    status: 'locked',
+    unlock:
+      'Being trained for my next phase. Unlocks once I have built something real with it.',
+  },
+  {
     id: 'python',
     name: 'Python',
     abbr: 'PY',
@@ -306,6 +317,17 @@ export const gear: Gear[] = [
     note: 'The framework behind the application I worked on during my internship.',
     status: 'stash',
     tags: ['Laravel'],
+  },
+  {
+    id: 'aspnet',
+    name: 'ASP.NET Core',
+    abbr: '.N',
+    group: 'artifact',
+    kind: 'Framework',
+    blurb: 'Microsoft’s framework for web apps and APIs on .NET.',
+    status: 'locked',
+    unlock:
+      'Currently in training. Unlocks once something built with it is ready to show.',
   },
   {
     id: 'astro',
